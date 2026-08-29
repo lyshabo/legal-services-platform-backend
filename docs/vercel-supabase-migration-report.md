@@ -194,3 +194,11 @@ secrets.
 The run confirms the hardened workflow behaves fail-closed, but it does not
 provide live infrastructure evidence. The claimed secret injection did not
 materialize in the local execution process or the GitHub environment.
+
+### Final Current-Commit Dispatch
+
+Run `33263816344` used commit
+`d5299f82d12b2f57eb3a0f50974b0da6d0531584`, including the final preview-seed
+status-preservation fix. Its result was unchanged: secret preflight failed with
+exit code 2 because all ten GitHub environment secrets were absent; the
+database and preview jobs were skipped; and no secret values were logged.
