@@ -128,6 +128,18 @@ See [`docs/full-stack-architecture.md`](docs/full-stack-architecture.md) for the
 - Server-side RBAC.
 - Provider adapters for payments, booking, notifications, storage, search, analytics, and model access.
 
+## Vercel Migration
+
+The production migration target is Vercel with Supabase PostgreSQL and Prisma.
+The existing interface is built into `dist/`; server-side `/api/*` routes are
+handled by `api/[...path].mjs`. GitHub Pages remains available as a reference
+demo until the Vercel deployment is successfully validated.
+
+Required Vercel server-side variables include `DATABASE_URL`, `DIRECT_URL`,
+`AUTH_SECRET`, `AUTH_URL`, `OIDC_ISSUER`, `OIDC_CLIENT_ID`, and
+`OIDC_CLIENT_SECRET`. Configure these separately for development, preview, and
+production. Never commit them or expose them through browser code.
+
 ## PostgreSQL Activation
 
 Docker Compose binds PostgreSQL to localhost only and uses development-only

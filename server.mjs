@@ -370,7 +370,7 @@ async function handleApi(request, response) {
   return false;
 }
 
-const server = createServer(async (request, response) => {
+export async function handleRequest(request, response) {
   if ((request.url || "").startsWith("/api/")) {
     try {
       if (
@@ -416,8 +416,14 @@ const server = createServer(async (request, response) => {
       "default-src 'self'; script-src 'self'; style-src 'self'; img-src 'self' data:; connect-src 'self'; object-src 'none'; base-uri 'self'; frame-ancestors 'none'"
   });
   createReadStream(filePath).pipe(response);
-});
+}
 
-server.listen(port, host, () => {
-  console.log(`Legal Services Platform server listening on ${host}:${port}`);
-});
+const isMainModule =
+  process.argv[1] && fileURLToPath(import.meta.url) === normalize(process.argv[1]);
+
+if (isMainModule) {
+  const server = createServer(handleRequest);
+  server.listen(port, host, () => {
+    console.log(`Legal Services Platform server listening on ${host}:${port}`);
+  });
+}

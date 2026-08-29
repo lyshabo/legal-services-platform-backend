@@ -13,6 +13,7 @@
     "db:migrate": "prisma migrate deploy",
     "db:seed": "prisma db seed",
     "prisma:validate": "node scripts/prisma-validate.mjs",
+    "vercel:build": "prisma generate && node scripts/build-vercel.mjs",
     "check": "node scripts/readiness.mjs",
     "validate": "node --check app.js && node --check platform-core.js && node --check data.js && node --check i18n.js && node --check server.mjs && node --check server-repository.mjs && node --check server-auth.mjs && node --check auth-runtime.mjs && node --check auth-prisma-adapter.mjs && node --check prisma-client.mjs && node --check questionnaire-repository.mjs && node --check booking-repository.mjs && node --check providers.mjs && node --test tests/*.test.mjs && node scripts/readiness.mjs"
   },
