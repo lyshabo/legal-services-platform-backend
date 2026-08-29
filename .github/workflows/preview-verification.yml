@@ -17,17 +17,17 @@ jobs:
     environment: preview-verification
     env:
       VERCEL_TOKEN: ${{ secrets.VERCEL_TOKEN }}
-      VERCEL_ORG_ID: ${{ secrets.VERCEL_ORG_ID }}
-      VERCEL_PROJECT_ID: ${{ secrets.VERCEL_PROJECT_ID }}
+      VERCEL_ORG_ID: ${{ vars.VERCEL_ORG_ID }}
+      VERCEL_PROJECT_ID: ${{ vars.VERCEL_PROJECT_ID }}
       DATABASE_URL: ${{ secrets.DATABASE_URL }}
       DIRECT_URL: ${{ secrets.DIRECT_URL }}
       AUTH_SECRET: ${{ secrets.AUTH_SECRET }}
-      AUTH_URL: ${{ secrets.AUTH_URL }}
-      OIDC_ISSUER: ${{ secrets.OIDC_ISSUER }}
-      OIDC_CLIENT_ID: ${{ secrets.OIDC_CLIENT_ID }}
+      AUTH_URL: ${{ vars.AUTH_URL }}
+      OIDC_ISSUER: ${{ vars.OIDC_ISSUER }}
+      OIDC_CLIENT_ID: ${{ vars.OIDC_CLIENT_ID }}
       OIDC_CLIENT_SECRET: ${{ secrets.OIDC_CLIENT_SECRET }}
     steps:
-      - name: Require approved secret configuration
+      - name: Require approved environment configuration
         shell: bash
         run: |
           set -euo pipefail
@@ -38,7 +38,7 @@ jobs:
             AUTH_SECRET AUTH_URL OIDC_ISSUER OIDC_CLIENT_ID OIDC_CLIENT_SECRET
           do
             if [[ -z "${!name:-}" ]]; then
-              echo "::error::Required secret $name is not configured."
+              echo "::error::Required environment value $name is not configured."
               missing=1
             else
               echo "::add-mask::${!name}"
@@ -97,13 +97,13 @@ jobs:
       url: ${{ steps.deploy.outputs.url }}
     env:
       VERCEL_TOKEN: ${{ secrets.VERCEL_TOKEN }}
-      VERCEL_ORG_ID: ${{ secrets.VERCEL_ORG_ID }}
-      VERCEL_PROJECT_ID: ${{ secrets.VERCEL_PROJECT_ID }}
+      VERCEL_ORG_ID: ${{ vars.VERCEL_ORG_ID }}
+      VERCEL_PROJECT_ID: ${{ vars.VERCEL_PROJECT_ID }}
       DATABASE_URL: ${{ secrets.DATABASE_URL }}
       AUTH_SECRET: ${{ secrets.AUTH_SECRET }}
-      AUTH_URL: ${{ secrets.AUTH_URL }}
-      OIDC_ISSUER: ${{ secrets.OIDC_ISSUER }}
-      OIDC_CLIENT_ID: ${{ secrets.OIDC_CLIENT_ID }}
+      AUTH_URL: ${{ vars.AUTH_URL }}
+      OIDC_ISSUER: ${{ vars.OIDC_ISSUER }}
+      OIDC_CLIENT_ID: ${{ vars.OIDC_CLIENT_ID }}
       OIDC_CLIENT_SECRET: ${{ secrets.OIDC_CLIENT_SECRET }}
     steps:
       - uses: actions/checkout@11d5960a326750d5838078e36cf38b85af677262
@@ -119,12 +119,17 @@ jobs:
         run: |
           set -euo pipefail
           for name in \
-            DATABASE_URL AUTH_SECRET AUTH_URL \
-            OIDC_ISSUER OIDC_CLIENT_ID OIDC_CLIENT_SECRET
+            DATABASE_URL AUTH_SECRET OIDC_CLIENT_SECRET
           do
             printf '%s' "${!name}" |
               npx --yes vercel@59.10.0 env add "$name" preview \
                 --git-branch master --force --sensitive --token="$VERCEL_TOKEN"
+          done
+          for name in AUTH_URL OIDC_ISSUER OIDC_CLIENT_ID
+          do
+            printf '%s' "${!name}" |
+              npx --yes vercel@59.10.0 env add "$name" preview \
+                --git-branch master --force --no-sensitive --token="$VERCEL_TOKEN"
           done
       - name: Configure fail-closed preview runtime
         shell: bash

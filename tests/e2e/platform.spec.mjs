@@ -1,5 +1,11 @@
 import { test, expect } from "@playwright/test";
 
+const developmentAdminKey = process.env.E2E_DEV_ADMIN_KEY;
+
+if (!developmentAdminKey) {
+  throw new Error("E2E_DEV_ADMIN_KEY was not initialized by the Playwright configuration.");
+}
+
 test("public services API does not expose unpublished versions", async ({ request }) => {
   const response = await request.get("/api/services");
   expect(response.ok()).toBeTruthy();
@@ -151,7 +157,7 @@ test("contact validation shows errors and local success", async ({ page }) => {
 
 test("launch controls support development login, versioning, and local gate state", async ({ page }) => {
   await page.goto("/#/admin");
-  await page.locator("#admin-login-form input[name=key]").fill("development-only-admin");
+  await page.locator("#admin-login-form input[name=key]").fill(developmentAdminKey);
   await page.locator("#admin-login-form button[type=submit]").click();
   await expect(page.getByText(/Authenticated as Development administrator/i)).toBeVisible();
   await page.locator('select[data-gate="identity"]').selectOption("in_review");
@@ -181,7 +187,7 @@ test("booking loads localized slots and reconciles development payment", async (
 
 test("admin manages questionnaire versions, availability, and audit filters", async ({ page }) => {
   await page.goto("/#/admin");
-  await page.locator("#admin-login-form input[name=key]").fill("development-only-admin");
+  await page.locator("#admin-login-form input[name=key]").fill(developmentAdminKey);
   await page.locator("#admin-login-form button[type=submit]").click();
   await expect(page.getByRole("heading", { name: "Orientation intake" })).toBeVisible();
   await page.locator("#questionnaire-version-form input[name=jurisdictionLabel]").fill("Approved development jurisdiction label");
@@ -198,7 +204,7 @@ test("admin manages questionnaire versions, availability, and audit filters", as
 
 test("admin filters thought leadership by identity and permission status", async ({ page }) => {
   await page.goto("/#/admin");
-  await page.locator("#admin-login-form input[name=key]").fill("development-only-admin");
+  await page.locator("#admin-login-form input[name=key]").fill(developmentAdminKey);
   await page.locator("#admin-login-form button[type=submit]").click();
   await expect(page.locator("#thought-leadership-filter-form")).toBeVisible();
   await expect(page.locator("#thought-leadership-admin-results > div")).toHaveCount(17);
@@ -218,7 +224,7 @@ test("admin evidence filter labels and status options are localized", async ({ p
     "zh-Hant": ["證據審查篩選", "身分匹配狀態", "發布許可待定"]
   };
   await page.goto("/#/admin");
-  await page.locator("#admin-login-form input[name=key]").fill("development-only-admin");
+  await page.locator("#admin-login-form input[name=key]").fill(developmentAdminKey);
   await page.locator("#admin-login-form button[type=submit]").click();
   for (const [locale, labels] of Object.entries(expected)) {
     await page.selectOption("#locale-select", locale);
@@ -245,7 +251,7 @@ test("admin updates booking status and reconciles payment", async ({ page }) => 
   const booking = await bookingResponse.json();
 
   await page.goto("/#/admin");
-  await page.locator("#admin-login-form input[name=key]").fill("development-only-admin");
+  await page.locator("#admin-login-form input[name=key]").fill(developmentAdminKey);
   await page.locator("#admin-login-form button[type=submit]").click();
   const status = page.locator(`[data-booking-status="${booking.id}"]`);
   await expect(status).toBeVisible();

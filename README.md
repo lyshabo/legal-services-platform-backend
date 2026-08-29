@@ -135,22 +135,35 @@ The existing interface is built into `dist/`; server-side `/api/*` routes are
 handled by `api/[...path].mjs`. GitHub Pages remains available as a reference
 demo until the Vercel deployment is successfully validated.
 
-Required Vercel server-side variables include `DATABASE_URL`, `DIRECT_URL`,
-`AUTH_SECRET`, `AUTH_URL`, `OIDC_ISSUER`, `OIDC_CLIENT_ID`, and
-`OIDC_CLIENT_SECRET`. Configure these separately for development, preview, and
-production. Never commit them or expose them through browser code.
+The deployment stack uses `DATABASE_URL`, `DIRECT_URL`, `AUTH_SECRET`,
+`AUTH_URL`, `OIDC_ISSUER`, `OIDC_CLIENT_ID`, and `OIDC_CLIENT_SECRET`, but they
+do not all share the same scope:
+
+- Vercel runtime secrets: `DATABASE_URL`, `AUTH_SECRET`,
+  `OIDC_CLIENT_SECRET`.
+- Vercel runtime configuration: `AUTH_URL`, `OIDC_ISSUER`,
+  `OIDC_CLIENT_ID`.
+- Migration-only secret: `DIRECT_URL`; keep it out of Vercel runtime.
+- CI-only deployment secret: `VERCEL_TOKEN`.
+- CI protected configuration: `VERCEL_ORG_ID`, `VERCEL_PROJECT_ID`.
+
+Use separate credentials and databases for development, preview, and
+production. Never copy production secrets into lower environments, commit
+secrets, or expose server-only values through browser code.
 
 ## PostgreSQL Activation
 
-Docker Compose binds PostgreSQL to localhost only and uses development-only
-credentials. The application continues to use development adapters unless
-explicitly configured.
+Docker Compose binds PostgreSQL to localhost only. It does not contain a
+default username, password, database URL, or development login key. Supply
+unique development values through the approved local secret mechanism; do not
+reuse preview or production credentials.
 
 ```powershell
-$env:DATABASE_URL='postgresql://legal_services:local-development-only@127.0.0.1:5432/legal_services?schema=public'
 $env:PERSISTENCE_ADAPTER='prisma'
 $env:APP_ENV='development'
 $env:AUTH_ADAPTER='dev'
+# Supply POSTGRES_DB, POSTGRES_USER, POSTGRES_PASSWORD, DATABASE_URL,
+# DIRECT_URL, and a randomly generated DEV_ADMIN_KEY without printing them.
 docker compose up -d postgres
 npm.cmd run db:migrate
 npm.cmd run db:seed
@@ -158,9 +171,10 @@ npm.cmd run test:db
 node server.mjs
 ```
 
-For Auth.js OIDC, set `AUTH_ADAPTER=authjs`, `AUTH_SECRET`, `OIDC_ISSUER`,
-`OIDC_CLIENT_ID`, and `OIDC_CLIENT_SECRET`. Local key login is rejected unless
-both `APP_ENV=development` and `AUTH_ADAPTER=dev`.
+For Auth.js OIDC, set `AUTH_ADAPTER=authjs`, `AUTH_SECRET`, `AUTH_URL`,
+`OIDC_ISSUER`, `OIDC_CLIENT_ID`, and `OIDC_CLIENT_SECRET`. Local key login is
+rejected unless `APP_ENV=development`, `AUTH_ADAPTER=dev`, and an explicit
+`DEV_ADMIN_KEY` of at least 32 characters are supplied.
 
 A live PostgreSQL migration was not run on August 27, 2026 because Docker,
 PostgreSQL, and `psql` were not installed or available in this workspace. The

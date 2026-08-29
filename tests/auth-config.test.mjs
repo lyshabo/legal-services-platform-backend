@@ -36,3 +36,28 @@ test("development authentication is rejected outside development", () => {
     /AUTH_ADAPTER=dev is prohibited/
   );
 });
+
+test("development authentication requires an explicit strong secret", () => {
+  assert.throws(
+    () =>
+      execFileSync(
+        process.execPath,
+        [
+          "--input-type=module",
+          "--eval",
+          "import('./server-auth.mjs').then((module) => module.assertAuthenticationConfiguration())"
+        ],
+        {
+          cwd: process.cwd(),
+          env: {
+            ...process.env,
+            APP_ENV: "development",
+            AUTH_ADAPTER: "dev",
+            DEV_ADMIN_KEY: ""
+          },
+          stdio: "pipe"
+        }
+      ),
+    /DEV_ADMIN_KEY must be supplied/
+  );
+});

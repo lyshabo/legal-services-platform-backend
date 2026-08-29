@@ -47,8 +47,9 @@ document protection, payment processing, or production approval.
 ## Manual Configuration Required
 
 1. Create or connect a Vercel project to the private backend repository.
-2. Create a Supabase project and set pooled `DATABASE_URL` and direct
-   `DIRECT_URL` in Vercel development, preview, and production environments.
+2. Create separate Supabase databases/credentials for each environment. Set
+   pooled `DATABASE_URL` in Vercel runtime and keep direct `DIRECT_URL` only in
+   the approved migration environment.
 3. Add approved Auth.js/OIDC secrets.
 4. Run non-destructive Prisma migration, seed, and live contract checks.
 5. Configure the custom domain and verify HTTPS, authentication, authorization,
@@ -96,7 +97,7 @@ evidence only and is not represented as external-provider verification.
 | Auth.js canonical origin | BLOCKED | Vercel and identity-provider administrators | Ensure `AUTH_URL` exactly matches the approved preview origin and registered callback origin | Blocks trusted callback handling and cookie/session validation |
 | Database session verification | BLOCKED | Application security owner | Authorize inspection of test-only user, account, and session records created by the verification run | Blocks evidence for database session persistence and deletion |
 | RBAC test assignments | BLOCKED | Application security / IAM owner | Approve test roles for one allowed and one denied route outcome without granting broader production access | Blocks live allow/deny RBAC evidence |
-| GitHub verification secrets | BLOCKED | GitHub repository administrator | Add the approved values as environment secrets under `preview-verification` | Blocks the guarded GitHub Actions workflow at preflight |
+| GitHub verification configuration | BLOCKED | GitHub repository administrator | Add `VERCEL_TOKEN`, `DATABASE_URL`, `DIRECT_URL`, `AUTH_SECRET`, and `OIDC_CLIENT_SECRET` as environment secrets; add Vercel IDs, `AUTH_URL`, issuer, and client ID as protected environment variables | Blocks the guarded GitHub Actions workflow at preflight |
 | Private storage and document protection | BLOCKED | Security / privacy / storage owner | Select and configure private object storage, retention, malware scanning, access logging, and signed URL controls | Blocks document-security and confidential-file readiness |
 | Live AI provider | BLOCKED | AI governance and security owners | Approve provider, model, data-use terms, retention, prompt safeguards, and server-only credentials | Blocks live AI processing; controlled development behavior remains the only evidence |
 | Payments and commerce | BLOCKED | Commerce, finance, and legal owners | Approve prices, currencies, tax/refund terms, payment provider, webhook verification, and fulfillment rules | Blocks purchase, payment, and compendium delivery |

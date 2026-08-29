@@ -100,9 +100,12 @@ Published versions are immutable. A public query selects only approved/published
 
 ## Authentication and Authorization
 
-The current development login requires the local key `development-only-admin`,
-issues an HttpOnly session cookie, and is available only when
-`APP_ENV=development` and `AUTH_ADAPTER=dev`. It is not suitable for production.
+The current development login requires an explicitly supplied, randomly
+generated `DEV_ADMIN_KEY` of at least 32 characters, issues an HttpOnly session
+cookie, and is available only when `APP_ENV=development` and
+`AUTH_ADAPTER=dev`. The key has no source-controlled default and is not
+prefilled in the browser. The development adapter is not suitable for
+production.
 
 The Auth.js-compatible configuration builds a generic approved OIDC provider
 only when issuer, client ID, and client secret are supplied. It uses PKCE,
@@ -137,6 +140,12 @@ DATABASE_URL=<provider-issued TLS connection; never commit or print>
 DIRECT_URL=<provider-issued direct TLS connection; never commit or print>
 AUTH_ADAPTER=authjs
 ```
+
+`DIRECT_URL` is migration-only and must not be added to Vercel runtime.
+`VERCEL_TOKEN` is CI-only. `VERCEL_ORG_ID`, `VERCEL_PROJECT_ID`, `AUTH_URL`,
+`OIDC_ISSUER`, and `OIDC_CLIENT_ID` are protected configuration rather than
+secrets. `DATABASE_URL`, `AUTH_SECRET`, and `OIDC_CLIENT_SECRET` are Vercel
+runtime secrets.
 
 Then run:
 

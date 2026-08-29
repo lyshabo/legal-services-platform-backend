@@ -1,4 +1,7 @@
 import { defineConfig, devices } from "@playwright/test";
+import { randomBytes } from "node:crypto";
+
+process.env.E2E_DEV_ADMIN_KEY ||= randomBytes(32).toString("hex");
 
 export default defineConfig({
   testDir: "./tests/e2e",
@@ -18,6 +21,7 @@ export default defineConfig({
       ...process.env,
       APP_ENV: "development",
       AUTH_ADAPTER: "dev",
+      DEV_ADMIN_KEY: process.env.E2E_DEV_ADMIN_KEY,
       PAYMENT_PROVIDER: "development"
     }
   }

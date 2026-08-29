@@ -4,7 +4,7 @@ import { hasPermission } from "./auth.config.mjs";
 
 const sessions = new Map();
 const SESSION_COOKIE = "lsp_session";
-const DEV_ADMIN_KEY = process.env.DEV_ADMIN_KEY || "development-only-admin";
+const DEV_ADMIN_KEY = process.env.DEV_ADMIN_KEY || "";
 export const appEnvironment = process.env.APP_ENV || "development";
 export const authAdapterName =
   process.env.AUTH_ADAPTER || (appEnvironment === "development" ? "dev" : "authjs");
@@ -121,6 +121,11 @@ export async function recordLogin(user) {
 export function assertAuthenticationConfiguration() {
   if (appEnvironment !== "development" && authAdapterName === "dev") {
     throw new Error("AUTH_ADAPTER=dev is prohibited outside APP_ENV=development");
+  }
+  if (developmentLoginEnabled && DEV_ADMIN_KEY.length < 32) {
+    throw new Error(
+      "DEV_ADMIN_KEY must be supplied through an approved secret mechanism and contain at least 32 characters"
+    );
   }
   if (authAdapterName === "authjs") {
     const required = [

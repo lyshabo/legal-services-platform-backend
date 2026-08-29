@@ -878,7 +878,7 @@ function adminView() {
                 ? `<div class="notice-box">${icon("lock")}<p>Local development login is disabled. <a href="${escapeHtml(state.authConfig.signInUrl || "/api/auth/signin")}">Sign in with the approved identity provider</a>.</p></div>`
               : `
                 <form id="admin-login-form" class="admin-login-form">
-                  <label><span>Development key</span><input name="key" type="password" value="development-only-admin" autocomplete="off" /></label>
+                  <label><span>Development key</span><input name="key" type="password" value="" autocomplete="off" /></label>
                   <button class="button button-primary button-small" type="submit">Authenticate</button>
                   <p class="fine-print">Development adapter only. Replace with approved identity infrastructure before production.</p>
                   <div id="admin-login-result" class="inline-result" aria-live="polite"></div>
