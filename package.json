@@ -12,6 +12,7 @@
     "db:up": "docker compose up -d postgres",
     "db:migrate": "prisma migrate deploy",
     "db:seed": "prisma db seed",
+    "db:ping": "node scripts/db-ping.mjs",
     "prisma:validate": "node scripts/prisma-validate.mjs",
     "vercel:build": "prisma generate && node scripts/build-vercel.mjs",
     "check": "node scripts/readiness.mjs",

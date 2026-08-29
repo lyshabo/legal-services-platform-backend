@@ -81,3 +81,27 @@ Only presence and string length were inspected during secret preflight; no
 secret values were printed, written to source control, or added to the report.
 The repository's local Auth.js test-issuer coverage remains implementation
 evidence only and is not represented as external-provider verification.
+
+## Blocked Prerequisites and Owner Actions
+
+| Prerequisite | Status | Required owner | Required action | Blocking effect |
+|---|---|---|---|---|
+| Approved secret injection | BLOCKED | Workspace / secret-channel administrator | Expose the approved variables to the execution process without placing values in chat, files, logs, or source control | Blocks every authenticated Vercel, Supabase, and external OIDC operation |
+| Vercel access | BLOCKED | Vercel project administrator | Supply an approved token, organization ID, and project ID; confirm the private Git repository is authorized for the project | Blocks project linkage, preview deployment, deployment URL, and deployed API verification |
+| Supabase pooled connection | BLOCKED | Supabase database administrator | Supply the provider-issued TLS pooler `DATABASE_URL` for serverless/runtime traffic | Blocks Prisma runtime connectivity and live repository contracts |
+| Supabase direct connection | BLOCKED | Supabase database administrator | Supply the provider-issued direct TLS `DIRECT_URL` with migration privileges | Blocks schema validation against the intended provider, migration deployment, and seed |
+| Migration authorization | BLOCKED | Database owner / release manager | Confirm that the checked-in non-destructive migration and seed are authorized for the selected environment | Blocks applying database changes even after connectivity is available |
+| OIDC client configuration | BLOCKED | Identity-provider administrator | Supply the approved issuer, client ID, client secret, callback URL registration, and logout configuration | Blocks real sign-in, callback, and logout |
+| OIDC test identity | BLOCKED | Identity / security owner | Provide an approved interactive test identity and any required MFA/test procedure through the approved access process | Client credentials alone cannot complete an end-user authorization-code flow |
+| Auth.js canonical origin | BLOCKED | Vercel and identity-provider administrators | Ensure `AUTH_URL` exactly matches the approved preview origin and registered callback origin | Blocks trusted callback handling and cookie/session validation |
+| Database session verification | BLOCKED | Application security owner | Authorize inspection of test-only user, account, and session records created by the verification run | Blocks evidence for database session persistence and deletion |
+| RBAC test assignments | BLOCKED | Application security / IAM owner | Approve test roles for one allowed and one denied route outcome without granting broader production access | Blocks live allow/deny RBAC evidence |
+| GitHub verification secrets | BLOCKED | GitHub repository administrator | Add the approved values as environment secrets under `preview-verification` | Blocks the guarded GitHub Actions workflow at preflight |
+| Private storage and document protection | BLOCKED | Security / privacy / storage owner | Select and configure private object storage, retention, malware scanning, access logging, and signed URL controls | Blocks document-security and confidential-file readiness |
+| Live AI provider | BLOCKED | AI governance and security owners | Approve provider, model, data-use terms, retention, prompt safeguards, and server-only credentials | Blocks live AI processing; controlled development behavior remains the only evidence |
+| Payments and commerce | BLOCKED | Commerce, finance, and legal owners | Approve prices, currencies, tax/refund terms, payment provider, webhook verification, and fulfillment rules | Blocks purchase, payment, and compendium delivery |
+| Identity and credential claims | BLOCKED | Identity / content owner and legal reviewer | Authenticate identity, credentials, Bar status, affiliations, publications, and permission to publish | Blocks broader publication of unresolved professional claims |
+| Jurisdiction and legal-service scope | BLOCKED | Qualified legal reviewer | Approve supported jurisdictions, service descriptions, exclusions, disclaimers, and escalation boundaries | Blocks production legal-service publication |
+| Privacy and security approval | BLOCKED | Privacy and security owners | Approve notices, lawful basis, retention, incident response, access controls, threat model, and vendor processing | Blocks intake of confidential production data |
+| Qualified translations | BLOCKED | Named qualified language reviewers | Record reviewer qualifications, target regions, terminology decisions, and dated approval for French, Simplified Chinese, and Traditional Chinese | Blocks qualified multilingual publication |
+| Final release approval | BLOCKED | Product owner and all gate owners | Review the completed evidence report and explicitly approve production release after all upstream gates pass | Keeps the production and publication gates closed |
