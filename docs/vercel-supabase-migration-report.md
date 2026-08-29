@@ -55,3 +55,29 @@ document protection, payment processing, or production approval.
    multilingual routes, and frontend-to-backend communication.
 6. Configure private document/publication storage, AI, and payment providers
    only after their separate approvals.
+
+## Approved-Secret Retry - August 29, 2026
+
+| Check | Result | Evidence / blocker |
+|---|---|---|
+| Official deployment workflow | PASS | The official Skywork `vercel-deploy` skill was installed for preview deployment |
+| Vercel approved-secret preflight | BLOCKED | `VERCEL_TOKEN`, `VERCEL_ORG_ID`, and `VERCEL_PROJECT_ID` were absent at process, user, and machine scope |
+| Supabase approved-secret preflight | BLOCKED | `DATABASE_URL` and `DIRECT_URL` were absent at process, user, and machine scope |
+| Auth.js/OIDC approved-secret preflight | BLOCKED | `AUTH_SECRET`, `AUTH_URL`, `OIDC_ISSUER`, `OIDC_CLIENT_ID`, and `OIDC_CLIENT_SECRET` were absent at process, user, and machine scope |
+| GitHub repository secret path | BLOCKED | The private backend repository has no Actions secret names or repository variables configured |
+| Existing Vercel connection | BLOCKED | The private backend repository has no GitHub deployment records or repository webhook records |
+| Preview deployment | BLOCKED | An authenticated approved Vercel project is not available; the unclaimed unauthenticated fallback was not used |
+| Prisma validation | BLOCKED | `npm run prisma:validate` stopped with the expected fail-closed message: `DATABASE_URL` is required and placeholder or localhost fallback is prohibited |
+| Prisma migration deploy | BLOCKED | No provider-issued direct TLS connection is available |
+| Prisma seed | BLOCKED | No reachable approved PostgreSQL database is available |
+| PostgreSQL `SELECT 1` | BLOCKED | No reachable approved PostgreSQL database is available |
+| Live Prisma contracts | BLOCKED | `PERSISTENCE_ADAPTER=prisma` cannot be activated without the approved database connection |
+| External OIDC sign-in and callback | BLOCKED | No approved issuer/client configuration is available |
+| Database session persistence and RBAC | BLOCKED | The live database and external identity provider are both unavailable |
+| Logout and post-logout denial | BLOCKED | A real authenticated session cannot be created without the approved OIDC configuration |
+| Local Auth.js test issuer | PASS (implementation only) | 3 tests passed for complete-provider gating, production rejection of development authentication, callback/session persistence, and RBAC |
+
+Only presence and string length were inspected during secret preflight; no
+secret values were printed, written to source control, or added to the report.
+The repository's local Auth.js test-issuer coverage remains implementation
+evidence only and is not represented as external-provider verification.
