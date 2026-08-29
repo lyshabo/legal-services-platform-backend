@@ -105,3 +105,25 @@ evidence only and is not represented as external-provider verification.
 | Privacy and security approval | BLOCKED | Privacy and security owners | Approve notices, lawful basis, retention, incident response, access controls, threat model, and vendor processing | Blocks intake of confidential production data |
 | Qualified translations | BLOCKED | Named qualified language reviewers | Record reviewer qualifications, target regions, terminology decisions, and dated approval for French, Simplified Chinese, and Traditional Chinese | Blocks qualified multilingual publication |
 | Final release approval | BLOCKED | Product owner and all gate owners | Review the completed evidence report and explicitly approve production release after all upstream gates pass | Keeps the production and publication gates closed |
+
+## Guarded GitHub Verification Run
+
+**Date:** August 29, 2026  
+**Commit:** `f5a1d124a221114f7375fdf8280573825c711a15`  
+**Workflow run:** `33262776299`
+
+| Job | Result | Evidence |
+|---|---|---|
+| Protected environment | PASS | GitHub environment `preview-verification` created and restricted to the `master` branch |
+| Workflow installation | PASS | Manually dispatched workflow is present on the private repository |
+| Secret upload | BLOCKED | No approved values were visible to the execution process, including outside the sandbox, so no values could be uploaded |
+| Preflight | FAIL (expected guard) | All ten required environment secrets were absent; the job exited with code 2 and named only missing variable names |
+| Database job | SKIP | GitHub skipped the job because preflight did not pass |
+| Preview deployment job | SKIP | GitHub skipped the job because the database job did not run |
+| Secret exposure review | PASS | The workflow output contained empty secret fields and missing-variable names only; no secret values were printed |
+
+The workflow is ready to rerun after the approved values are actually injected
+into the execution process or added directly as GitHub environment secrets. A
+claim that the values were exposed is not sufficient evidence when process,
+user, machine, local ignored-file, and GitHub environment checks all show them
+as absent.
