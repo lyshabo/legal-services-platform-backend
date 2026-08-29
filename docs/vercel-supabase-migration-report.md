@@ -143,6 +143,7 @@ as absent.
 | MEDIUM | Secret presence alone did not validate TLS, remote hosts, Auth.js secret length, or OIDC discovery | Fixed: non-disclosing structural preflight and OIDC discovery checks were added |
 | MEDIUM | Deployment success was inferred from the deploy command alone | Fixed: Vercel inspection now waits for deployment readiness and verifies the canonical `AUTH_URL` resolves in the approved project |
 | MEDIUM | Migration completion lacked an explicit final-state check | Fixed: migration filenames/hashes are recorded and `prisma migrate status` runs after deployment |
+| MEDIUM | Preview seed could overwrite the review/publication status of an existing version-one service record | Fixed: preview seed creates missing gated records but does not update the status or author of an existing service version |
 | OPEN | Client credentials cannot complete an interactive end-user OIDC authorization-code flow | Remains blocked pending an approved test identity, MFA procedure, and browser interaction |
 
 Local regression evidence after remediation: 16 unit tests passed, one live
@@ -168,3 +169,28 @@ are not present in its process environment. The safe remediation is to restart
 or reinitialize the execution session with the approved secret bundle attached,
 then repeat the presence-only preflight before uploading GitHub environment
 secrets.
+
+## Remediated Workflow Dispatch
+
+**Date:** August 29, 2026
+
+**Commit:** `1b86114cc9005bb381ed61ba40267923f0fbaf2d`
+
+**Workflow run:** `33263734979`
+
+| Job / check | Result | Evidence |
+|---|---|---|
+| Current workflow definition | PASS | The run used the remediated commit rather than rerunning historical run `33262776299` |
+| GitHub environment secret inventory | BLOCKED | `preview-verification` still contains no configured secret names |
+| Secret preflight | FAIL (expected guard) | All ten required secret names resolved to empty values; exit code 2 |
+| Structural URL/TLS validation | SKIP | The secret-presence guard stopped before processing any values |
+| OIDC discovery | SKIP | No approved issuer was available to the runner |
+| Prisma validation and migration | SKIP | The database job was dependency-skipped |
+| Seed, `SELECT 1`, and live contracts | SKIP | The database job was dependency-skipped |
+| Vercel configuration and deployment | SKIP | The preview job was dependency-skipped |
+| External sign-in, callback, session, RBAC, logout | BLOCKED | No deployment or approved interactive OIDC test identity was available |
+| Secret disclosure | PASS | Logs contained missing variable names and empty fields only; no approved values were exposed |
+
+The run confirms the hardened workflow behaves fail-closed, but it does not
+provide live infrastructure evidence. The claimed secret injection did not
+materialize in the local execution process or the GitHub environment.

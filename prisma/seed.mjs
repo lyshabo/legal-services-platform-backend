@@ -90,7 +90,9 @@ await prisma.$transaction(async (tx) => {
 
     const version = await tx.serviceVersion.upsert({
       where: { serviceId_version: { serviceId: service.id, version: 1 } },
-      update: { status: serviceVersionStatus, createdById: seedActorId },
+      update: developmentSeed
+        ? { status: serviceVersionStatus, createdById: seedActorId }
+        : {},
       create: {
         serviceId: service.id,
         version: 1,
