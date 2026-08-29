@@ -47,6 +47,15 @@ jobs:
           if [[ "$missing" -ne 0 ]]; then
             exit 2
           fi
+      - uses: actions/checkout@11d5960a326750d5838078e36cf38b85af677262
+      - uses: actions/setup-node@49933ea5288caeca8642d1e84afbd3f7d6820020
+        with:
+          node-version: 20
+          cache: npm
+      - name: Validate approved configuration structure
+        run: npm run live:preflight
+      - name: Validate approved OIDC discovery
+        run: npm run oidc:discovery
 
   database:
     needs: preflight
@@ -57,17 +66,22 @@ jobs:
       DIRECT_URL: ${{ secrets.DIRECT_URL }}
       PERSISTENCE_ADAPTER: prisma
       APP_ENV: production
+      SEED_MODE: preview-fixture
     steps:
-      - uses: actions/checkout@v4
-      - uses: actions/setup-node@v4
+      - uses: actions/checkout@11d5960a326750d5838078e36cf38b85af677262
+      - uses: actions/setup-node@49933ea5288caeca8642d1e84afbd3f7d6820020
         with:
           node-version: 20
           cache: npm
       - run: npm ci
       - name: Validate Prisma schema
         run: npm run prisma:validate
+      - name: Record checked-in migration hashes
+        run: sha256sum prisma/migrations/*/migration.sql
       - name: Apply checked-in migrations
         run: npm run db:migrate
+      - name: Confirm migration state
+        run: npx prisma migrate status
       - name: Seed approved fixture data
         run: npm run db:seed
       - name: Verify database connectivity
@@ -86,53 +100,60 @@ jobs:
       VERCEL_ORG_ID: ${{ secrets.VERCEL_ORG_ID }}
       VERCEL_PROJECT_ID: ${{ secrets.VERCEL_PROJECT_ID }}
       DATABASE_URL: ${{ secrets.DATABASE_URL }}
-      DIRECT_URL: ${{ secrets.DIRECT_URL }}
       AUTH_SECRET: ${{ secrets.AUTH_SECRET }}
       AUTH_URL: ${{ secrets.AUTH_URL }}
       OIDC_ISSUER: ${{ secrets.OIDC_ISSUER }}
       OIDC_CLIENT_ID: ${{ secrets.OIDC_CLIENT_ID }}
       OIDC_CLIENT_SECRET: ${{ secrets.OIDC_CLIENT_SECRET }}
     steps:
-      - uses: actions/checkout@v4
-      - uses: actions/setup-node@v4
+      - uses: actions/checkout@11d5960a326750d5838078e36cf38b85af677262
+      - uses: actions/setup-node@49933ea5288caeca8642d1e84afbd3f7d6820020
         with:
           node-version: 20
           cache: npm
       - run: npm ci
       - name: Link approved Vercel project
-        run: npx vercel@latest pull --yes --environment=preview --token="$VERCEL_TOKEN"
+        run: npx --yes vercel@59.10.0 pull --yes --environment=preview --git-branch=master --token="$VERCEL_TOKEN"
       - name: Configure sensitive preview variables
         shell: bash
         run: |
           set -euo pipefail
           for name in \
-            DATABASE_URL DIRECT_URL AUTH_SECRET AUTH_URL \
+            DATABASE_URL AUTH_SECRET AUTH_URL \
             OIDC_ISSUER OIDC_CLIENT_ID OIDC_CLIENT_SECRET
           do
             printf '%s' "${!name}" |
-              npx vercel@latest env add "$name" preview \
-                --force --sensitive --token="$VERCEL_TOKEN"
+              npx --yes vercel@59.10.0 env add "$name" preview \
+                --git-branch master --force --sensitive --token="$VERCEL_TOKEN"
           done
       - name: Configure fail-closed preview runtime
         shell: bash
         run: |
           set -euo pipefail
           printf '%s' production |
-            npx vercel@latest env add APP_ENV preview --force --token="$VERCEL_TOKEN"
+            npx --yes vercel@59.10.0 env add APP_ENV preview \
+              --git-branch master --force --token="$VERCEL_TOKEN"
           printf '%s' prisma |
-            npx vercel@latest env add PERSISTENCE_ADAPTER preview --force --token="$VERCEL_TOKEN"
+            npx --yes vercel@59.10.0 env add PERSISTENCE_ADAPTER preview \
+              --git-branch master --force --token="$VERCEL_TOKEN"
           printf '%s' authjs |
-            npx vercel@latest env add AUTH_ADAPTER preview --force --token="$VERCEL_TOKEN"
+            npx --yes vercel@59.10.0 env add AUTH_ADAPTER preview \
+              --git-branch master --force --token="$VERCEL_TOKEN"
           for name in PAYMENT_PROVIDER BOOKING_PROVIDER MODEL_PROVIDER ANALYTICS_PROVIDER
           do
             printf '%s' disabled |
-              npx vercel@latest env add "$name" preview --force --token="$VERCEL_TOKEN"
+              npx --yes vercel@59.10.0 env add "$name" preview \
+                --git-branch master --force --token="$VERCEL_TOKEN"
           done
       - name: Deploy preview
         id: deploy
         shell: bash
         run: |
           set -euo pipefail
-          url="$(npx vercel@latest deploy --yes --token="$VERCEL_TOKEN")"
+          url="$(npx --yes vercel@59.10.0 deploy --yes --token="$VERCEL_TOKEN")"
           echo "url=$url" >> "$GITHUB_OUTPUT"
           echo "Preview deployment completed: $url"
+      - name: Confirm deployment readiness
+        run: npx --yes vercel@59.10.0 inspect "${{ steps.deploy.outputs.url }}" --wait --timeout 5m --token="$VERCEL_TOKEN"
+      - name: Confirm canonical Auth.js origin resolves in Vercel
+        run: npx --yes vercel@59.10.0 inspect "$AUTH_URL" --wait --timeout 5m --token="$VERCEL_TOKEN"

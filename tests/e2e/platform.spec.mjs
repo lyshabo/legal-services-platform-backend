@@ -1,5 +1,13 @@
 import { test, expect } from "@playwright/test";
 
+test("public services API does not expose unpublished versions", async ({ request }) => {
+  const response = await request.get("/api/services");
+  expect(response.ok()).toBeTruthy();
+  const payload = await response.json();
+  expect(Array.isArray(payload.services)).toBeTruthy();
+  expect(payload.services.every((service) => service.status === "published")).toBeTruthy();
+});
+
 test("multilingual navigation updates visible content", async ({ page }) => {
   await page.goto("/#/home");
   await expect(page.getByRole("heading", { name: /International Law\. African Perspective\. Strategic Insight\./i })).toBeVisible();

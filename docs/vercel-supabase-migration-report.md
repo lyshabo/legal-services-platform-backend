@@ -129,3 +129,42 @@ into the execution process or added directly as GitHub environment secrets. A
 claim that the values were exposed is not sufficient evidence when process,
 user, machine, local ignored-file, and GitHub environment checks all show them
 as absent.
+
+## Defect-First Workflow Review - August 29, 2026
+
+| Severity | Finding | Resolution |
+|---|---|---|
+| HIGH | Preview seeding created a development `PLATFORM_ADMIN` while the workflow used production mode | Fixed: production preview seed is now an explicit `preview-fixture` mode, creates no development administrator, and refuses a database where that administrator already exists |
+| HIGH | Preview seed marked gated fixture services `PUBLISHED` | Fixed: preview fixture service versions remain `IN_REVIEW`; development-only seed behavior remains separate |
+| HIGH | Public `/api/services` explicitly requested unpublished service versions | Fixed: the public API now requests published versions only; a focused Playwright assertion verifies the boundary |
+| HIGH | Privileged `DIRECT_URL` was uploaded to Vercel preview runtime | Fixed: `DIRECT_URL` is limited to the GitHub migration job and is no longer configured in Vercel runtime |
+| MEDIUM | Vercel environment mutations applied to all preview branches | Fixed: preview environment values are scoped to the `master` branch |
+| MEDIUM | GitHub actions and Vercel CLI used mutable major/latest references | Fixed: actions are pinned to commit SHAs and Vercel CLI is pinned to `59.10.0` |
+| MEDIUM | Secret presence alone did not validate TLS, remote hosts, Auth.js secret length, or OIDC discovery | Fixed: non-disclosing structural preflight and OIDC discovery checks were added |
+| MEDIUM | Deployment success was inferred from the deploy command alone | Fixed: Vercel inspection now waits for deployment readiness and verifies the canonical `AUTH_URL` resolves in the approved project |
+| MEDIUM | Migration completion lacked an explicit final-state check | Fixed: migration filenames/hashes are recorded and `prisma migrate status` runs after deployment |
+| OPEN | Client credentials cannot complete an interactive end-user OIDC authorization-code flow | Remains blocked pending an approved test identity, MFA procedure, and browser interaction |
+
+Local regression evidence after remediation: 16 unit tests passed, one live
+database test remained correctly skipped without database credentials, and all
+18 Playwright tests passed. Historical run `33262776299` must not be rerun
+because GitHub reruns use the workflow definition from that historical commit;
+the corrected workflow requires a new manual dispatch from the remediated
+commit.
+
+## Secret-Channel Export Diagnosis
+
+The approved values were checked by name and length only at process, user, and
+machine scope, inside and outside the managed sandbox. Ignored local environment
+files were also checked by key name, and the GitHub `preview-verification`
+environment was queried for configured secret names. All paths reported the ten
+values as absent.
+
+This rules out a sandbox-only visibility issue. The evidence is consistent with
+the secret-channel values not being attached to this execution session, or with
+the secret channel requiring a newly initialized session before child processes
+inherit the values. No repository or workflow command can recover values that
+are not present in its process environment. The safe remediation is to restart
+or reinitialize the execution session with the approved secret bundle attached,
+then repeat the presence-only preflight before uploading GitHub environment
+secrets.

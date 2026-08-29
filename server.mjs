@@ -90,7 +90,7 @@ async function handleApi(request, response) {
     return true;
   }
   if (request.method === "GET" && path === "/api/services") {
-    json(response, 200, { services: await listServices({ publishedOnly: false }) });
+    json(response, 200, { services: await listServices({ publishedOnly: true }) });
     return true;
   }
   if (request.method === "POST" && path === "/api/auth/dev-login") {

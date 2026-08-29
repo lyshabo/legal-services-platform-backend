@@ -1,6 +1,21 @@
 import { PrismaClient } from "@prisma/client";
 import { services } from "../data.js";
 
+const appEnv = process.env.APP_ENV || "development";
+const seedMode = process.env.SEED_MODE || (appEnv === "development" ? "development" : "");
+const developmentSeed = appEnv === "development" && seedMode === "development";
+const previewSeed = appEnv === "production" && seedMode === "preview-fixture";
+
+if (!developmentSeed && !previewSeed) {
+  console.error(
+    "Seed refused: use development/development locally or production/preview-fixture for the approved preview environment."
+  );
+  process.exitCode = 2;
+  process.exit();
+}
+
+const seedActorId = developmentSeed ? "dev-admin" : null;
+const serviceVersionStatus = developmentSeed ? "PUBLISHED" : "IN_REVIEW";
 const prisma = new PrismaClient();
 
 const questionnaireQuestions = [
@@ -29,16 +44,32 @@ const questionnaireQuestions = [
 ];
 
 await prisma.$transaction(async (tx) => {
-  await tx.user.upsert({
-    where: { email: "dev-admin@localhost" },
-    update: { role: "PLATFORM_ADMIN", name: "Development administrator" },
-    create: {
-      id: "dev-admin",
-      email: "dev-admin@localhost",
-      role: "PLATFORM_ADMIN",
-      name: "Development administrator"
+  if (previewSeed) {
+    const developmentAdmin = await tx.user.findFirst({
+      where: {
+        OR: [{ id: "dev-admin" }, { email: "dev-admin@localhost" }]
+      },
+      select: { id: true }
+    });
+    if (developmentAdmin) {
+      throw new Error(
+        "Preview seed refused because a development administrator exists in the target database."
+      );
     }
-  });
+  }
+
+  if (developmentSeed) {
+    await tx.user.upsert({
+      where: { email: "dev-admin@localhost" },
+      update: { role: "PLATFORM_ADMIN", name: "Development administrator" },
+      create: {
+        id: "dev-admin",
+        email: "dev-admin@localhost",
+        role: "PLATFORM_ADMIN",
+        name: "Development administrator"
+      }
+    });
+  }
 
   for (const service of services) {
     await tx.service.upsert({
@@ -59,12 +90,12 @@ await prisma.$transaction(async (tx) => {
 
     const version = await tx.serviceVersion.upsert({
       where: { serviceId_version: { serviceId: service.id, version: 1 } },
-      update: { status: "PUBLISHED" },
+      update: { status: serviceVersionStatus, createdById: seedActorId },
       create: {
         serviceId: service.id,
         version: 1,
-        status: "PUBLISHED",
-        createdById: "dev-admin"
+        status: serviceVersionStatus,
+        createdById: seedActorId
       }
     });
 
@@ -180,11 +211,11 @@ await prisma.$transaction(async (tx) => {
   await tx.auditEvent.create({
     data: {
       action: "database.seed.completed",
-      actorId: "dev-admin",
-      actorRole: "PLATFORM_ADMIN",
+      actorId: seedActorId,
+      actorRole: developmentSeed ? "PLATFORM_ADMIN" : null,
       targetType: "Database",
-      targetId: "development",
-      metadata: { seededAt: new Date().toISOString() }
+      targetId: developmentSeed ? "development" : "preview-fixture",
+      metadata: { seededAt: new Date().toISOString(), seedMode }
     }
   });
 });

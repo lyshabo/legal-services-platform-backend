@@ -1579,7 +1579,9 @@ async function refreshServerState() {
     const serviceResponse = await fetch("/api/services");
     if (serviceResponse.ok) {
       const payload = await serviceResponse.json();
-      state.catalogServices = payload.services;
+      if (Array.isArray(payload.services) && payload.services.length) {
+        state.catalogServices = payload.services;
+      }
     }
     const sessionResponse = await fetch("/api/admin/session");
     if (sessionResponse.ok) {
