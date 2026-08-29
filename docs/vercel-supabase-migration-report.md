@@ -108,8 +108,10 @@ evidence only and is not represented as external-provider verification.
 
 ## Guarded GitHub Verification Run
 
-**Date:** August 29, 2026  
-**Commit:** `f5a1d124a221114f7375fdf8280573825c711a15`  
+**Date:** August 29, 2026
+
+**Commit:** `f5a1d124a221114f7375fdf8280573825c711a15`
+
 **Workflow run:** `33262776299`
 
 | Job | Result | Evidence |
