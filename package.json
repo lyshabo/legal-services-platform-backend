@@ -1,0 +1,33 @@
+{
+  "name": "legal-services-platform",
+  "version": "0.1.0",
+  "private": true,
+  "type": "module",
+  "description": "Multilingual legal services platform foundation with controlled legal guidance.",
+  "scripts": {
+    "dev": "node server.mjs",
+    "test": "node --test tests/*.test.mjs",
+    "test:db": "node --test tests/database-contract.test.mjs",
+    "test:e2e": "playwright test",
+    "db:up": "docker compose up -d postgres",
+    "db:migrate": "prisma migrate deploy",
+    "db:seed": "prisma db seed",
+    "prisma:validate": "node scripts/prisma-validate.mjs",
+    "check": "node scripts/readiness.mjs",
+    "validate": "node --check app.js && node --check platform-core.js && node --check data.js && node --check i18n.js && node --check server.mjs && node --check server-repository.mjs && node --check server-auth.mjs && node --check auth-runtime.mjs && node --check auth-prisma-adapter.mjs && node --check prisma-client.mjs && node --check questionnaire-repository.mjs && node --check booking-repository.mjs && node --check providers.mjs && node --test tests/*.test.mjs && node scripts/readiness.mjs"
+  },
+  "engines": {
+    "node": ">=20"
+  },
+  "devDependencies": {
+    "@playwright/test": "^1.55.0",
+    "prisma": "6.12.0"
+  },
+  "dependencies": {
+    "@auth/core": "0.41.3",
+    "@prisma/client": "6.12.0"
+  },
+  "prisma": {
+    "seed": "node prisma/seed.mjs"
+  }
+}

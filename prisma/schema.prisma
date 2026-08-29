@@ -1,0 +1,344 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+enum PublicationStatus {
+  DRAFT
+  IN_REVIEW
+  APPROVED
+  PUBLISHED
+  SUSPENDED
+  SUPERSEDED
+  ARCHIVED
+}
+
+enum UserRole {
+  PUBLIC_USER
+  CUSTOMER
+  SUPPORT
+  CONTENT_EDITOR
+  TRANSLATOR
+  LEGAL_REVIEWER
+  AI_REVIEWER
+  OPERATIONS_ADMIN
+  PRIVACY_ADMIN
+  PLATFORM_ADMIN
+}
+
+enum BookingStatus {
+  AVAILABLE
+  HOLD
+  PENDING_PAYMENT
+  CONFIRMED
+  CANCELLED
+  EXPIRED
+  FAILED
+}
+
+enum PaymentStatus {
+  CREATED
+  REQUIRES_ACTION
+  SUCCEEDED
+  FAILED
+  REFUNDED
+  PARTIALLY_REFUNDED
+}
+
+enum AssessmentStatus {
+  MISSING_INFORMATION
+  UNSUPPORTED_JURISDICTION
+  ATTORNEY_REVIEW_REQUIRED
+  ESCALATED
+  ATTORNEY_APPROVED
+  REJECTED
+}
+
+model User {
+  id             String       @id @default(cuid())
+  email          String       @unique
+  name           String?
+  emailVerified  DateTime?
+  image          String?
+  role           UserRole     @default(PUBLIC_USER)
+  createdAt      DateTime     @default(now())
+  updatedAt      DateTime     @updatedAt
+  sessions       Session[]
+  accounts       Account[]
+  serviceVersions ServiceVersion[] @relation("ServiceVersionAuthor")
+  auditEvents    AuditEvent[]
+  bookings       Booking[]
+  submissions    QuestionnaireSubmission[]
+  reviewedAssessments PreliminaryAssessment[] @relation("AssessmentReviewer")
+}
+
+model Session {
+  id           String   @id @default(cuid())
+  sessionToken String   @unique
+  userId       String
+  expires      DateTime
+  user         User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+  createdAt    DateTime @default(now())
+
+  @@index([userId])
+}
+
+model Account {
+  id                String  @id @default(cuid())
+  userId            String
+  type              String
+  provider          String
+  providerAccountId String
+  refresh_token     String?
+  access_token      String?
+  expires_at        Int?
+  token_type        String?
+  scope             String?
+  id_token          String?
+  session_state     String?
+  user              User    @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  @@unique([provider, providerAccountId])
+  @@index([userId])
+}
+
+model Service {
+  id              String           @id
+  category        String
+  bookingEnabled  Boolean          @default(false)
+  fixture         Boolean          @default(false)
+  currentVersion  Int              @default(1)
+  versions        ServiceVersion[]
+  questionnaires  Questionnaire[]
+  bookings        Booking[]
+  availabilityRules AvailabilityRule[]
+  bookingSlots    BookingSlot[]
+  createdAt       DateTime         @default(now())
+  updatedAt       DateTime         @updatedAt
+}
+
+model ServiceVersion {
+  id          String            @id @default(cuid())
+  serviceId   String
+  version     Int
+  status      PublicationStatus  @default(DRAFT)
+  createdById String?
+  createdAt   DateTime           @default(now())
+  service     Service           @relation(fields: [serviceId], references: [id], onDelete: Cascade)
+  createdBy   User?             @relation("ServiceVersionAuthor", fields: [createdById], references: [id], onDelete: SetNull)
+  translations ServiceTranslation[]
+
+  @@unique([serviceId, version])
+  @@index([serviceId, status])
+}
+
+model ServiceTranslation {
+  id               String         @id @default(cuid())
+  serviceVersionId String
+  locale           String
+  title            String
+  summary          String
+  audience         String?
+  included         String?
+  excluded         String?
+  serviceVersion   ServiceVersion @relation(fields: [serviceVersionId], references: [id], onDelete: Cascade)
+
+  @@unique([serviceVersionId, locale])
+  @@index([locale])
+}
+
+model Questionnaire {
+  id            String              @id
+  serviceId     String?
+  topic         String?
+  currentVersion Int                @default(1)
+  service       Service?            @relation(fields: [serviceId], references: [id], onDelete: SetNull)
+  versions      QuestionnaireVersion[]
+  submissions   QuestionnaireSubmission[]
+}
+
+model QuestionnaireVersion {
+  id             String              @id @default(cuid())
+  questionnaireId String
+  version        Int
+  status         PublicationStatus   @default(DRAFT)
+  createdAt      DateTime            @default(now())
+  questionnaire  Questionnaire       @relation(fields: [questionnaireId], references: [id], onDelete: Cascade)
+  questions      QuestionnaireQuestion[]
+  submissions    QuestionnaireSubmission[]
+
+  @@unique([questionnaireId, version])
+}
+
+model QuestionnaireQuestion {
+  id                  String              @id @default(cuid())
+  questionnaireVersionId String
+  key                 String
+  type                String
+  required            Boolean             @default(false)
+  order               Int
+  translations        QuestionnaireQuestionTranslation[]
+  rules               ConditionalRule[]
+  questionnaireVersion QuestionnaireVersion @relation(fields: [questionnaireVersionId], references: [id], onDelete: Cascade)
+
+  @@unique([questionnaireVersionId, key])
+  @@index([questionnaireVersionId, order])
+}
+
+model QuestionnaireQuestionTranslation {
+  id           String                @id @default(cuid())
+  questionId   String
+  locale       String
+  label        String
+  helpText     String?
+  question     QuestionnaireQuestion @relation(fields: [questionId], references: [id], onDelete: Cascade)
+
+  @@unique([questionId, locale])
+}
+
+model ConditionalRule {
+  id          String                @id @default(cuid())
+  questionId  String
+  dependsOnKey String
+  operator    String
+  value       String
+  question    QuestionnaireQuestion @relation(fields: [questionId], references: [id], onDelete: Cascade)
+}
+
+model QuestionnaireSubmission {
+  id                    String              @id @default(cuid())
+  questionnaireId       String
+  questionnaireVersionId String
+  userId                String?
+  locale                String
+  status                String              @default("RECEIVED")
+  submittedAt           DateTime            @default(now())
+  questionnaire         Questionnaire       @relation(fields: [questionnaireId], references: [id], onDelete: Restrict)
+  questionnaireVersion  QuestionnaireVersion @relation(fields: [questionnaireVersionId], references: [id], onDelete: Restrict)
+  user                  User?               @relation(fields: [userId], references: [id], onDelete: SetNull)
+  answers               QuestionnaireAnswer[]
+
+  @@index([questionnaireId, submittedAt])
+}
+
+model QuestionnaireAnswer {
+  id           String                 @id @default(cuid())
+  submissionId String
+  questionKey String
+  value        Json
+  submission   QuestionnaireSubmission @relation(fields: [submissionId], references: [id], onDelete: Cascade)
+}
+
+model PreliminaryAssessment {
+  id              String           @id @default(cuid())
+  language        String
+  jurisdiction    String
+  issue           String
+  urgency         Boolean          @default(false)
+  status          AssessmentStatus @default(ATTORNEY_REVIEW_REQUIRED)
+  submittedAt     DateTime         @default(now())
+  reviewedAt      DateTime?
+  reviewedById    String?
+  reviewNote      String?
+  reviewedBy      User?            @relation("AssessmentReviewer", fields: [reviewedById], references: [id], onDelete: SetNull)
+  auditEvents     AuditEvent[]
+
+  @@index([status, submittedAt])
+  @@index([reviewedById, reviewedAt])
+}
+
+model AvailabilityRule {
+  id          String   @id @default(cuid())
+  serviceId   String
+  timezone    String
+  weekday     Int
+  startMinute Int
+  endMinute   Int
+  active      Boolean  @default(true)
+  service     Service  @relation(fields: [serviceId], references: [id], onDelete: Cascade)
+}
+
+model BookingSlot {
+  id            String        @id @default(cuid())
+  serviceId     String
+  startsAt      DateTime
+  endsAt        DateTime
+  timezone      String
+  status        BookingStatus  @default(AVAILABLE)
+  holdExpiresAt DateTime?
+  service       Service        @relation(fields: [serviceId], references: [id], onDelete: Restrict)
+  bookings      Booking[]
+
+  @@unique([serviceId, startsAt])
+  @@index([serviceId, startsAt, status])
+}
+
+model Booking {
+  id                 String        @id @default(cuid())
+  serviceId          String
+  slotId             String
+  userId             String?
+  status             BookingStatus @default(HOLD)
+  locale             String
+  clientTimezone     String
+  idempotencyKey     String        @unique
+  paymentId          String?
+  createdAt          DateTime      @default(now())
+  updatedAt          DateTime      @updatedAt
+  service            Service       @relation(fields: [serviceId], references: [id], onDelete: Restrict)
+  slot               BookingSlot   @relation(fields: [slotId], references: [id], onDelete: Restrict)
+  user               User?         @relation(fields: [userId], references: [id], onDelete: SetNull)
+  payment            PaymentAttempt? @relation(fields: [paymentId], references: [id], onDelete: SetNull)
+  statusHistory      BookingStatusHistory[]
+
+  @@index([serviceId, status])
+  @@index([slotId, status])
+  @@unique([paymentId])
+}
+
+model BookingStatusHistory {
+  id        String        @id @default(cuid())
+  bookingId String
+  from      BookingStatus?
+  to        BookingStatus
+  reason    String?
+  createdAt DateTime      @default(now())
+  booking   Booking       @relation(fields: [bookingId], references: [id], onDelete: Cascade)
+}
+
+model PaymentAttempt {
+  id                String        @id @default(cuid())
+  provider          String
+  providerReference String?
+  status            PaymentStatus @default(CREATED)
+  amountMinor       Int
+  currency          String
+  idempotencyKey    String        @unique
+  createdAt         DateTime      @default(now())
+  updatedAt         DateTime      @updatedAt
+  booking           Booking?
+
+  @@index([provider, providerReference])
+}
+
+model AuditEvent {
+  id          String   @id @default(cuid())
+  action      String
+  actorId     String?
+  actorRole   UserRole?
+  targetType  String?
+  targetId    String?
+  metadata    Json?
+  correlationId String?
+  createdAt   DateTime @default(now())
+  actor       User?    @relation(fields: [actorId], references: [id], onDelete: SetNull)
+  assessment  PreliminaryAssessment? @relation(fields: [assessmentId], references: [id], onDelete: SetNull)
+  assessmentId String?
+
+  @@index([action, createdAt])
+  @@index([targetType, targetId])
+}

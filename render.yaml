@@ -1,0 +1,41 @@
+services:
+  - type: web
+    name: legal-services-platform-api
+    runtime: node
+    plan: free
+    buildCommand: npm ci && npx prisma generate
+    startCommand: node server.mjs
+    healthCheckPath: /api/health
+    envVars:
+      - key: APP_ENV
+        value: production
+      - key: HOST
+        value: 0.0.0.0
+      - key: PORT
+        value: 10000
+      - key: PERSISTENCE_ADAPTER
+        value: prisma
+      - key: DATABASE_URL
+        sync: false
+      - key: DIRECT_URL
+        sync: false
+      - key: AUTH_ADAPTER
+        value: authjs
+      - key: AUTH_SECRET
+        sync: false
+      - key: AUTH_URL
+        sync: false
+      - key: OIDC_ISSUER
+        sync: false
+      - key: OIDC_CLIENT_ID
+        sync: false
+      - key: OIDC_CLIENT_SECRET
+        sync: false
+      - key: PAYMENT_PROVIDER
+        value: disabled
+      - key: BOOKING_PROVIDER
+        value: disabled
+      - key: MODEL_PROVIDER
+        value: disabled
+      - key: ANALYTICS_PROVIDER
+        value: disabled

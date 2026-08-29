@@ -1,0 +1,1613 @@
+import {
+  DEFAULT_LOCALE,
+  SUPPORTED_LOCALES,
+  calculateReadiness,
+  evaluateGuidance,
+  filterCatalog,
+  getRoute,
+  localized,
+  normalizeLocale
+} from "./platform-core.js";
+import {
+  fixtures,
+  knowledgeSources,
+  launchGates,
+  platformConfig,
+  products,
+  services
+} from "./data.js";
+import { copy } from "./i18n.js";
+
+const app = document.querySelector("#app");
+const staticDemo = document.documentElement.dataset.staticDemo === "true";
+const thoughtLeadershipEvidence = {
+  credentials: [
+    null,
+    "https://iccwbo.org/news-publications/news/2022/icc-hold-the-door-open-scholarship-programme/"
+  ],
+  publications: [
+    "https://www.omicsonline.org/open-access/when-confidentiality-in-international-commercial-arbitration-ica-is-not-salutary-african-perspectives-on-transparency-2169-0170-1000313.php",
+    "https://www.omicsonline.org/open-access/reinforcing-the-definition-of-ecocide-proposed-by-the-independent-expert-panel-iep-in-light-of-the-niger-delta-case-opportunities-and-challenges-2169-0170-1000312.php"
+  ],
+  engagements: [
+    "https://viennaarbitrationdays.com/2022/"
+  ]
+};
+const thoughtLeadershipFieldLabels = {
+  en: { sourceTitle: "Source title", sourceType: "Source type", identityMatch: "Identity match", publicationPermission: "Publication permission", pending: "Pending review" },
+  fr: { sourceTitle: "Titre de la source", sourceType: "Type de source", identityMatch: "Correspondance d’identité", publicationPermission: "Autorisation de publication", pending: "Revue en attente" },
+  zh: { sourceTitle: "来源标题", sourceType: "来源类型", identityMatch: "身份匹配", publicationPermission: "发布许可", pending: "待审查" },
+  "zh-Hant": { sourceTitle: "來源標題", sourceType: "來源類型", identityMatch: "身分匹配", publicationPermission: "發布許可", pending: "待審查" }
+};
+const adminEvidenceCopy = {
+  en: { eyebrow: "Thought Leadership & Recognition", title: "Evidence review filters", identity: "Identity-match status", permission: "Publication-permission status", all: "All statuses", pendingIdentity: "Pending or partial match", noIdentity: "No identity match", pendingPermission: "Permission pending", development: "Development linking only", apply: "Apply filters", noResults: "No matching items", adjust: "Adjust the review filters" },
+  fr: { eyebrow: "Rayonnement intellectuel et reconnaissance", title: "Filtres de revue des preuves", identity: "Statut de correspondance d’identité", permission: "Statut d’autorisation de publication", all: "Tous les statuts", pendingIdentity: "Correspondance partielle ou en attente", noIdentity: "Aucune correspondance d’identité", pendingPermission: "Autorisation en attente", development: "Lien limité au développement", apply: "Appliquer les filtres", noResults: "Aucun élément correspondant", adjust: "Ajustez les filtres de revue" },
+  zh: { eyebrow: "思想领导力与认可", title: "证据审查筛选", identity: "身份匹配状态", permission: "发布许可状态", all: "所有状态", pendingIdentity: "待核实或部分匹配", noIdentity: "没有身份匹配", pendingPermission: "发布许可待定", development: "仅限开发环境链接", apply: "应用筛选", noResults: "没有匹配项目", adjust: "请调整审查筛选条件" },
+  "zh-Hant": { eyebrow: "思想領導力與認可", title: "證據審查篩選", identity: "身分匹配狀態", permission: "發布許可狀態", all: "所有狀態", pendingIdentity: "有待核實或部分匹配", noIdentity: "沒有身分匹配", pendingPermission: "發布許可待定", development: "僅限開發環境連結", apply: "套用篩選", noResults: "沒有相符項目", adjust: "請調整審查篩選條件" }
+};
+const thoughtLeadershipMeta = {
+  credentials: [
+    ["About Tezzeta Mbuya N'Gungwa.docx", "Supplied biography", "Not independently matched", "Not yet approved"],
+    ["Publications, Conferences & Recognition.docx; ICC official programme page", "Supplied document + ICC source", "Name appears in source lead; personal identity confirmation pending", "Linking in development only; publication permission pending"],
+    ["Publications, Conferences & Recognition.docx", "Supplied recognition document", "Not independently matched", "Not yet approved"],
+    ["Publications, Conferences & Recognition.docx", "Supplied recognition document", "Not independently matched", "Not yet approved"],
+    ["Publications, Conferences & Recognition.docx", "Supplied recognition document", "Not independently matched", "Not yet approved"],
+    ["Public web references reviewed Aug. 29, 2026", "Public legal publication / secondary directory lead", "No identity-matched current official record located", "Not yet approved"]
+  ],
+  publications: [
+    ["Publications, Conferences & Recognition.docx; OMICS article page", "Supplied document + publisher page", "Name appears in source lead; personal identity confirmation pending", "Linking in development only; publication permission pending"],
+    ["Publications, Conferences & Recognition.docx; OMICS article page", "Supplied document + publisher page", "Name appears in source lead; personal identity confirmation pending", "Linking in development only; publication permission pending"]
+  ],
+  engagements: [
+    ["Publications, Conferences & Recognition.docx; Vienna Arbitration Days 2022", "Supplied document + event page", "Participation listing appears in source lead; personal identity confirmation pending", "Linking in development only; publication permission pending"],
+    ["Publications, Conferences & Recognition.docx", "Supplied recognition document", "Speaker identity not independently matched", "Not yet approved"]
+  ],
+  development: [
+    ["Publications, Conferences & Recognition.docx", "Supplied recognition document", "Not independently matched", "Not yet approved"],
+    ["Publications, Conferences & Recognition.docx", "Supplied recognition document", "Not independently matched", "Not yet approved"],
+    ["Publications, Conferences & Recognition.docx", "Supplied recognition document", "Not independently matched", "Not yet approved"],
+    ["Publications, Conferences & Recognition.docx", "Supplied recognition document", "Not independently matched", "Not yet approved"],
+    ["Publications, Conferences & Recognition.docx", "Supplied recognition document", "Not independently matched", "Not yet approved"],
+    ["Publications, Conferences & Recognition.docx", "Supplied recognition document", "Not independently matched", "Not yet approved"],
+    ["Publications, Conferences & Recognition.docx", "Supplied recognition document", "Not independently matched", "Not yet approved"]
+  ]
+};
+const safeBarDetail = {
+  en: "Public references were reviewed, but no current official or authenticated record matching the full name was located. Identity and current status remain unverified.",
+  fr: "Des références publiques ont été examinées, mais aucun document officiel ou authentifié actuel correspondant au nom complet n’a été trouvé. L’identité et le statut actuel restent non vérifiés.",
+  zh: "已审阅公开资料，但尚未找到与全名匹配的现行官方或经认证记录。身份和当前状态仍待核实。",
+  "zh-Hant": "已審閱公開資料，但尚未找到與全名相符的現行官方或經認證記錄。身分及目前狀態仍待核實。"
+};
+function thoughtLeadershipItems() {
+  const c = t().about;
+  return [
+    ...c.credentials.map((item, index) => ({ section: "Credential", title: item.title, meta: thoughtLeadershipMeta.credentials[index] })),
+    ...c.publications.map((item, index) => ({ section: "Publication", title: item, meta: thoughtLeadershipMeta.publications[index] })),
+    ...c.engagements.map((item, index) => ({ section: "Engagement", title: item, meta: thoughtLeadershipMeta.engagements[index] })),
+    ...c.development.map((item, index) => ({ section: "Development", title: item, meta: thoughtLeadershipMeta.development[index] }))
+  ];
+}
+const STORAGE = {
+  locale: "lsp-locale",
+  gates: "lsp-gates"
+};
+
+const state = {
+  locale: normalizeLocale(localStorage.getItem(STORAGE.locale) || DEFAULT_LOCALE),
+  route: getRoute(window.location.hash),
+  serviceSearch: "",
+  serviceCategory: "all",
+  productSearch: "",
+  productCategory: "all",
+  gateStatuses: loadGateStatuses(),
+  catalogServices: services,
+  adminUser: null,
+  auditEvents: [],
+  questionnaire: null,
+  availabilityRules: [],
+  adminBookings: [],
+  authConfig: { developmentLoginEnabled: !staticDemo },
+  adminFlash: "",
+  thoughtLeadershipFilters: { identityMatch: "all", publicationPermission: "all" },
+  assessmentQueue: []
+};
+
+function loadGateStatuses() {
+  try {
+    return JSON.parse(localStorage.getItem(STORAGE.gates) || "{}");
+  } catch {
+    return {};
+  }
+}
+
+function t() {
+  return copy[state.locale];
+}
+
+function escapeHtml(value = "") {
+  return String(value)
+    .replaceAll("&", "&amp;")
+    .replaceAll("<", "&lt;")
+    .replaceAll(">", "&gt;")
+    .replaceAll('"', "&quot;")
+    .replaceAll("'", "&#039;");
+}
+
+function icon(name) {
+  const icons = {
+    arrow: '<path d="M5 12h14M13 6l6 6-6 6"/>',
+    calendar: '<rect x="3" y="5" width="18" height="16" rx="2"/><path d="M16 3v4M8 3v4M3 10h18"/>',
+    book: '<path d="M4 19.5A2.5 2.5 0 0 1 6.5 17H20V4H6.5A2.5 2.5 0 0 0 4 6.5v13Z"/><path d="M8 7h8M8 11h8"/>',
+    compass: '<circle cx="12" cy="12" r="9"/><path d="m16 8-2.5 5.5L8 16l2.5-5.5L16 8Z"/>',
+    shield: '<path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10Z"/><path d="m9 12 2 2 4-4"/>',
+    search: '<circle cx="11" cy="11" r="7"/><path d="m20 20-4-4"/>',
+    globe: '<circle cx="12" cy="12" r="9"/><path d="M3 12h18M12 3a15 15 0 0 1 0 18M12 3a15 15 0 0 0 0 18"/>',
+    menu: '<path d="M4 6h16M4 12h16M4 18h16"/>',
+    close: '<path d="m6 6 12 12M18 6 6 18"/>',
+    check: '<path d="m5 12 4 4L19 6"/>',
+    alert: '<path d="M10.3 2.9 1.8 17a2 2 0 0 0 1.7 3h17a2 2 0 0 0 1.7-3L13.7 2.9a2 2 0 0 0-3.4 0Z"/><path d="M12 9v4M12 17h.01"/>',
+    lock: '<rect x="4" y="10" width="16" height="11" rx="2"/><path d="M8 10V7a4 4 0 0 1 8 0v3"/>'
+  };
+  return `<svg aria-hidden="true" viewBox="0 0 24 24">${icons[name] || icons.arrow}</svg>`;
+}
+
+function routeHref(route, id = "") {
+  return `#/${route}${id ? `/${id}` : ""}`;
+}
+
+function navLink(route, label) {
+  const active = state.route.route === route;
+  return `<a href="${routeHref(route)}" ${active ? 'aria-current="page"' : ""}>${escapeHtml(label)}</a>`;
+}
+
+function layout(content) {
+  const c = t();
+  document.documentElement.lang =
+    state.locale === "zh" ? "zh-Hans" : state.locale === "zh-Hant" ? "zh-Hant" : state.locale;
+  document.title = `${routeTitle()} | Legal Services Platform`;
+  return `
+    <div class="preview-banner">${escapeHtml(c.banner)}</div>
+    <header class="site-header">
+      <div class="header-inner">
+        <a class="brand" href="#/home" aria-label="${escapeHtml(c.nav.home)}">
+          <span class="brand-mark">${icon("shield")}</span>
+          <span>
+            <strong>Legal Services Platform</strong>
+            <small>${escapeHtml(c.common.placeholder)}</small>
+          </span>
+        </a>
+        <button class="icon-button mobile-menu" type="button" aria-expanded="false" aria-controls="primary-nav" title="Menu">
+          ${icon("menu")}
+        </button>
+        <nav id="primary-nav" class="primary-nav" aria-label="Primary navigation">
+          ${navLink("home", c.nav.home)}
+          ${navLink("services", c.nav.services)}
+          ${navLink("library", c.nav.library)}
+          ${navLink("guidance", c.nav.guidance)}
+          ${navLink("about", c.nav.about)}
+          ${navLink("contact", c.nav.contact)}
+          ${navLink("admin", c.nav.admin)}
+        </nav>
+        <label class="locale-picker">
+          <span class="sr-only">Language</span>
+          ${icon("globe")}
+          <select id="locale-select" aria-label="Language">
+            ${SUPPORTED_LOCALES.map(
+              (locale) =>
+                `<option value="${locale}" ${locale === state.locale ? "selected" : ""}>${escapeHtml(copy[locale].localeName)}</option>`
+            ).join("")}
+          </select>
+        </label>
+      </div>
+    </header>
+    <main id="main" tabindex="-1">${content}</main>
+    <footer class="site-footer">
+      <div class="footer-inner">
+        <p>${escapeHtml(c.footer.notice)}</p>
+        <div>
+          <span>${escapeHtml(c.footer.privacy)}</span>
+          <span>${escapeHtml(c.footer.accessibility)}</span>
+        </div>
+      </div>
+    </footer>
+  `;
+}
+
+function routeTitle() {
+  const c = t();
+  return {
+    home: c.nav.home,
+    services: c.nav.services,
+    service: c.nav.services,
+    library: c.nav.library,
+    product: c.nav.library,
+    guidance: c.nav.guidance,
+    about: c.nav.about,
+    contact: c.nav.contact,
+    admin: c.nav.admin
+  }[state.route.route];
+}
+
+function fixtureBadge() {
+  return `<span class="badge badge-warning">${escapeHtml(t().common.placeholder)}</span>`;
+}
+
+function homeView() {
+  const c = t();
+  const compendiumCopy = {
+    en: ["Legal Compendiums", "Access carefully organized legal materials and compendiums designed to make important laws and legal resources easier to consult and understand.", "Explore Legal Compendiums"],
+    fr: ["Compendiums juridiques", "Accédez à des ressources juridiques et compendiums organisés avec soin pour faciliter la consultation et la compréhension des textes.", "Explorer les compendiums juridiques"],
+    zh: ["法律汇编", "浏览经过整理的法律材料和汇编，帮助理解和查阅重要法律与法律资源。", "探索法律汇编"],
+    "zh-Hant": ["法律彙編", "瀏覽經整理的法律材料與彙編，協助查閱及理解重要法律與法律資源。", "探索法律彙編"]
+  }[state.locale] || [];
+  const featuredCompendium = products[0];
+  const aiCopy = {
+    en: ["Preliminary Legal Assessment", "A structured intake can organize facts, identify jurisdiction and urgency, and prepare a review brief. It does not replace an attorney or create a professional relationship.", "Start preliminary assessment"],
+    fr: ["Évaluation juridique préliminaire", "Un parcours structuré peut organiser les faits, identifier la juridiction et l’urgence, et préparer une note de revue. Il ne remplace pas un avocat et ne crée pas de relation professionnelle.", "Commencer l’évaluation"],
+    zh: ["初步法律评估", "结构化问卷可整理事实、识别司法管辖区和紧迫性，并准备审查摘要。它不替代律师，也不会建立专业关系。", "开始初步评估"],
+    "zh-Hant": ["初步法律評估", "結構化問卷可整理事實、識別司法管轄區及緊迫性，並準備審查摘要。它不取代律師，也不會建立專業關係。", "開始初步評估"]
+  }[state.locale] || [];
+  return `
+    <section class="hero">
+      <div class="hero-content">
+        <p class="eyebrow">${escapeHtml(c.home.eyebrow)}</p>
+        <h1>${escapeHtml(c.home.title)}</h1>
+        <p class="hero-copy">${escapeHtml(c.home.intro)}</p>
+        <div class="hero-actions">
+          <a class="button button-primary" href="#/services">${icon("calendar")}${escapeHtml(c.home.book)}</a>
+          <a class="button button-secondary" href="#/services">${icon("book")}${escapeHtml(c.home.explore)}</a>
+          <a class="text-link" href="#/guidance">${escapeHtml(c.home.guide)}${icon("arrow")}</a>
+        </div>
+        <div class="trust-row">
+          <span>${icon("shield")} Source-governed</span>
+          <span>${icon("globe")} EN / FR / 简体中文 / 繁體中文</span>
+          <span>${icon("lock")} Privacy by design</span>
+        </div>
+      </div>
+      <div class="hero-panel" aria-label="Platform status">
+        <div class="status-header">
+          <span>${escapeHtml(c.admin.readiness)}</span>
+          <strong class="status-red">${escapeHtml(c.admin.blocked)}</strong>
+        </div>
+        <ol>
+          <li><span>01</span>${escapeHtml(c.home.servicesTitle)}</li>
+          <li><span>02</span>${escapeHtml(c.home.libraryTitle)}</li>
+          <li><span>03</span>${escapeHtml(c.home.guidanceTitle)}</li>
+        </ol>
+        <a href="#/admin">${escapeHtml(c.nav.admin)}${icon("arrow")}</a>
+      </div>
+    </section>
+    <section class="section">
+      <div class="section-heading">
+        <p class="eyebrow">${escapeHtml(c.home.sectionTitle)}</p>
+        <h2>${escapeHtml(c.home.sectionTitle)}</h2>
+      </div>
+      <div class="path-grid">
+        ${pathCard("calendar", c.home.servicesTitle, c.home.servicesText, "services")}
+        ${pathCard("book", c.home.libraryTitle, c.home.libraryText, "library")}
+        ${pathCard("compass", c.home.guidanceTitle, c.home.guidanceText, "guidance")}
+      </div>
+    </section>
+    <section class="section profile-band">
+      <div class="section-heading">
+        <p class="eyebrow">${escapeHtml(c.about.profileTitle)}</p>
+        <h2>${escapeHtml(c.about.profileTitle)}</h2>
+      </div>
+      <p class="profile-copy">${escapeHtml(c.about.profileText)}</p>
+      <a class="text-link" href="#/about">${escapeHtml(c.about.profileCta)}${icon("arrow")}</a>
+    </section>
+    <section class="section ai-assessment-band">
+      <div class="section-heading">
+        <p class="eyebrow">${escapeHtml(aiCopy[0])}</p>
+        <h2>${escapeHtml(aiCopy[0])}</h2>
+      </div>
+      <p class="profile-copy">${escapeHtml(aiCopy[1])}</p>
+      <a class="button button-secondary" href="#/assessment">${escapeHtml(aiCopy[2])}${icon("arrow")}</a>
+    </section>
+    <section class="section featured-publications">
+      <div class="section-heading">
+        <p class="eyebrow">${escapeHtml(compendiumCopy[0])}</p>
+        <h2>${escapeHtml(compendiumCopy[0])}</h2>
+      </div>
+      <p class="profile-copy">${escapeHtml(compendiumCopy[1])}</p>
+      ${productCard(featuredCompendium)}
+      <a class="text-link" href="#/library">${escapeHtml(compendiumCopy[2])}${icon("arrow")}</a>
+    </section>
+    <section class="process-band">
+      <div class="section-heading">
+        <p class="eyebrow">01 — 04</p>
+        <h2>${escapeHtml(c.home.processTitle)}</h2>
+      </div>
+      <ol class="process-list">
+        ${c.home.process.map((item, index) => `<li><span>${String(index + 1).padStart(2, "0")}</span><p>${escapeHtml(item)}</p></li>`).join("")}
+      </ol>
+    </section>
+  `;
+}
+
+function pathCard(iconName, title, text, route) {
+  return `
+    <article class="path-card">
+      <span class="card-icon">${icon(iconName)}</span>
+      <h3>${escapeHtml(title)}</h3>
+      <p>${escapeHtml(text)}</p>
+      <a class="text-link" href="${routeHref(route)}">${escapeHtml(t().common.learnMore)}${icon("arrow")}</a>
+    </article>
+  `;
+}
+
+function servicesView() {
+  const c = t();
+  const filtered = filterCatalog(
+    state.catalogServices,
+    state.locale,
+    state.serviceSearch,
+    state.serviceCategory
+  );
+  return pageIntro(
+    c.services.title,
+    c.services.intro,
+    `
+      <section class="section compact-top">
+        ${catalogControls("service", state.serviceSearch, state.serviceCategory, ["advisory", "documents", "international-law", "research"])}
+        <div class="catalog-grid" id="service-results" aria-live="polite">
+          ${
+            filtered.length
+              ? filtered.map(serviceCard).join("")
+              : `<p class="empty-state">${escapeHtml(c.common.noResults)}</p>`
+          }
+        </div>
+      </section>
+    `
+  );
+}
+
+function serviceCard(service) {
+  return `
+    <article class="catalog-card">
+      <div class="catalog-meta">${fixtureBadge()}<span>${escapeHtml(service.category)}</span></div>
+      <h2>${escapeHtml(localized(service, state.locale))}</h2>
+      <p>${escapeHtml(localized(service, state.locale, "summary"))}</p>
+      <a class="button button-secondary button-small" href="${routeHref("service", service.id)}">
+        ${escapeHtml(t().common.learnMore)}${icon("arrow")}
+      </a>
+    </article>
+  `;
+}
+
+function serviceDetailView(id) {
+  const service = state.catalogServices.find((item) => item.id === id);
+  if (!service) return notFoundView();
+  const c = t();
+  const tr = service.translations[state.locale] ?? service.translations.en;
+  return `
+    <section class="detail-header">
+      <a class="text-link back-link" href="#/services">${icon("arrow")}${escapeHtml(c.common.back)}</a>
+      <div class="catalog-meta">${fixtureBadge()}<span>${escapeHtml(service.category)}</span></div>
+      <h1>${escapeHtml(tr.title)}</h1>
+      <p>${escapeHtml(tr.summary)}</p>
+    </section>
+    <section class="detail-layout">
+      <div class="detail-content">
+        ${detailBlock(c.services.audience, tr.audience)}
+        ${detailBlock(c.services.included, tr.included)}
+        ${detailBlock(c.services.excluded, tr.excluded)}
+      </div>
+      <aside class="action-panel">
+        <h2>${escapeHtml(c.nav.services)}</h2>
+        <p>${escapeHtml(c.contact.notice)}</p>
+        <button class="button button-primary" type="button" data-booking="${service.id}" ${service.bookingEnabled ? "" : "disabled"}>
+          ${icon("calendar")}${escapeHtml(service.bookingEnabled ? c.services.booking : c.services.disabled)}
+        </button>
+        <div id="booking-result" class="inline-result" aria-live="polite"></div>
+      </aside>
+    </section>
+  `;
+}
+
+function detailBlock(title, text) {
+  return `<article class="detail-block"><h2>${escapeHtml(title)}</h2><p>${escapeHtml(text)}</p></article>`;
+}
+
+function libraryView() {
+  const c = t();
+  const filtered = products.filter((item) => {
+    const query = state.productSearch.trim().toLocaleLowerCase(state.locale);
+    const localizedText = [
+      localized(item, state.locale, "title"),
+      localized(item, state.locale, "summary"),
+      item.category,
+      item.resourceType,
+      item.language
+    ].join(" ").toLocaleLowerCase(state.locale);
+    return (!query || localizedText.includes(query)) &&
+      (state.productCategory === "all" || item.category === state.productCategory);
+  });
+  return pageIntro(
+    c.library.title,
+    c.library.intro,
+    `
+      <section class="section compact-top">
+        ${libraryControls()}
+        <div class="catalog-grid" id="product-results" aria-live="polite">
+          ${
+            filtered.length
+              ? filtered.map(productCard).join("")
+              : `<p class="empty-state">${escapeHtml(c.common.noResults)}</p>`
+          }
+        </div>
+      </section>
+    `
+  );
+}
+
+function productCard(product) {
+  const tr = product.translations[state.locale] ?? product.translations.en;
+  const meta = publicationMeta(state.locale);
+  return `
+    <article class="catalog-card">
+      <div class="catalog-meta">${fixtureBadge()}<span>${escapeHtml(product.resourceType ?? "Legal resource")} · ${escapeHtml(product.language ?? "English")}</span></div>
+      <h2>${escapeHtml(tr.title)}</h2>
+      <p>${escapeHtml(tr.summary)}</p>
+      <dl class="publication-meta">
+        <div><dt>${escapeHtml(meta.jurisdiction)}</dt><dd>${escapeHtml(product.jurisdiction || meta.placeholder)}</dd></div>
+        <div><dt>${escapeHtml(meta.subject)}</dt><dd>${escapeHtml(product.topic ?? product.category)}</dd></div>
+        <div><dt>${escapeHtml(meta.edition)}</dt><dd>${escapeHtml(product.edition || meta.placeholder)}</dd></div>
+        <div><dt>${escapeHtml(meta.format)}</dt><dd>${escapeHtml(tr.format || meta.placeholder)}</dd></div>
+        <div><dt>${escapeHtml(meta.price)}</dt><dd>${escapeHtml(product.price || meta.pending)}</dd></div>
+        <div><dt>${escapeHtml(meta.availability)}</dt><dd>${escapeHtml(meta.pending)}</dd></div>
+      </dl>
+      <a class="button button-secondary button-small" href="${routeHref("product", product.id)}">
+        ${escapeHtml(t().library.readResource)}${icon("arrow")}
+      </a>
+      <button class="button button-primary button-small" type="button" disabled>${icon("lock")}${escapeHtml(meta.buy)}</button>
+    </article>
+  `;
+}
+
+function publicationMeta(locale) {
+  return ({
+    en: { jurisdiction: "Jurisdiction", subject: "Area of law", edition: "Edition", format: "Format", price: "Price", availability: "Availability", contents: "Contents", placeholder: "[Placeholder]", pending: "Pending approval", buy: "Buy now", disclaimer: "Legal publications provide information and reference material. They do not, by themselves, constitute individualized legal advice or create an attorney-client relationship." },
+    fr: { jurisdiction: "Juridiction", subject: "Domaine du droit", edition: "Édition", format: "Format", price: "Prix", availability: "Disponibilité", contents: "Contenu", placeholder: "[Espace réservé]", pending: "En attente d’approbation", buy: "Acheter", disclaimer: "Les publications juridiques fournissent des informations et des documents de référence. Elles ne constituent pas, à elles seules, un conseil juridique individualisé et ne créent pas de relation avocat-client." },
+    zh: { jurisdiction: "司法管辖区", subject: "法律领域", edition: "版本", format: "格式", price: "价格", availability: "可用性", contents: "内容", placeholder: "[占位内容]", pending: "待批准", buy: "立即购买", disclaimer: "法律出版物提供法律信息和参考资料。本身不构成个性化法律意见，也不会建立律师与客户的关系。" },
+    "zh-Hant": { jurisdiction: "司法管轄區", subject: "法律領域", edition: "版本", format: "格式", price: "價格", availability: "可用性", contents: "內容", placeholder: "[預留內容]", pending: "待批准", buy: "立即購買", disclaimer: "法律出版物提供法律資訊及參考資料。本身不構成個人化法律意見，也不會建立律師與客戶的關係。" }
+  }[locale] || {});
+}
+
+function productDetailView(id) {
+  const product = products.find((item) => item.id === id);
+  if (!product) return notFoundView();
+  const c = t();
+  const tr = product.translations[state.locale] ?? product.translations.en;
+  const meta = publicationMeta(state.locale);
+  return `
+    <section class="detail-header">
+      <a class="text-link back-link" href="#/library">${icon("arrow")}${escapeHtml(c.common.back)}</a>
+      <div class="catalog-meta">${fixtureBadge()}<span>${escapeHtml(product.category)}</span></div>
+      <h1>${escapeHtml(tr.title)}</h1>
+      <p>${escapeHtml(tr.summary)}</p>
+    </section>
+    <section class="detail-layout">
+      <div class="detail-content">
+        ${detailBlock(meta.jurisdiction, product.jurisdiction || meta.placeholder)}
+        ${detailBlock(meta.edition, product.edition || meta.placeholder)}
+        ${detailBlock(meta.price, product.price || meta.pending)}
+        ${detailBlock(c.library.format, tr.format)}
+        ${detailBlock(c.library.limitation, tr.limitation)}
+        ${detailBlock(meta.subject, product.topic || meta.placeholder)}
+        ${detailBlock(meta.contents, "DEMO CONTENT — REPLACE BEFORE PUBLICATION. Laws, regulations, amendments, supplementary materials, indexes, and tables of contents require verified source material.")}
+      </div>
+      <aside class="action-panel">
+        <h2>${escapeHtml(c.common.unavailable)}</h2>
+        <p>${escapeHtml(tr.limitation)}</p>
+        <p class="fine-print">${escapeHtml(meta.disclaimer)}</p>
+        <button class="button button-primary" type="button" disabled>${icon("lock")}${escapeHtml(meta.buy)} · ${escapeHtml(c.library.purchase)}</button>
+      </aside>
+    </section>
+  `;
+}
+
+function catalogControls(prefix, search, category, categories) {
+  const c = t();
+  const serviceCategoryLabels = {
+    en: { advisory: "Advisory support", documents: "Document review", "international-law": "International Law", research: "Legal Research" },
+    fr: { advisory: "Soutien consultatif", documents: "Revue de documents", "international-law": "Droit international", research: "Recherche juridique" },
+    zh: { advisory: "咨询支持", documents: "文件审查", "international-law": "国际法", research: "法律研究" },
+    "zh-Hant": { advisory: "諮詢支援", documents: "文件審查", "international-law": "國際法", research: "法律研究" }
+  };
+  return `
+    <form class="catalog-controls" id="${prefix}-filters">
+      <label class="search-field">
+        <span class="sr-only">${escapeHtml(c.common.search)}</span>
+        ${icon("search")}
+        <input type="search" name="query" value="${escapeHtml(search)}" placeholder="${escapeHtml(c.common.search)}" />
+      </label>
+      <label>
+        <span class="sr-only">${escapeHtml(c.common.all)}</span>
+        <select name="category">
+          <option value="all">${escapeHtml(c.common.all)}</option>
+          ${categories.map((item) => `<option value="${item}" ${item === category ? "selected" : ""}>${escapeHtml(prefix === "service" ? (serviceCategoryLabels[state.locale] || serviceCategoryLabels.en)[item] || item : item)}</option>`).join("")}
+        </select>
+      </label>
+    </form>
+  `;
+}
+
+function libraryControls() {
+  const c = t();
+  const values = ["international-arbitration", "investment-law", "african-trade", "business-human-rights", "extractive-industries", "international-economic-law", "legal-research"];
+  const labelsByLocale = {
+    en: ["International Arbitration", "Investment Law", "African Trade & AfCFTA", "Business & Human Rights", "Extractive Industries", "International Economic Law", "Legal Research"],
+    fr: ["Arbitrage international", "Droit des investissements", "Commerce africain et ZLECAf", "Entreprises et droits humains", "Industries extractives", "Droit économique international", "Recherche juridique"],
+    zh: ["国际仲裁", "投资法", "非洲贸易与非洲大陆自贸区", "企业与人权", "采掘业", "国际经济法", "法律研究"],
+    "zh-Hant": ["國際仲裁", "投資法", "非洲貿易與非洲大陸自由貿易區", "企業與人權", "採掘業", "國際經濟法", "法律研究"]
+  };
+  const topics = values.map((value, index) => [value, (labelsByLocale[state.locale] || labelsByLocale.en)[index]]);
+  return `
+    <form class="catalog-controls library-controls" id="product-filters">
+      <label class="search-field">
+        <span class="sr-only">${escapeHtml(c.common.search)}</span>
+        ${icon("search")}
+        <input type="search" name="query" value="${escapeHtml(state.productSearch)}" placeholder="${escapeHtml(c.library.searchPlaceholder)}" />
+      </label>
+      <label>
+        <span>${escapeHtml(c.library.topicFilter)}</span>
+        <select name="category">
+          <option value="all">${escapeHtml(c.common.all)}</option>
+          ${topics.map(([value, label]) => `<option value="${value}" ${value === state.productCategory ? "selected" : ""}>${escapeHtml(label)}</option>`).join("")}
+        </select>
+      </label>
+    </form>
+    <p class="filter-note">${escapeHtml(c.library.filterBy)}: ${escapeHtml(({ en: "🇬🇧 English · 🇫🇷 Français · 🇨🇳 中文 (Simplified / Traditional)", fr: "🇬🇧 English · 🇫🇷 Français · 🇨🇳 中文 (chinois simplifié / traditionnel)", zh: "🇬🇧 English · 🇫🇷 Français · 🇨🇳 中文（简体中文 / 繁體中文）", "zh-Hant": "🇬🇧 English · 🇫🇷 Français · 🇨🇳 中文（簡體中文 / 繁體中文）" }[state.locale] || "🇬🇧 English · 🇫🇷 Français · 🇨🇳 中文"))} · ${escapeHtml(c.library.resourceType)}: ${escapeHtml(c.library.readResource)}</p>
+  `;
+}
+
+function guidanceView() {
+  const c = t().guidance;
+  const languageLabels = { en: ["Language", "English", "French", "Chinese"], fr: ["Langue", "Anglais", "Français", "Chinois"], zh: ["语言", "英语", "法语", "中文"], "zh-Hant": ["語言", "英語", "法語", "中文"] }[state.locale] || [];
+  return pageIntro(
+    c.title,
+    c.intro,
+    `
+      <section class="guidance-layout section compact-top">
+        <form id="guidance-form" class="form-panel" novalidate>
+          <label>
+            <span>${escapeHtml(languageLabels[0])} <em>${escapeHtml(t().common.required)}</em></span>
+            <select name="language"><option value="en" ${state.locale === "en" ? "selected" : ""}>${escapeHtml(languageLabels[1])}</option><option value="fr" ${state.locale === "fr" ? "selected" : ""}>${escapeHtml(languageLabels[2])}</option><option value="zh" ${state.locale.startsWith("zh") ? "selected" : ""}>${escapeHtml(languageLabels[3])}</option></select>
+          </label>
+          <label>
+            <span>${escapeHtml(c.jurisdiction)} <em>${escapeHtml(t().common.required)}</em></span>
+            <select name="jurisdiction" required>
+              <option value="">${escapeHtml(c.select)}</option>
+              <option value="DEMO">${escapeHtml(c.demoJurisdiction)}</option>
+              <option value="UNSUPPORTED">Other / unsupported</option>
+            </select>
+          </label>
+          <label>
+            <span>${escapeHtml(c.topic)} <em>${escapeHtml(t().common.required)}</em></span>
+            <select name="topic" required>
+              <option value="">${escapeHtml(c.select)}</option>
+              <option value="orientation">${escapeHtml(c.demoTopic)}</option>
+              <option value="unsupported">Other / unsupported</option>
+            </select>
+          </label>
+          <label>
+            <span>${escapeHtml(c.situation)}</span>
+            <textarea name="situation" rows="6" maxlength="1200"></textarea>
+          </label>
+          <label class="checkbox-row">
+            <input type="checkbox" name="urgency" />
+            <span>${escapeHtml(c.urgent)}</span>
+          </label>
+          <button class="button button-primary" type="submit">${icon("compass")}${escapeHtml(t().common.submit)}</button>
+        </form>
+        <section class="result-panel" aria-live="polite" aria-labelledby="guidance-result-title">
+          <span class="card-icon">${icon("shield")}</span>
+          <h2 id="guidance-result-title">${escapeHtml(c.result)}</h2>
+          <div id="guidance-result">
+            <p>${escapeHtml(c.missingText)}</p>
+          </div>
+        </section>
+      </section>
+    `
+  );
+}
+
+function assessmentView() {
+  const labels = {
+    en: ["Preliminary Legal Assessment", "Structured intake for language, jurisdiction, legal issue, urgency, and attorney review.", "Language", "Jurisdiction", "Legal issue", "Urgency", "Attorney review state", "Select an option", "English", "French", "Chinese", "International matter", "General orientation", "Urgent or time-sensitive", "Submit for attorney review", "Missing information", "Unsupported jurisdiction", "Attorney-approved response"],
+    fr: ["Évaluation juridique préliminaire", "Parcours structuré pour la langue, la juridiction, la question juridique, l’urgence et la revue par un avocat.", "Langue", "Juridiction", "Question juridique", "Urgence", "État de revue par l’avocat", "Sélectionnez une option", "Anglais", "Français", "Chinois", "Question internationale", "Orientation générale", "Urgent ou sensible au délai", "Soumettre à la revue", "Informations manquantes", "Juridiction non prise en charge", "Réponse approuvée par l’avocat"],
+    zh: ["初步法律评估", "用于语言、司法管辖区、法律问题、紧迫性和律师审查的结构化流程。", "语言", "司法管辖区", "法律问题", "紧迫性", "律师审查状态", "请选择", "英语", "法语", "中文", "国际事项", "一般指导", "紧急或有时间限制", "提交律师审查", "信息不足", "不受支持的司法管辖区", "律师已批准的回复"],
+    "zh-Hant": ["初步法律評估", "用於語言、司法管轄區、法律問題、緊迫性及律師審查的結構化流程。", "語言", "司法管轄區", "法律問題", "緊迫性", "律師審查狀態", "請選擇", "英語", "法語", "中文", "國際事項", "一般指引", "緊急或有時間限制", "提交律師審查", "資訊不足", "不支援的司法管轄區", "律師已核准的回覆"]
+  }[state.locale] || [];
+  return pageIntro(labels[0], labels[1], `<section class="guidance-layout section compact-top"><form id="assessment-form" class="form-panel" novalidate>
+    <label><span>${labels[2]}</span><select name="language" required><option value="">${labels[7]}</option><option>${labels[8]}</option><option>${labels[9]}</option><option>${labels[10]}</option></select></label>
+    <label><span>${labels[3]}</span><input name="jurisdiction" required placeholder="${labels[7]}" /></label>
+    <label><span>${labels[4]}</span><select name="issue" required><option value="">${labels[7]}</option><option>${labels[11]}</option><option>${labels[12]}</option></select></label>
+    <label class="checkbox-row"><input type="checkbox" name="urgent" /><span>${labels[13]}</span></label>
+    <label><span>${labels[6]}</span><select name="reviewState"><option value="attorney_review">Attorney review required</option><option value="attorney_approved">${labels[17]}</option></select></label>
+    <button class="button button-primary" type="submit">${labels[14]}${icon("arrow")}</button>
+  </form><section class="result-panel" aria-live="polite"><h2>${labels[6]}</h2><div id="assessment-result"><p>${labels[7]}</p></div></section></section>`);
+}
+
+function guidanceResult(result) {
+  const c = t().guidance;
+  const labels = {
+    en: {
+      facts: "Facts provided",
+      jurisdiction: "Relevant jurisdiction",
+      issue: "Legal issue / topic",
+      language: "Language",
+      authorities: "Verified authorities",
+      reasoning: "General legal reasoning",
+      risks: "Risks, limitations, and uncertainties",
+      missing: "Information still required",
+      draft: "Draft Client-Facing Response",
+      review: "Attorney Review",
+      draftText: "AI-generated draft for attorney verification before communication.",
+      reviewText: "Substantive legal advice remains a draft until an attorney reviews and approves it.",
+      noAuthorities: "No authority is cited unless it can be verified from an approved source."
+    },
+    fr: {
+      facts: "Faits fournis",
+      jurisdiction: "Juridiction pertinente",
+      issue: "Question juridique / sujet",
+      language: "Langue",
+      authorities: "Sources vérifiées",
+      reasoning: "Raisonnement juridique général",
+      risks: "Risques, limites et incertitudes",
+      missing: "Informations encore nécessaires",
+      draft: "Projet de réponse au client",
+      review: "Revue par un avocat",
+      draftText: "Projet généré par l’IA à vérifier par un avocat avant toute communication.",
+      reviewText: "Tout conseil juridique substantiel reste un projet jusqu’à sa revue et son approbation par un avocat.",
+      noAuthorities: "Aucune source n’est citée sans vérification à partir d’une source approuvée."
+    },
+    zh: {
+      facts: "已提供的事实",
+      jurisdiction: "相关司法管辖区",
+      issue: "法律问题 / 主题",
+      language: "语言",
+      authorities: "已核实的法律依据",
+      reasoning: "一般法律分析",
+      risks: "风险、限制与不确定性",
+      missing: "仍需提供的信息",
+      draft: "面向客户的回复草稿",
+      review: "律师审查",
+      draftText: "人工智能生成的草稿，沟通前必须由律师核实。",
+      reviewText: "实质性法律意见在律师审查并批准前均属于草稿。",
+      noAuthorities: "除非能够从获批来源核实，否则不引用法律依据。"
+    },
+    "zh-Hant": {
+      facts: "已提供的事實",
+      jurisdiction: "相關司法管轄區",
+      issue: "法律問題／主題",
+      language: "語言",
+      authorities: "已核實的法律依據",
+      reasoning: "一般法律分析",
+      risks: "風險、限制與不確定性",
+      missing: "仍需提供的資訊",
+      draft: "面向客戶的回覆草稿",
+      review: "律師審查",
+      draftText: "人工智慧產生的草稿，溝通前必須由律師核實。",
+      reviewText: "實質性法律意見在律師審查並批准前均屬草稿。",
+      noAuthorities: "除非能從獲批來源核實，否則不引用法律依據。"
+    }
+  }[state.locale] || {};
+  const content = {
+    needs_input: [c.missingTitle, c.missingText, "alert"],
+    unsupported: [c.unsupportedTitle, c.unsupportedText, "alert"],
+    escalate: [c.urgentTitle, c.urgentText, "alert"],
+    supported: [c.supportedTitle, c.supportedText, "check"]
+  }[result.status];
+  return `
+    <div class="result-status result-${result.status}">${icon(content[2])}<strong>${escapeHtml(content[0])}</strong></div>
+    <p class="assessment-language" data-guidance-language="${escapeHtml(result.language || state.locale)}">${escapeHtml(labels.language)}: ${escapeHtml(result.language || state.locale)}</p>
+    <p>${escapeHtml(content[1])}</p>
+    <div class="guidance-review-grid">
+      <article><h3>${escapeHtml(labels.facts)}</h3><p>${escapeHtml(result.input?.situation || "No additional facts supplied.")}</p></article>
+      <article><h3>${escapeHtml(labels.jurisdiction)}</h3><p>${escapeHtml(result.input?.jurisdiction || "Not supplied")}</p></article>
+      <article><h3>${escapeHtml(labels.issue)}</h3><p>${escapeHtml(result.input?.topic || "Not supplied")}</p></article>
+      <article><h3>${escapeHtml(labels.authorities)}</h3><p>${escapeHtml(result.sources?.length ? result.sources.map((source) => `${source.title} · ${source.version} · ${source.effectiveDate}`).join("; ") : labels.noAuthorities)}</p></article>
+      <article><h3>${escapeHtml(labels.reasoning)}</h3><p>${escapeHtml(result.status === "supported" ? c.supportedText : content[1])}</p></article>
+      <article><h3>${escapeHtml(labels.risks)}</h3><p>${escapeHtml(c.disclaimer)}</p></article>
+      <article><h3>${escapeHtml(labels.missing)}</h3><p>${escapeHtml(result.status === "needs_input" ? c.missingText : "A qualified professional may require additional facts, current law, and jurisdiction-specific verification.")}</p></article>
+      <article><h3>${escapeHtml(labels.review)}</h3><p>${escapeHtml(labels.reviewText)}</p></article>
+    </div>
+    <section class="draft-response-box"><h3>${escapeHtml(labels.draft)}</h3><p>${escapeHtml(labels.draftText)}</p></section>
+    ${
+      result.status === "supported"
+        ? `
+          <ol class="guidance-structure">
+            ${c.structure.map((item) => `<li>${escapeHtml(item)}</li>`).join("")}
+          </ol>
+          <div class="source-box">
+            <strong>${escapeHtml(c.result)}</strong>
+            ${result.sources.map((source) => `<p>${escapeHtml(source.title)} · ${escapeHtml(source.version)} · ${escapeHtml(source.effectiveDate)}</p>`).join("")}
+          </div>
+        `
+        : ""
+    }
+    <p class="fine-print">${escapeHtml(c.disclaimer)}</p>
+  `;
+}
+
+function aboutView() {
+  const c = t().about;
+  const labels = thoughtLeadershipFieldLabels[state.locale] || thoughtLeadershipFieldLabels.en;
+  const fields = (meta = []) =>
+    `<dl class="evidence-fields"><div><dt>${escapeHtml(labels.sourceTitle)}</dt><dd>${escapeHtml(meta[0] || "Not supplied")}</dd></div><div><dt>${escapeHtml(labels.sourceType)}</dt><dd>${escapeHtml(meta[1] || "Not supplied")}</dd></div><div><dt>${escapeHtml(labels.identityMatch)}</dt><dd>${escapeHtml(meta[2] || labels.pending)}</dd></div><div><dt>${escapeHtml(labels.publicationPermission)}</dt><dd>${escapeHtml(meta[3] || labels.pending)}</dd></div></dl>`;
+  return pageIntro(
+    c.title,
+    c.text,
+    `
+      <section class="section compact-top">
+        <div class="profile-highlight">
+          <p class="eyebrow">${escapeHtml(c.profileTitle)}</p>
+          <h2>${escapeHtml(c.profileTitle)}</h2>
+          <p class="profile-tagline">${escapeHtml(c.profileTagline)}</p>
+          ${c.profileParagraphs.map((paragraph) => `<p>${escapeHtml(paragraph)}</p>`).join("")}
+        </div>
+        <div class="expertise-strip">
+          <p class="eyebrow">${escapeHtml(c.expertiseTitle)}</p>
+          <h2>${escapeHtml(c.expertiseTitle)}</h2>
+          <div class="expertise-list">
+            ${c.expertise.map((item) => `<span>${escapeHtml(item)}</span>`).join("")}
+          </div>
+        </div>
+        <div class="credentials-section">
+          <div>
+            <p class="eyebrow">${escapeHtml(c.credentialsTitle)}</p>
+            <h2>${escapeHtml(c.credentialsTitle)}</h2>
+            <p>${escapeHtml(c.credentialsIntro)}</p>
+          </div>
+          <ul class="credentials-list">
+            ${c.credentials
+              .map(
+                (item, index) =>
+                  `<li><div><strong>${escapeHtml(item.title)}</strong><p>${escapeHtml(index === 5 ? safeBarDetail[state.locale] : item.detail)}</p>${thoughtLeadershipEvidence.credentials[index] ? `<a href="${thoughtLeadershipEvidence.credentials[index]}" target="_blank" rel="noopener noreferrer">${escapeHtml(c.evidenceLinkLabel || "Evidence link")}</a>` : ""}${fields(thoughtLeadershipMeta.credentials[index])}</div><span class="badge badge-warning">${escapeHtml(c.credentialsPending)}</span></li>`
+              )
+              .join("")}
+          </ul>
+        </div>
+        <div class="thought-leadership-section">
+          <div class="section-heading">
+            <p class="eyebrow">${escapeHtml(c.thoughtLeadershipTitle)}</p>
+            <h2>${escapeHtml(c.thoughtLeadershipTitle)}</h2>
+            <p>${escapeHtml(c.thoughtLeadershipText)}</p>
+          </div>
+          <div class="thought-leadership-grid">
+            <article>
+              <h3>${escapeHtml(c.publicationsTitle)}</h3>
+              <ul>${c.publications
+                .map(
+                  (item, index) =>
+                    `<li><div>${escapeHtml(item)}${thoughtLeadershipEvidence.publications[index] ? ` <a href="${thoughtLeadershipEvidence.publications[index]}" target="_blank" rel="noopener noreferrer">${escapeHtml(c.evidenceLinkLabel || "Evidence link")}</a>` : ""}</div>${fields(thoughtLeadershipMeta.publications[index])}</li>`
+                )
+                .join("")}</ul>
+            </article>
+            <article>
+              <h3>${escapeHtml(c.engagementTitle)}</h3>
+              <ul>${c.engagements
+                .map(
+                  (item, index) =>
+                    `<li><div>${escapeHtml(item)}${thoughtLeadershipEvidence.engagements[index] ? ` <a href="${thoughtLeadershipEvidence.engagements[index]}" target="_blank" rel="noopener noreferrer">${escapeHtml(c.evidenceLinkLabel || "Evidence link")}</a>` : ""}</div>${fields(thoughtLeadershipMeta.engagements[index])}</li>`
+                )
+                .join("")}</ul>
+            </article>
+            <article>
+              <h3>${escapeHtml(c.developmentTitle)}</h3>
+              <ul>${c.development.map((item, index) => `<li><div>${escapeHtml(item)}</div>${fields(thoughtLeadershipMeta.development[index])}</li>`).join("")}</ul>
+            </article>
+          </div>
+        </div>
+        <div class="principles">
+          <div>
+            <p class="eyebrow">${escapeHtml(c.principlesTitle)}</p>
+            <h2>${escapeHtml(c.principlesTitle)}</h2>
+          </div>
+          <ul>
+            ${c.principles.map((item) => `<li>${icon("check")}<span>${escapeHtml(item)}</span></li>`).join("")}
+          </ul>
+        </div>
+      </section>
+    `
+  );
+}
+
+function contactView() {
+  const c = t().contact;
+  return pageIntro(
+    c.title,
+    c.intro,
+    `
+      <section class="section compact-top contact-layout">
+        <form id="contact-form" class="form-panel" novalidate>
+          <label><span>${escapeHtml(c.name)} <em>${escapeHtml(t().common.required)}</em></span><input name="name" required maxlength="100" /></label>
+          <label><span>${escapeHtml(c.email)} <em>${escapeHtml(t().common.required)}</em></span><input name="email" type="email" required maxlength="200" /></label>
+          <label><span>${escapeHtml(c.message)} <em>${escapeHtml(t().common.required)}</em></span><textarea name="message" required minlength="20" maxlength="2000" rows="7"></textarea></label>
+          <div class="notice-box">${icon("alert")}<p>${escapeHtml(c.notice)}</p></div>
+          <button class="button button-primary" type="submit">${escapeHtml(t().common.submit)}${icon("arrow")}</button>
+          <div id="contact-result" class="inline-result" aria-live="polite"></div>
+        </form>
+        <aside class="contact-aside">
+          <span class="card-icon">${icon("lock")}</span>
+          <h2>Development adapter</h2>
+          <p>No information leaves this browser. The production notification provider remains disabled until privacy, security, retention, and vendor review are complete.</p>
+        </aside>
+      </section>
+    `
+  );
+}
+
+function adminView() {
+  const c = t().admin;
+  const effectiveGates = launchGates.map((gate) => ({
+    ...gate,
+    status: state.gateStatuses[gate.id] || gate.status
+  }));
+  const readiness = calculateReadiness({
+    gates: effectiveGates,
+    fixtures,
+    providers: platformConfig.providers,
+    aiSources: knowledgeSources
+  });
+  return pageIntro(
+    c.title,
+    c.intro,
+    `
+      <section class="section compact-top admin-grid">
+        <div class="admin-auth">
+          <div class="admin-heading">
+            <div>
+              <p class="eyebrow">Server boundary</p>
+              <h2>Development administrator</h2>
+            </div>
+            ${
+              state.adminUser
+                ? `<button class="button button-secondary button-small" type="button" id="admin-logout">Log out</button>`
+                : ""
+            }
+          </div>
+          ${
+            state.adminUser
+              ? `<p class="success-message">${icon("check")}<span>Authenticated as ${escapeHtml(state.adminUser.name)}. Server-side versioning and audit events are enabled.</span></p>`
+              : staticDemo
+                ? `<div class="notice-box">${icon("lock")}<p>This temporary static demo has no authentication, server-side administration, persistence, booking provider, or payment provider. Launch-gate selections below remain in this browser only and are not approvals.</p></div>`
+              : !state.authConfig.developmentLoginEnabled
+                ? `<div class="notice-box">${icon("lock")}<p>Local development login is disabled. <a href="${escapeHtml(state.authConfig.signInUrl || "/api/auth/signin")}">Sign in with the approved identity provider</a>.</p></div>`
+              : `
+                <form id="admin-login-form" class="admin-login-form">
+                  <label><span>Development key</span><input name="key" type="password" value="development-only-admin" autocomplete="off" /></label>
+                  <button class="button button-primary button-small" type="submit">Authenticate</button>
+                  <p class="fine-print">Development adapter only. Replace with approved identity infrastructure before production.</p>
+                  <div id="admin-login-result" class="inline-result" aria-live="polite"></div>
+                </form>
+              `
+          }
+        </div>
+        <div class="admin-main">
+          <div class="admin-heading">
+            <div>
+              <p class="eyebrow">${escapeHtml(c.localOnly)}</p>
+              <h2>${escapeHtml(c.gates)}</h2>
+            </div>
+            <button class="button button-secondary button-small" type="button" id="reset-gates">${escapeHtml(c.reset)}</button>
+          </div>
+          <div class="gate-list">
+            ${effectiveGates.map(gateRow).join("")}
+          </div>
+          ${
+            state.adminUser
+              ? `
+                <div class="version-panel">
+                  <p class="eyebrow">Attorney review queue</p>
+                  <h2>Preliminary Legal Assessments</h2>
+                  <div class="data-table">
+                    ${state.assessmentQueue.length ? state.assessmentQueue.map((item) => `<div><strong>${escapeHtml(item.status)}</strong><span>${escapeHtml(item.jurisdiction)} · ${escapeHtml(item.issue)}<br />${escapeHtml(item.language)}</span></div>`).join("") : `<div><strong>No assessment submissions</strong><span>New structured intakes will appear here</span></div>`}
+                  </div>
+                </div>
+                <div class="version-panel">
+                  <div class="admin-heading">
+                    <div>
+                      <p class="eyebrow">Versioned services</p>
+                      <h2>Publish a server-side revision</h2>
+                    </div>
+                  </div>
+                  <form id="service-version-form" class="version-form">
+                    <label><span>Service</span><select name="serviceId">${state.catalogServices.map((service) => `<option value="${service.id}">${escapeHtml(localized(service, state.locale))}</option>`).join("")}</select></label>
+                    <label><span>English title</span><input name="title" required value="${escapeHtml(localized(state.catalogServices[0] || {}, "en"))}" /></label>
+                    <label><span>English summary</span><textarea name="summary" rows="3" required>${escapeHtml(localized(state.catalogServices[0] || {}, "en", "summary"))}</textarea></label>
+                    <label class="checkbox-row"><input name="publish" type="checkbox" /><span>Publish locally (still subject to production launch gates)</span></label>
+                    <button class="button button-secondary button-small" type="submit">Create version</button>
+                    <div id="version-result" class="inline-result" aria-live="polite">${
+                      state.adminFlash
+                        ? `<div class="success-message">${icon("check")}<span>${escapeHtml(state.adminFlash)}</span></div>`
+                        : ""
+                    }</div>
+                  </form>
+                </div>
+                <div class="version-panel admin-management-grid">
+                  <section>
+                    <p class="eyebrow">Versioned questionnaires</p>
+                    <h2>Orientation intake</h2>
+                    <p>Current version: <strong>${escapeHtml(state.questionnaire?.currentVersion ?? "not loaded")}</strong></p>
+                    <form id="questionnaire-version-form" class="stacked-admin-form">
+                      <label><span>English jurisdiction label</span><input name="jurisdictionLabel" required value="Country or jurisdiction" /></label>
+                      <label class="checkbox-row"><input name="publish" type="checkbox" /><span>Publish this version</span></label>
+                      <button class="button button-secondary button-small" type="submit">Create questionnaire version</button>
+                      <div id="questionnaire-result" class="inline-result" aria-live="polite"></div>
+                    </form>
+                  </section>
+                  <section>
+                    <p class="eyebrow">Availability rules</p>
+                    <h2>Booking schedule</h2>
+                    <form id="availability-form" class="stacked-admin-form">
+                      <label><span>Time zone</span><input name="timezone" required value="America/New_York" /></label>
+                      <div class="compact-fields">
+                        <label><span>Weekday (0-6)</span><input name="weekday" type="number" min="0" max="6" required value="2" /></label>
+                        <label><span>Start minute</span><input name="startMinute" type="number" min="0" max="1439" required value="540" /></label>
+                        <label><span>End minute</span><input name="endMinute" type="number" min="1" max="1440" required value="1020" /></label>
+                      </div>
+                      <button class="button button-secondary button-small" type="submit">Add availability rule</button>
+                      <div id="availability-result" class="inline-result" aria-live="polite"></div>
+                    </form>
+                    <div class="data-table compact-data">
+                      ${state.availabilityRules.map((rule) => `<div><strong>${escapeHtml(rule.timezone)} · day ${escapeHtml(rule.weekday)}</strong><span>${escapeHtml(rule.startMinute)}-${escapeHtml(rule.endMinute)} · ${rule.active ? "active" : "inactive"}</span></div>`).join("") || `<div><strong>No rules</strong><span>Add a schedule rule</span></div>`}
+                    </div>
+                  </section>
+                </div>
+                <div class="version-panel">
+                  <p class="eyebrow">Booking operations</p>
+                  <h2>Status and payment reconciliation</h2>
+                  <div class="data-table admin-booking-list">
+                    ${
+                      state.adminBookings.length
+                        ? state.adminBookings.map((booking) => `
+                          <div>
+                            <span class="booking-summary"><strong>${escapeHtml(booking.id)}</strong><small>${escapeHtml(booking.status)} · ${escapeHtml(booking.clientTimezone)}</small></span>
+                            <span class="admin-row-actions">
+                              <select data-booking-status="${escapeHtml(booking.id)}" aria-label="Booking status">
+                                ${["pending_payment", "confirmed", "cancelled", "expired", "failed"].map((status) => `<option value="${status}" ${booking.status === status ? "selected" : ""}>${status}</option>`).join("")}
+                              </select>
+                              <button class="button button-secondary button-small" type="button" data-reconcile-booking="${escapeHtml(booking.id)}">Reconcile success</button>
+                            </span>
+                          </div>
+                        `).join("")
+                        : `<div><strong>No bookings</strong><span>Public booking activity will appear here</span></div>`
+                    }
+                  </div>
+                  <div id="booking-admin-result" class="inline-result" aria-live="polite"></div>
+                </div>
+              `
+              : ""
+          }
+        </div>
+        <aside class="readiness-panel">
+          <span class="card-icon">${icon(readiness.ready ? "check" : "alert")}</span>
+          <p class="eyebrow">${escapeHtml(c.readiness)}</p>
+          <h2 class="${readiness.ready ? "status-green" : "status-red"}">${escapeHtml(readiness.ready ? c.ready : c.blocked)}</h2>
+          <p>${readiness.blockers.length} blocker(s) detected by the local readiness evaluator.</p>
+          <ul>
+            ${readiness.blockers.slice(0, 7).map((blocker) => `<li>${escapeHtml(blocker.message)}</li>`).join("")}
+          </ul>
+        </aside>
+      </section>
+      <section class="section split-table-section">
+        <div>
+          <p class="eyebrow">${escapeHtml(c.providerTitle)}</p>
+          <h2>${escapeHtml(c.providerTitle)}</h2>
+          <div class="data-table">
+            ${Object.entries(platformConfig.providers).map(([name, provider]) => `<div><strong>${escapeHtml(name)}</strong><span>${escapeHtml(provider.mode)}</span></div>`).join("")}
+          </div>
+        </div>
+        <div>
+          <p class="eyebrow">${escapeHtml(c.sourceTitle)}</p>
+          <h2>${escapeHtml(c.sourceTitle)}</h2>
+          <div class="data-table">
+            ${knowledgeSources.map((source) => `<div><strong>${escapeHtml(source.title)}</strong><span>${escapeHtml(source.version)} · ${escapeHtml(source.status)}</span></div>`).join("")}
+          </div>
+        </div>
+        ${
+          state.adminUser
+            ? `
+              <div>
+                <p class="eyebrow">Audit events</p>
+                <h2>Filtered server activity</h2>
+                <form id="audit-filter-form" class="audit-filter-form">
+                  <label><span>Action contains</span><input name="action" placeholder="booking or questionnaire" /></label>
+                  <label><span>Target type</span><input name="targetType" placeholder="Booking" /></label>
+                  <button class="button button-secondary button-small" type="submit">Apply filters</button>
+                </form>
+                <div class="data-table">
+                  ${
+                    state.auditEvents.length
+                      ? state.auditEvents.slice(0, 12).map((event) => `<div><strong>${escapeHtml(event.action)}</strong><span>${escapeHtml(event.targetType ?? "")} ${escapeHtml(event.targetId ?? "")}<br />${escapeHtml(event.createdAt ?? event.at ?? "")}</span></div>`).join("")
+                      : `<div><strong>No events yet</strong><span>Authenticate or create a version</span></div>`
+                  }
+                </div>
+              </div>
+              <div>
+                <p class="eyebrow">${escapeHtml((adminEvidenceCopy[state.locale] || adminEvidenceCopy.en).eyebrow)}</p>
+                <h2>${escapeHtml((adminEvidenceCopy[state.locale] || adminEvidenceCopy.en).title)}</h2>
+                <form id="thought-leadership-filter-form" class="audit-filter-form">
+                  <label><span>${escapeHtml((adminEvidenceCopy[state.locale] || adminEvidenceCopy.en).identity)}</span><select name="identityMatch"><option value="all">${escapeHtml((adminEvidenceCopy[state.locale] || adminEvidenceCopy.en).all)}</option><option value="pending">${escapeHtml((adminEvidenceCopy[state.locale] || adminEvidenceCopy.en).pendingIdentity)}</option><option value="none">${escapeHtml((adminEvidenceCopy[state.locale] || adminEvidenceCopy.en).noIdentity)}</option></select></label>
+                  <label><span>${escapeHtml((adminEvidenceCopy[state.locale] || adminEvidenceCopy.en).permission)}</span><select name="publicationPermission"><option value="all">${escapeHtml((adminEvidenceCopy[state.locale] || adminEvidenceCopy.en).all)}</option><option value="pending">${escapeHtml((adminEvidenceCopy[state.locale] || adminEvidenceCopy.en).pendingPermission)}</option><option value="development">${escapeHtml((adminEvidenceCopy[state.locale] || adminEvidenceCopy.en).development)}</option></select></label>
+                  <button class="button button-secondary button-small" type="submit">${escapeHtml((adminEvidenceCopy[state.locale] || adminEvidenceCopy.en).apply)}</button>
+                </form>
+                <div class="data-table" id="thought-leadership-admin-results">
+                  ${thoughtLeadershipItems().filter((item) => {
+                    const [, , identity, permission] = item.meta;
+                    const identityOk = state.thoughtLeadershipFilters.identityMatch === "all" ||
+                      (state.thoughtLeadershipFilters.identityMatch === "none" && identity.toLowerCase().includes("no identity")) ||
+                      (state.thoughtLeadershipFilters.identityMatch === "pending" && !identity.toLowerCase().includes("no identity"));
+                    const permissionOk = state.thoughtLeadershipFilters.publicationPermission === "all" ||
+                      (state.thoughtLeadershipFilters.publicationPermission === "pending" && permission.toLowerCase().includes("pending")) ||
+                      (state.thoughtLeadershipFilters.publicationPermission === "development" && permission.toLowerCase().includes("development"));
+                    return identityOk && permissionOk;
+                  }).map((item) => `<div><strong>${escapeHtml(item.section)}: ${escapeHtml(item.title)}</strong><span>${escapeHtml(item.meta[2])}<br />${escapeHtml(item.meta[3])}</span></div>`).join("") || `<div><strong>${escapeHtml((adminEvidenceCopy[state.locale] || adminEvidenceCopy.en).noResults)}</strong><span>${escapeHtml((adminEvidenceCopy[state.locale] || adminEvidenceCopy.en).adjust)}</span></div>`}
+                </div>
+              </div>
+            `
+            : ""
+        }
+      </section>
+    `
+  );
+}
+
+function gateRow(gate) {
+  return `
+    <article class="gate-row">
+      <div>
+        <span class="gate-id">${escapeHtml(gate.id)}</span>
+        <h3>${escapeHtml(gate.title)}</h3>
+        <p>${escapeHtml(gate.owner)}</p>
+      </div>
+      <label>
+        <span class="sr-only">${escapeHtml(t().common.status)}</span>
+        <select data-gate="${escapeHtml(gate.id)}">
+          <option value="open" ${gate.status === "open" ? "selected" : ""}>Open</option>
+          <option value="in_review" ${gate.status === "in_review" ? "selected" : ""}>In review</option>
+          <option value="approved" ${gate.status === "approved" ? "selected" : ""}>Approved locally</option>
+        </select>
+      </label>
+    </article>
+  `;
+}
+
+function pageIntro(title, intro, body) {
+  return `
+    <section class="page-intro">
+      <p class="eyebrow">Legal Services Platform</p>
+      <h1>${escapeHtml(title)}</h1>
+      <p>${escapeHtml(intro)}</p>
+    </section>
+    ${body}
+  `;
+}
+
+function notFoundView() {
+  return pageIntro("Not found", "The requested development route does not exist.", "");
+}
+
+function render() {
+  const view = {
+    home: homeView,
+    services: servicesView,
+    service: () => serviceDetailView(state.route.id),
+    book: () => bookingView(state.route.id),
+    library: libraryView,
+    product: () => productDetailView(state.route.id),
+    guidance: guidanceView,
+    assessment: assessmentView,
+    about: aboutView,
+    contact: contactView,
+    admin: adminView
+  }[state.route.route]();
+
+  app.innerHTML = layout(view);
+  bindEvents();
+}
+
+function bookingView(serviceId = "service-orientation") {
+  const c = t();
+  const service = state.catalogServices.find((item) => item.id === serviceId) ?? state.catalogServices[0];
+  return pageIntro(
+    c.services.title,
+    c.services.intro,
+    `
+      <section class="section compact-top booking-layout">
+        <form id="booking-form" class="form-panel" novalidate>
+          <input type="hidden" name="serviceId" value="${escapeHtml(service?.id || "service-orientation")}" />
+          <label>
+            <span>1. ${escapeHtml(c.services.title)}</span>
+            <select name="serviceId" id="booking-service">
+              ${state.catalogServices.map((item) => `<option value="${item.id}" ${item.id === service?.id ? "selected" : ""}>${escapeHtml(localized(item, state.locale))}</option>`).join("")}
+            </select>
+          </label>
+          <label>
+            <span>2. ${escapeHtml(t().guidance.jurisdiction)} <em>${escapeHtml(t().common.required)}</em></span>
+            <input name="jurisdiction" required placeholder="${escapeHtml(t().guidance.demoJurisdiction)}" />
+          </label>
+          <label>
+            <span>3. ${escapeHtml(t().contact.name)} <em>${escapeHtml(t().common.required)}</em></span>
+            <input name="name" required maxlength="100" />
+          </label>
+          <label>
+            <span>4. ${escapeHtml(t().contact.email)} <em>${escapeHtml(t().common.required)}</em></span>
+            <input name="email" type="email" required maxlength="200" />
+          </label>
+          <label>
+            <span>5. Time zone</span>
+            <input name="clientTimezone" value="${escapeHtml(Intl.DateTimeFormat().resolvedOptions().timeZone || "UTC")}" />
+          </label>
+          <label>
+            <span>6. Available slot <em>${escapeHtml(t().common.required)}</em></span>
+            <select name="slotId" id="slot-select" required>
+              <option value="">Loading slots…</option>
+            </select>
+          </label>
+          <div class="notice-box">${icon("alert")}<p>${escapeHtml(t().contact.notice)}</p></div>
+          <button class="button button-primary" type="submit">${icon("calendar")}Create development booking hold</button>
+          <div id="booking-form-result" class="inline-result" aria-live="polite"></div>
+        </form>
+        <aside class="result-panel">
+          <span class="card-icon">${icon("calendar")}</span>
+          <h2>Booking and payment state</h2>
+          <div id="booking-state" class="booking-state">
+            <p>Slots are loaded from the development booking adapter. No live calendar or payment provider is connected.</p>
+          </div>
+        </aside>
+      </section>
+    `
+  );
+}
+
+function bindEvents() {
+  document.querySelector("#locale-select")?.addEventListener("change", (event) => {
+    state.locale = normalizeLocale(event.target.value);
+    localStorage.setItem(STORAGE.locale, state.locale);
+    render();
+  });
+  document.querySelector("#assessment-form")?.addEventListener("submit", (event) => {
+    event.preventDefault();
+    const data = new FormData(event.currentTarget);
+    const urgent = data.get("urgent") === "on";
+    const jurisdiction = String(data.get("jurisdiction") || "").trim();
+    const issue = String(data.get("issue") || "").trim();
+    const reviewState = String(data.get("reviewState") || "attorney_review");
+    const result = document.querySelector("#assessment-result");
+    const state = !jurisdiction || !issue
+      ? ["MISSING_INFORMATION", "Additional jurisdiction and legal-issue information is required before a reliable assessment can be prepared.", "alert"]
+      : jurisdiction.toUpperCase() === "UNSUPPORTED"
+        ? ["UNSUPPORTED_JURISDICTION", "This jurisdiction is not covered by the approved development scope. No assessment is provided.", "alert"]
+        : reviewState === "attorney_approved" && !urgent
+          ? ["ATTORNEY_APPROVED_RESPONSE", "An attorney-approved response may be shown only after the responsible attorney has reviewed and approved the draft.", "check"]
+          : urgent
+            ? ["ESCALATE", "This may be time-sensitive. Do not rely on automated analysis; seek prompt attorney review.", "alert"]
+            : ["ATTORNEY_REVIEW_REQUIRED", "The intake is organized for attorney review. No legal conclusion or attorney-client relationship is created.", "shield"];
+    result.innerHTML = `<div class="result-status result-${state[0].toLowerCase()}">${icon(state[2])}<strong>${escapeHtml(state[0])}</strong></div><p>${escapeHtml(state[1])}</p><p class="fine-print">Status: ${escapeHtml(state[0])}</p>`;
+    if (state[0] !== "MISSING_INFORMATION") {
+      fetch("/api/assessments", { method: "POST", headers: { "Content-Type": "application/json" }, body: JSON.stringify({ language: data.get("language"), jurisdiction, issue, urgent, status: state[0] }) }).catch(() => {});
+    }
+  });
+
+  const menuButton = document.querySelector(".mobile-menu");
+  const nav = document.querySelector("#primary-nav");
+  menuButton?.addEventListener("click", () => {
+    const expanded = menuButton.getAttribute("aria-expanded") === "true";
+    menuButton.setAttribute("aria-expanded", String(!expanded));
+    menuButton.innerHTML = icon(expanded ? "menu" : "close");
+    nav.classList.toggle("open", !expanded);
+  });
+
+  bindCatalogForm("service", (query, category) => {
+    state.serviceSearch = query;
+    state.serviceCategory = category;
+  });
+  bindCatalogForm("product", (query, category) => {
+    state.productSearch = query;
+    state.productCategory = category;
+  });
+
+  document.querySelector("#guidance-form")?.addEventListener("submit", (event) => {
+    event.preventDefault();
+    const form = event.currentTarget;
+    const formData = new FormData(form);
+    const input = {
+      jurisdiction: formData.get("jurisdiction"),
+      topic: formData.get("topic"),
+      language: formData.get("language"),
+      situation: formData.get("situation"),
+      urgency: formData.get("urgency") === "on"
+    };
+    const result = { ...evaluateGuidance(input, knowledgeSources), input };
+    document.querySelector("#guidance-result").innerHTML = guidanceResult(result);
+  });
+
+  document.querySelector("#contact-form")?.addEventListener("submit", (event) => {
+    event.preventDefault();
+    const form = event.currentTarget;
+    const result = document.querySelector("#contact-result");
+    if (!form.checkValidity()) {
+      form.reportValidity();
+      result.textContent = "";
+      return;
+    }
+    result.innerHTML = `<div class="success-message">${icon("check")}<span>${escapeHtml(t().contact.success)}</span></div>`;
+    form.reset();
+  });
+
+  document.querySelector("[data-booking]")?.addEventListener("click", () => {
+    window.location.hash = `#/book/${document.querySelector("[data-booking]").dataset.booking}`;
+  });
+
+  const bookingForm = document.querySelector("#booking-form");
+  if (bookingForm) {
+    loadBookingSlots();
+    bookingForm.addEventListener("submit", async (event) => {
+      event.preventDefault();
+      const form = event.currentTarget;
+      const result = document.querySelector("#booking-form-result");
+      if (!form.checkValidity()) {
+        form.reportValidity();
+        return;
+      }
+      if (staticDemo) {
+        result.innerHTML = `<div class="notice-box">${icon("lock")}<p>Static demo only: no booking was created and no information was transmitted. Live booking requires approved providers, policies, security controls, and server-side persistence.</p></div>`;
+        return;
+      }
+      const data = new FormData(form);
+      const idempotencyKey = `dev-${crypto.randomUUID()}`;
+      const response = await fetch("/api/booking", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({
+          serviceId: data.get("serviceId"),
+          slotId: data.get("slotId"),
+          locale: state.locale,
+          clientTimezone: data.get("clientTimezone"),
+          idempotencyKey
+        })
+      });
+      const payload = await response.json();
+      if (!response.ok) {
+        result.textContent = payload.error || "Booking could not be created.";
+        return;
+      }
+      result.innerHTML = `<div class="success-message">${icon("check")}<span>Development booking hold created. Payment reconciliation is still required.</span></div>`;
+      document.querySelector("#booking-state").innerHTML = `
+        <div class="state-stack">
+          <p><strong>Booking ID</strong><br />${escapeHtml(payload.id)}</p>
+          <p><strong>Status</strong><br /><span class="status-red">${escapeHtml(payload.status)}</span></p>
+          <button class="button button-secondary button-small" type="button" id="reconcile-payment">Mark development payment succeeded</button>
+          <div id="payment-result" class="inline-result" aria-live="polite"></div>
+        </div>
+      `;
+      document.querySelector("#reconcile-payment")?.addEventListener("click", async () => {
+        const payment = await fetch(`/api/booking/${encodeURIComponent(payload.id)}/payment`, {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify({
+            status: "succeeded",
+            provider: "development",
+            amountMinor: 0,
+            currency: "USD",
+            idempotencyKey: `payment-${payload.id}`
+          })
+        });
+        const paymentPayload = await payment.json();
+        document.querySelector("#payment-result").innerHTML = payment.ok
+          ? `<div class="success-message">${icon("check")}<span>Payment reconciled; booking is now confirmed in the development adapter.</span></div>`
+          : `<div class="notice-box">${icon("alert")}<p>${escapeHtml(paymentPayload.error || "Payment reconciliation failed.")}</p></div>`;
+      });
+    });
+  }
+
+  document.querySelectorAll("[data-gate]").forEach((select) => {
+    select.addEventListener("change", (event) => {
+      state.gateStatuses[event.target.dataset.gate] = event.target.value;
+      localStorage.setItem(STORAGE.gates, JSON.stringify(state.gateStatuses));
+      render();
+    });
+  });
+
+  document.querySelector("#reset-gates")?.addEventListener("click", () => {
+    state.gateStatuses = {};
+    localStorage.removeItem(STORAGE.gates);
+    render();
+  });
+
+  document.querySelector("#admin-login-form")?.addEventListener("submit", async (event) => {
+    event.preventDefault();
+    const formData = new FormData(event.currentTarget);
+    const result = document.querySelector("#admin-login-result");
+    const response = await fetch("/api/auth/dev-login", {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({ key: formData.get("key") })
+    });
+    if (!response.ok) {
+      result.textContent = "Authentication failed.";
+      return;
+    }
+    const payload = await response.json();
+    state.adminUser = payload.user;
+    await refreshServerState();
+    render();
+  });
+
+  document.querySelector("#admin-logout")?.addEventListener("click", async () => {
+    await fetch("/api/auth/logout", { method: "POST" });
+    state.adminUser = null;
+    state.auditEvents = [];
+    render();
+  });
+
+  document.querySelector("#service-version-form")?.addEventListener("submit", async (event) => {
+    event.preventDefault();
+    const formData = new FormData(event.currentTarget);
+    const service = state.catalogServices.find((item) => item.id === formData.get("serviceId"));
+    const result = document.querySelector("#version-result");
+    const translations = structuredClone(service.translations);
+    translations.en = {
+      ...translations.en,
+      title: String(formData.get("title")),
+      summary: String(formData.get("summary"))
+    };
+    const response = await fetch(`/api/admin/services/${encodeURIComponent(service.id)}/versions`, {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({
+        status: formData.get("publish") === "on" ? "published" : "draft",
+        translations
+      })
+    });
+    if (!response.ok) {
+      result.textContent = "Version could not be created.";
+      return;
+    }
+    state.adminFlash = "Server-side version created and audit event recorded.";
+    await refreshServerState();
+    render();
+  });
+
+  document.querySelector("#questionnaire-version-form")?.addEventListener("submit", async (event) => {
+    event.preventDefault();
+    const formData = new FormData(event.currentTarget);
+    const response = await fetch("/api/admin/questionnaires/orientation/versions", {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({
+        status: formData.get("publish") === "on" ? "published" : "draft",
+        questions: [
+          {
+            key: "matterType",
+            type: "select",
+            required: true,
+            order: 1,
+            translations: {
+              en: "What type of matter are you exploring?",
+              fr: "Quel type de question explorez-vous ?",
+              zh: "您正在了解哪类事项？"
+            }
+          },
+          {
+            key: "jurisdiction",
+            type: "text",
+            required: true,
+            order: 2,
+            translations: {
+              en: String(formData.get("jurisdictionLabel")),
+              fr: "Pays ou juridiction",
+              zh: "国家或司法管辖区"
+            }
+          }
+        ]
+      })
+    });
+    const result = document.querySelector("#questionnaire-result");
+    if (!response.ok) {
+      result.textContent = "Questionnaire version could not be created.";
+      return;
+    }
+    state.adminFlash = "Questionnaire version created and audited.";
+    await refreshServerState();
+    render();
+  });
+
+  document.querySelector("#availability-form")?.addEventListener("submit", async (event) => {
+    event.preventDefault();
+    const formData = new FormData(event.currentTarget);
+    const response = await fetch("/api/admin/availability", {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({
+        serviceId: "service-orientation",
+        timezone: formData.get("timezone"),
+        weekday: Number(formData.get("weekday")),
+        startMinute: Number(formData.get("startMinute")),
+        endMinute: Number(formData.get("endMinute")),
+        active: true
+      })
+    });
+    const payload = await response.json();
+    if (!response.ok) {
+      document.querySelector("#availability-result").textContent =
+        payload.error || "Availability rule could not be created.";
+      return;
+    }
+    state.adminFlash = "Availability rule created and audited.";
+    await refreshServerState();
+    render();
+  });
+
+  document.querySelectorAll("[data-booking-status]").forEach((select) => {
+    select.addEventListener("change", async (event) => {
+      const response = await fetch(
+        `/api/admin/bookings/${encodeURIComponent(event.target.dataset.bookingStatus)}`,
+        {
+          method: "PATCH",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify({
+            status: event.target.value,
+            reason: "Updated from the development administration interface"
+          })
+        }
+      );
+      if (!response.ok) {
+        document.querySelector("#booking-admin-result").textContent = "Booking status update failed.";
+        return;
+      }
+      state.adminFlash = "Booking status updated and audited.";
+      await refreshServerState();
+      render();
+    });
+  });
+
+  document.querySelectorAll("[data-reconcile-booking]").forEach((button) => {
+    button.addEventListener("click", async (event) => {
+      const bookingId = event.currentTarget.dataset.reconcileBooking;
+      const response = await fetch(
+        `/api/admin/bookings/${encodeURIComponent(bookingId)}/payment`,
+        {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify({
+            status: "succeeded",
+            provider: "development-admin",
+            amountMinor: 0,
+            currency: "USD",
+            idempotencyKey: `admin-payment-${bookingId}`
+          })
+        }
+      );
+      const payload = await response.json();
+      if (!response.ok) {
+        document.querySelector("#booking-admin-result").textContent =
+          payload.error || "Payment reconciliation failed.";
+        return;
+      }
+      state.adminFlash = "Payment reconciled and booking state refreshed.";
+      await refreshServerState();
+      render();
+    });
+  });
+
+  document.querySelector("#audit-filter-form")?.addEventListener("submit", async (event) => {
+    event.preventDefault();
+    const formData = new FormData(event.currentTarget);
+    const params = new URLSearchParams();
+    for (const name of ["action", "targetType"]) {
+      const value = String(formData.get(name) || "").trim();
+      if (value) params.set(name, value);
+    }
+    const response = await fetch(`/api/admin/audit?${params}`);
+    if (response.ok) {
+      state.auditEvents = (await response.json()).events;
+      render();
+    }
+  });
+  document.querySelector("#thought-leadership-filter-form")?.addEventListener("submit", (event) => {
+    event.preventDefault();
+    const formData = new FormData(event.currentTarget);
+    state.thoughtLeadershipFilters = {
+      identityMatch: String(formData.get("identityMatch") || "all"),
+      publicationPermission: String(formData.get("publicationPermission") || "all")
+    };
+    render();
+  });
+}
+
+async function loadBookingSlots() {
+  const select = document.querySelector("#slot-select");
+  if (!select) return;
+  if (staticDemo) {
+    const timezone = Intl.DateTimeFormat().resolvedOptions().timeZone || "UTC";
+    const startsAt = new Date(Date.now() + 7 * 24 * 60 * 60 * 1000);
+    startsAt.setUTCHours(14, 0, 0, 0);
+    select.innerHTML = `<option value="static-demo-slot">${escapeHtml(
+      startsAt.toLocaleString(state.locale, {
+        dateStyle: "medium",
+        timeStyle: "short",
+        timeZone: timezone
+      })
+    )} (${escapeHtml(timezone)}) - sample only</option>`;
+    return;
+  }
+  try {
+    const timezone = Intl.DateTimeFormat().resolvedOptions().timeZone || "UTC";
+    const response = await fetch(`/api/booking/slots?timezone=${encodeURIComponent(timezone)}`);
+    const payload = await response.json();
+    select.innerHTML = payload.slots
+      .map(
+        (slot) =>
+          `<option value="${escapeHtml(slot.id)}">${escapeHtml(new Date(slot.startsAt).toLocaleString(state.locale, { dateStyle: "medium", timeStyle: "short", timeZone: timezone }))} (${escapeHtml(timezone)})</option>`
+      )
+      .join("");
+  } catch {
+    select.innerHTML = `<option value="">Slots unavailable</option>`;
+  }
+}
+
+function bindCatalogForm(prefix, update) {
+  const form = document.querySelector(`#${prefix}-filters`);
+  if (!form) return;
+  const refresh = () => {
+    const formData = new FormData(form);
+    update(String(formData.get("query") || ""), String(formData.get("category") || "all"));
+    render();
+    document.querySelector(`#${prefix}-filters input`)?.focus();
+  };
+  form.querySelector("input")?.addEventListener("input", refresh);
+  form.querySelector("select")?.addEventListener("change", refresh);
+  form.addEventListener("submit", (event) => event.preventDefault());
+}
+
+window.addEventListener("hashchange", () => {
+  state.route = getRoute(window.location.hash);
+  render();
+  document.querySelector("#main")?.focus();
+});
+
+async function refreshServerState() {
+  if (staticDemo) return;
+  try {
+    const authConfigResponse = await fetch("/api/auth/config");
+    if (authConfigResponse.ok) state.authConfig = await authConfigResponse.json();
+    const serviceResponse = await fetch("/api/services");
+    if (serviceResponse.ok) {
+      const payload = await serviceResponse.json();
+      state.catalogServices = payload.services;
+    }
+    const sessionResponse = await fetch("/api/admin/session");
+    if (sessionResponse.ok) {
+      const payload = await sessionResponse.json();
+      state.adminUser = payload.user;
+    }
+    if (state.adminUser) {
+      const [auditResponse, questionnaireResponse, availabilityResponse, bookingsResponse] =
+        await Promise.all([
+          fetch("/api/admin/audit"),
+          fetch("/api/admin/questionnaires/orientation"),
+          fetch("/api/admin/availability?serviceId=service-orientation"),
+          fetch("/api/admin/bookings")
+        ]);
+      if (auditResponse.ok) state.auditEvents = (await auditResponse.json()).events;
+      if (questionnaireResponse.ok) state.questionnaire = await questionnaireResponse.json();
+      if (availabilityResponse.ok) {
+        state.availabilityRules = (await availabilityResponse.json()).rules;
+      }
+      if (bookingsResponse.ok) state.adminBookings = (await bookingsResponse.json()).bookings;
+      const assessmentsResponse = await fetch("/api/admin/assessments");
+      if (assessmentsResponse.ok) state.assessmentQueue = (await assessmentsResponse.json()).assessments;
+    }
+  } catch {
+    // The static preview remains usable when the server boundary is unavailable.
+  }
+}
+
+if (!window.location.hash) window.location.hash = "#/home";
+render();
+refreshServerState().then(render);
