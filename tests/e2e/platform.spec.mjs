@@ -102,6 +102,40 @@ test("thought leadership evidence metadata is explicit in all locales", async ({
   }
 });
 
+test("About redesign preserves CV sourcing, publication gates, and multilingual structure", async ({ page }) => {
+  const expected = {
+    en: ["Education", "Bar Memberships & Admissions", "Selected Experience", "Counsel", "Board of Advisors"],
+    fr: ["Formation", "Barreaux et admissions", "Expérience sélectionnée", "Conseil", "Conseil consultatif"],
+    zh: ["教育背景", "律师协会会员与执业资格", "精选经历", "合作律师", "顾问委员会"],
+    "zh-Hant": ["教育背景", "律師公會會員與執業資格", "精選經歷", "合作律師", "顧問委員會"]
+  };
+
+  await page.goto("/#/about");
+  await expect(page.locator("main h1")).toHaveCount(1);
+  const portrait = page.locator('.about-portrait img');
+  await expect(portrait).toBeVisible();
+  expect(await portrait.evaluate((image) => image.complete && image.naturalWidth > 0)).toBeTruthy();
+
+  for (const [locale, headings] of Object.entries(expected)) {
+    await page.selectOption("#locale-select", locale);
+    for (const heading of headings) {
+      await expect(page.getByRole("heading", { name: heading, exact: true })).toBeVisible();
+    }
+    await expect(page.locator(".credential-timeline article")).toHaveCount(4);
+    await expect(page.locator(".experience-list article")).toHaveCount(4);
+    await expect(page.locator(".bar-status-panel .badge")).toBeVisible();
+    await expect(page.locator(".future-team-grid .badge")).toHaveCount(2);
+  }
+
+  await expect(page.locator('meta[name="robots"]')).toHaveAttribute("content", /noindex/);
+  await expect(page.locator('.about-cta a[href="#/book/service-orientation"]')).toBeVisible();
+  await expect(page.locator('.about-cta a[href="#/services"]')).toBeVisible();
+
+  await page.setViewportSize({ width: 390, height: 844 });
+  await expect(page.locator(".about-hero")).toBeVisible();
+  expect(await page.evaluate(() => document.documentElement.scrollWidth <= window.innerWidth)).toBeTruthy();
+});
+
 test("service filtering narrows catalog results", async ({ page }) => {
   await page.goto("/#/services");
   await page.locator("#service-filters input").fill("document");
