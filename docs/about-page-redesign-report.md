@@ -84,3 +84,79 @@ French, Simplified Chinese, and Traditional Chinese review.
 high-resolution supplied image already used in the prior About-page review and it
 supports responsive editorial cropping. Likeness, image rights, crop preference,
 alt-text approval, and public-use permission remain open human-review items.
+
+## Subsequent Pages And Visual Verification
+
+The historical blocked publication attempt above is retained as the evidence available
+at that time. The following later evidence records the successful deployment of the
+refined browser-only static demo; it does not change any production publication gate.
+
+### GitHub Pages Deployment
+
+| Evidence | Verified result |
+|---|---|
+| Static-demo commit | `4f2f69d0e86a2ba33f6b7ba65d110fdfea824ae0` (`Refine About mobile evidence presentation`) |
+| Workflow | `Deploy static demo to GitHub Pages` |
+| Workflow run | `33331516484` - completed successfully |
+| Workflow URL | `https://github.com/Legal-Services-Platform/legal-services-platform-static-demo-20260828/actions/runs/33331516484` |
+| Deploy job | `99310763873` - completed successfully |
+| Deploy job URL | `https://github.com/Legal-Services-Platform/legal-services-platform-static-demo-20260828/actions/runs/33331516484/job/99310763873` |
+| Pages artifact | `github-pages`, artifact ID `9737772245`, 353,614 bytes |
+| Artifact digest | `sha256:ff264e2121c4e242a453899cf7fe1904ec0f46244bac9114bdf1c485fad87b56` |
+| Artifact download endpoint | `https://api.github.com/repos/Legal-Services-Platform/legal-services-platform-static-demo-20260828/actions/artifacts/9737772245/zip` |
+| Deployment URL | `https://legal-services-platform.github.io/legal-services-platform-static-demo-20260828/` |
+
+The workflow and deploy job were rechecked on August 30, 2026. Both reported
+`completed` with conclusion `success`, and the artifact remained available and
+unexpired.
+
+### CDN Response
+
+The deployment URL returned HTTP `200` on August 30, 2026. The observed response
+included:
+
+- `Content-Type: text/html; charset=utf-8`
+- `ETag: "6a948731-4c3"`
+- `Last-Modified: Sun, 30 Aug 2026 19:40:33 GMT`
+- `Cache-Control: max-age=600`
+- `Age: 0`
+- `x-proxy-cache: MISS`
+- `X-Cache: MISS`
+- GitHub Pages edge region: `iad`
+
+This response proves that the deployed shell was reachable. The cache evidence records
+a fresh miss at the time of the request; it does not by itself claim a later cache hit
+or universal CDN propagation.
+
+### Deployed About-Page Walkthrough
+
+The deployed `#/about` route was inspected at `1440 x 1000` desktop and
+`390 x 844` mobile viewports in English, French, Simplified Chinese, and Traditional
+Chinese.
+
+| Check | Result |
+|---|---|
+| Locale switching and document language | PASS - `en`, `fr`, `zh-Hans`, and `zh-Hant` were applied correctly |
+| Professional title localization | PASS - the lower-risk candidate/specialist wording rendered in all four locales |
+| Evidence disclosure localization | PASS - `Evidence metadata`, `Métadonnées des preuves`, `证据元数据`, and `證據中繼資料` rendered in their respective locales |
+| Collapsed default state | PASS - all inspected evidence disclosures started closed |
+| Disclosure interaction | PASS - the first disclosure expanded and collapsed in every locale and viewport |
+| Evidence completeness | PASS - 17 evidence records were present; each expanded record exposed source title, source type, identity-match status, and publication-permission status |
+| Mobile timeline rhythm | PASS - education and experience row vertical padding reduced from 24 px on desktop to 17.6 px on mobile |
+| Long-title wrapping | PASS - English and French titles wrapped to two lines without overlap; Chinese titles remained on one line at the inspected widths |
+| Portrait and consultation CTA | PASS - visible in every inspected locale and viewport |
+| Horizontal overflow | PASS - none detected at either viewport |
+| Publication safeguards | PASS - `noindex, nofollow, noarchive`, verification badges, and publication-gated future-team states remained present |
+
+The refined collapsible metadata materially shortens the default mobile scan while
+keeping all evidence fields accessible on expansion. The tighter timeline padding
+improves rhythm without causing text collision or hiding the longer French entries.
+
+### Remaining Human-Review Blockers
+
+No authenticated reviewer identities, qualification or authority records, approved
+target regions, terminology decisions, review dates, or sign-off dates were found in
+the supplied materials or repository records. The `Name required` and `Not supplied`
+entries in `docs/about-page-evidence-request-checklist.md` therefore remain accurate.
+They must not be replaced until the responsible people provide reproducible evidence
+and dated approval. Production publication remains blocked.
