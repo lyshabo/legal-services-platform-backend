@@ -1,9 +1,11 @@
-# About Page Evidence Request Checklist
+﻿# About Page Evidence Request Checklist
 
-**Prepared:** August 30, 2026  
-**Asset:** Multilingual About page and mirrored browser-only static demo  
-**Locales:** English, French, Simplified Chinese, Traditional Chinese  
+**Prepared:** August 30, 2026
+**Asset:** Multilingual About page and mirrored browser-only static demo
+**Locales:** English, French, Simplified Chinese, Traditional Chinese
 **Publication state:** Development preview only; production publication remains blocked.
+**Planning convention:** Entries marked `Name required` or `Proposed` are assignments
+for review planning, not completed approvals or publication clearance.
 
 ## Purpose
 
@@ -28,17 +30,17 @@ result, or prior publication.
 
 ## Reviewer Record
 
-| Review function | Named reviewer | Qualification or authority basis | Organization | Review date | Sign-off date | Decision |
-|---|---|---|---|---|---|---|
-| Identity and preferred name |  |  |  |  |  | Not supplied |
-| Professional status and jurisdiction |  |  |  |  |  | Not supplied |
-| Academic credentials |  |  |  |  |  | Not supplied |
-| Employment and institutional experience |  |  |  |  |  | Not supplied |
-| Marketing and content claims |  |  |  |  |  | Not supplied |
-| Image rights and accessibility |  |  |  |  |  | Not supplied |
-| French localization |  |  |  |  |  | Not supplied |
-| Simplified Chinese localization |  |  |  |  |  | Not supplied |
-| Traditional Chinese localization |  |  |  |  |  | Not supplied |
+| Review function | Responsible owner | Named reviewer | Qualification or authority basis | Organization | Proposed due date | Review date | Sign-off date | Decision |
+|---|---|---|---|---|---|---|---|---|
+| Identity and preferred name | Founder / profile owner | Name required | Identity verification authority | Name required | Proposed: September 4, 2026 |  |  | Not supplied |
+| Professional status and jurisdiction | Professional-status owner | Name required | Licensed professional or competent Bar-status reviewer | Name required | Proposed: September 8, 2026 |  |  | Not supplied |
+| Academic credentials | Profile owner | Name required | Academic-record reviewer | Name required | Proposed: September 8, 2026 |  |  | Not supplied |
+| Employment and institutional experience | Profile owner | Name required | Institutional/HR verification authority | Name required | Proposed: September 11, 2026 |  |  | Not supplied |
+| Marketing and content claims | Marketing/content owner | Name required | Legal-marketing or qualified legal reviewer | Name required | Proposed: September 11, 2026 |  |  | Not supplied |
+| Image rights and accessibility | Design/content owner | Name required | Rights holder or authorized representative; accessibility reviewer | Name required | Proposed: September 4, 2026 |  |  | Not supplied |
+| French localization | Localization owner | Name required | Qualified French legal translator | Name required | Proposed: September 15, 2026 |  |  | Not supplied |
+| Simplified Chinese localization | Localization owner | Name required | Qualified Simplified Chinese legal translator | Name required | Proposed: September 15, 2026 |  |  | Not supplied |
+| Traditional Chinese localization | Localization owner | Name required | Qualified Traditional Chinese legal translator | Name required | Proposed: September 15, 2026 |  |  | Not supplied |
 
 ## 1. Identity And Display Name
 
@@ -48,10 +50,14 @@ result, or prior publication.
 | ID-02 | Preferred spelling, punctuation, and capitalization | Confirm exact public form in all locales | Signed self-attestation or approved identity/profile record | Identity reviewer | Blocks page title, headings, metadata, portrait alt text, and citations | Not supplied |
 | ID-03 | Professional portrait identifies the named person | Confirm likeness | Signed confirmation from the subject or authorized representative | Identity reviewer and image-rights reviewer | Blocks portrait publication | Not supplied |
 
-**Evidence location/link:**  
-**Reviewer notes:**  
-**Approved exact display name:**  
-**Signature and date:**  
+**Evidence location/link:**
+**Proposed evidence location:** `evidence/identity/ID-01/`
+**Proposed owner:** Founder / profile owner
+**Proposed reviewer:** Name required
+**Proposed due date:** September 4, 2026
+**Reviewer notes:**
+**Approved exact display name:**
+**Signature and date:**
 
 ## 2. Professional Status, Regulated Titles, And Jurisdiction
 
@@ -63,11 +69,15 @@ result, or prior publication.
 | PS-04 | Current independent professional work from 2017 to present | Current role, capacity, and date range | Engagement/status confirmation and approved public description | Professional-status reviewer | Blocks current-role and current-practice claims | Not supplied |
 | PS-05 | Bar-status panel wording | Exact approved public wording and review expiry | Reviewer-approved statement with evidence date and renewal date | Professional-status reviewer | Blocks removal of the verification badge | Not supplied |
 
-**Approved jurisdictions:**  
-**Approved title by locale:**  
-**Prohibited wording:**  
-**Evidence expiry or next review date:**  
-**Signature and date:**  
+**Approved jurisdictions:**
+**Proposed evidence location:** `evidence/professional-status/PS-01/`
+**Proposed owner:** Professional-status owner
+**Proposed reviewer:** Name required
+**Proposed due date:** September 8, 2026
+**Approved title by locale:**
+**Prohibited wording:**
+**Evidence expiry or next review date:**
+**Signature and date:**
 
 ## 3. Academic Credentials And Doctoral Status
 
@@ -80,10 +90,14 @@ result, or prior publication.
 | AC-05 | Universite de Lubumbashi LLB | Degree, institution name, and dates | Degree certificate, transcript, or authenticated university record | Academic reviewer | Blocks qualification claim | Not supplied |
 | AC-06 | Coursework summaries | Accuracy and relevance of selected subjects | Transcript, course record, or approved CV-to-copy mapping | Academic and content reviewers | Blocks detailed coursework descriptions | Not supplied |
 
-**Approved institution names:**  
-**Approved qualification wording by locale:**  
-**Approved research wording:**  
-**Signature and date:**  
+**Approved institution names:**
+**Proposed evidence location:** `evidence/academic/AC-01-AC-06/`
+**Proposed owner:** Profile owner
+**Proposed reviewer:** Name required
+**Proposed due date:** September 8, 2026
+**Approved qualification wording by locale:**
+**Approved research wording:**
+**Signature and date:**
 
 ## 4. Employment And Institutional Experience
 
@@ -96,15 +110,20 @@ result, or prior publication.
 | EX-05 | Work involving governments, investors, mining operations, and international organizations | Scope without implying undisclosed clients or representation | Role records, work samples cleared for disclosure, or employer/supervisor confirmation | Experience and content reviewers | Blocks experience-scope paragraph | Not supplied |
 | EX-06 | Commercial, regulatory, mining, ESG, tax, customs, treaty, and dispute work | Evidence mapping for each subject | Claim-to-CV and claim-to-record crosswalk approved by the reviewer | Experience and content reviewers | Blocks unsupported subject-matter descriptions | Not supplied |
 
+**Proposed evidence location:** `evidence/experience/EX-01-EX-06/`
+**Proposed owner:** Profile owner
+**Proposed reviewer:** Name required
+**Proposed due date:** September 11, 2026
+
 For every organization, record:
 
-- **Approved organization name:**  
-- **Approved role:**  
-- **Approved dates:**  
-- **Approved duty summary:**  
-- **Permission contact and date:**  
-- **Confidential or prohibited details:**  
-- **Signature and date:**  
+- **Approved organization name:**
+- **Approved role:**
+- **Approved dates:**
+- **Approved duty summary:**
+- **Permission contact and date:**
+- **Confidential or prohibited details:**
+- **Signature and date:**
 
 ## 5. Expertise And Professional Positioning
 
@@ -121,10 +140,14 @@ For every organization, record:
 | CL-09 | International Economic Law | Approved evidence mapping and scope wording | Content/claims reviewer | Blocks expertise label | Not supplied |
 | CL-10 | Research-led international and African perspective | Evidence mapping and confirmation that the wording does not imply authorization across Africa | Content/claims and jurisdiction reviewers | Blocks positioning statement | Not supplied |
 
-**Approved descriptors:**  
-**Descriptors requiring qualification:**  
-**Descriptors rejected:**  
-**Signature and date:**  
+**Approved descriptors:**
+**Proposed evidence location:** `evidence/claims/CL-01-CL-10/`
+**Proposed owner:** Marketing/content owner
+**Proposed reviewer:** Name required
+**Proposed due date:** September 11, 2026
+**Descriptors requiring qualification:**
+**Descriptors rejected:**
+**Signature and date:**
 
 ## 6. Portrait, Image Rights, And Accessibility
 
@@ -137,11 +160,15 @@ For every organization, record:
 | IM-05 | Approve alt text | Accurate, non-inferential accessible description | Accessibility and identity reviewers | Blocks final alt text | Not supplied |
 | IM-06 | Record expiry or withdrawal process | Contact and process for future rights changes | Image-rights reviewer | Blocks production asset governance | Not supplied |
 
-**Copyright owner:**  
-**License or release location:**  
-**Approved crop:**  
-**Approved alt text by locale:**  
-**Signature and date:**  
+**Copyright owner:**
+**Proposed evidence location:** `evidence/image/IM-01-IM-06/`
+**Proposed owner:** Design/content owner
+**Proposed reviewer:** Name required
+**Proposed due date:** September 4, 2026
+**License or release location:**
+**Approved crop:**
+**Approved alt text by locale:**
+**Signature and date:**
 
 ## 7. Consultation And Service Availability
 
@@ -177,6 +204,10 @@ approve another.
 | Evidence/review file link |  |
 | Reviewer signature |  |
 
+**Responsible owner:** Localization owner
+**Proposed due date:** September 15, 2026
+**Proposed evidence location:** `evidence/translations/fr/`
+
 ### Simplified Chinese
 
 | Field | Required entry |
@@ -185,8 +216,8 @@ approve another.
 | Qualification basis |  |
 | Target country/region and audience |  |
 | Source English version and commit |  |
-| Decision on `争议解决专业人士` and prohibited use of `律师` |  |
-| Decision on `投资仲裁博士研究生` |  |
+| Decision on `äº‰è®®è§£å†³ä¸“ä¸šäººå£«` and prohibited use of `å¾‹å¸ˆ` |  |
+| Decision on `æŠ•èµ„ä»²è£åšå£«ç ”ç©¶ç”Ÿ` |  |
 | Bar/admission terminology decision |  |
 | Jurisdiction and disclaimer terminology decision |  |
 | Institutional names and transliteration decisions |  |
@@ -196,6 +227,10 @@ approve another.
 | Decision | Not supplied |
 | Evidence/review file link |  |
 | Reviewer signature |  |
+
+**Responsible owner:** Localization owner
+**Proposed due date:** September 15, 2026
+**Proposed evidence location:** `evidence/translations/zh-Hans/`
 
 ### Traditional Chinese
 
@@ -205,8 +240,8 @@ approve another.
 | Qualification basis |  |
 | Target country/region and audience |  |
 | Source English version and commit |  |
-| Decision on `爭議解決專業人士` and prohibited use of `律師` |  |
-| Decision on `投資仲裁博士研究生` |  |
+| Decision on `çˆ­è­°è§£æ±ºå°ˆæ¥­äººå£«` and prohibited use of `å¾‹å¸«` |  |
+| Decision on `æŠ•è³‡ä»²è£åšå£«ç ”ç©¶ç”Ÿ` |  |
 | Bar/admission terminology decision |  |
 | Jurisdiction and disclaimer terminology decision |  |
 | Institutional names and transliteration decisions |  |
@@ -216,6 +251,10 @@ approve another.
 | Decision | Not supplied |
 | Evidence/review file link |  |
 | Reviewer signature |  |
+
+**Responsible owner:** Localization owner
+**Proposed due date:** September 15, 2026
+**Proposed evidence location:** `evidence/translations/zh-Hant/`
 
 ## 9. Claim-To-Evidence Crosswalk
 
@@ -259,10 +298,9 @@ Production publication must remain blocked when any of the following is true:
 | Simplified Chinese translation |  | Not supplied |  |  |  |
 | Traditional Chinese translation |  | Not supplied |  |  |  |
 
-**Final publication decision:** Not supplied  
-**Authorized production version/commit:**  
-**Authorized publication date:**  
-**Final approver name and authority:**  
-**Signature:**  
-**Date:**  
-
+**Final publication decision:** Not supplied
+**Authorized production version/commit:**
+**Authorized publication date:**
+**Final approver name and authority:**
+**Signature:**
+**Date:**
