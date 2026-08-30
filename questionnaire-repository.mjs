@@ -206,22 +206,27 @@ export async function submitQuestionnaire(id, { answers = {}, locale = "en", use
   const active = await prisma.questionnaireVersion.findUnique({
     where: { questionnaireId_version: { questionnaireId: id, version: evaluation.version } }
   });
-  const submission = await prisma.questionnaireSubmission.create({
-    data: {
-      questionnaireId: id,
-      questionnaireVersionId: active.id,
-      userId,
-      locale,
-      answers: {
-        create: Object.entries(answers).map(([questionKey, value]) => ({ questionKey, value }))
+  const submission = await prisma.$transaction(async (tx) => {
+    const created = await tx.questionnaireSubmission.create({
+      data: {
+        questionnaireId: id,
+        questionnaireVersionId: active.id,
+        userId,
+        locale,
+        answers: {
+          create: Object.entries(answers).map(([questionKey, value]) => ({ questionKey, value }))
+        }
       }
-    }
-  });
-  await appendAudit({
-    action: "questionnaire.submitted",
-    targetType: "QuestionnaireSubmission",
-    targetId: submission.id,
-    metadata: { questionnaireId: id, version: evaluation.version, locale }
+    });
+    await tx.auditEvent.create({
+      data: {
+        action: "questionnaire.submitted",
+        targetType: "QuestionnaireSubmission",
+        targetId: created.id,
+        metadata: { questionnaireId: id, version: evaluation.version, locale }
+      }
+    });
+    return created;
   });
   return {
     id: submission.id,

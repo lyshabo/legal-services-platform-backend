@@ -92,4 +92,18 @@ test("availability rejects invalid time zones and booking status updates are ide
   const repeated = await updateBookingStatus(booking.id, "cancelled", actor);
   assert.equal(cancelled.status, "cancelled");
   assert.equal(repeated.status, "cancelled");
+
+  const invalidRevival = await updateBookingStatus(booking.id, "confirmed", actor);
+  assert.equal(invalidRevival.error, "INVALID_BOOKING_TRANSITION");
+  const latePayment = await reconcilePayment({
+    bookingId: booking.id,
+    provider: "development-admin",
+    status: "succeeded",
+    amountMinor: 0,
+    currency: "USD",
+    idempotencyKey: "cancelled-booking-payment",
+    actor
+  });
+  assert.equal(latePayment.error, "BOOKING_NOT_PAYABLE");
+  assert.equal(booking.status, "cancelled");
 });

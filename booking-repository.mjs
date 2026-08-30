@@ -6,9 +6,29 @@ const slots = new Map();
 const bookings = new Map();
 const payments = new Map();
 const availabilityRules = new Map();
+const terminalBookingStatuses = new Set(["CANCELLED", "EXPIRED", "FAILED"]);
 
 function lower(value) {
   return value?.toLowerCase?.() ?? value;
+}
+
+function canTransitionBooking(from, to) {
+  if (from === to) return true;
+  if (from === "PENDING_PAYMENT") {
+    return ["CONFIRMED", "CANCELLED", "EXPIRED", "FAILED"].includes(to);
+  }
+  return from === "CONFIRMED" && to === "CANCELLED";
+}
+
+function paymentStateConflict(bookingStatus, slotStatus) {
+  const normalizedSlotStatus = slotStatus === "HELD" ? "HOLD" : slotStatus;
+  if (terminalBookingStatuses.has(bookingStatus) || bookingStatus === "CONFIRMED") {
+    return { error: "BOOKING_NOT_PAYABLE", statusCode: 409 };
+  }
+  if (bookingStatus !== "PENDING_PAYMENT" || normalizedSlotStatus !== "HOLD") {
+    return { error: "BOOKING_STATE_CONFLICT", statusCode: 409 };
+  }
+  return null;
 }
 
 function isValidTimezone(value) {
@@ -170,6 +190,7 @@ export async function createBooking({
     return { error: "SLOT_UNAVAILABLE", statusCode: 409 };
   }
   slot.status = "held";
+  slot.holdExpiresAt = new Date(Date.now() + 15 * 60 * 1000).toISOString();
   const booking = {
     id: randomUUID(),
     serviceId,
@@ -198,7 +219,8 @@ export async function reconcilePayment({
   status,
   amountMinor = 0,
   currency = "USD",
-  idempotencyKey
+  idempotencyKey,
+  actor = null
 }) {
   const normalizedStatus = String(status || "").toLowerCase();
   if (
@@ -221,12 +243,49 @@ export async function reconcilePayment({
       }
       return { payment: serializePayment(existing), booking: serializeBooking(booking) };
     }
-    return prisma.$transaction(
-      async (tx) => {
+    try {
+      return await prisma.$transaction(
+        async (tx) => {
         const [booking] = await tx.$queryRaw`
           SELECT * FROM "Booking" WHERE id = ${bookingId} FOR UPDATE
         `;
         if (!booking) return { error: "BOOKING_NOT_FOUND", statusCode: 404 };
+        const [slot] = await tx.$queryRaw`
+          SELECT * FROM "BookingSlot" WHERE id = ${booking.slotId} FOR UPDATE
+        `;
+        if (!slot) return { error: "BOOKING_STATE_CONFLICT", statusCode: 409 };
+        const stateConflict = paymentStateConflict(booking.status, slot.status);
+        if (stateConflict) return stateConflict;
+        if (slot.holdExpiresAt && new Date(slot.holdExpiresAt).getTime() <= Date.now()) {
+          await tx.booking.update({
+            where: { id: bookingId },
+            data: {
+              status: "EXPIRED",
+              statusHistory: {
+                create: {
+                  from: booking.status,
+                  to: "EXPIRED",
+                  reason: "Payment attempted after the booking hold expired"
+                }
+              }
+            }
+          });
+          await tx.bookingSlot.update({
+            where: { id: booking.slotId },
+            data: { status: "AVAILABLE", holdExpiresAt: null }
+          });
+          await tx.auditEvent.create({
+            data: {
+              action: "booking.hold.expired",
+              actorId: actor?.id ?? null,
+              actorRole: actor?.role ? actor.role.toUpperCase() : null,
+              targetType: "Booking",
+              targetId: bookingId,
+              metadata: { slotId: booking.slotId }
+            }
+          });
+          return { error: "BOOKING_HOLD_EXPIRED", statusCode: 409 };
+        }
         const paymentStatus = normalizedStatus.toUpperCase();
         const allowed = ["SUCCEEDED", "FAILED", "REQUIRES_ACTION", "CREATED"];
         if (!allowed.includes(paymentStatus)) {
@@ -274,15 +333,31 @@ export async function reconcilePayment({
         await tx.auditEvent.create({
           data: {
             action: "payment.reconciled",
+            actorId: actor?.id ?? null,
+            actorRole: actor?.role ? actor.role.toUpperCase() : null,
             targetType: "PaymentAttempt",
             targetId: payment.id,
             metadata: { bookingId, status: paymentStatus, provider }
           }
         });
         return { payment: serializePayment(payment), booking: serializeBooking(updatedBooking) };
-      },
-      { isolationLevel: "Serializable" }
-    );
+        },
+        { isolationLevel: "Serializable" }
+      );
+    } catch (error) {
+      if (error.code === "P2002" || error.code === "P2034") {
+        const repeated = await prisma.paymentAttempt.findUnique({ where: { idempotencyKey } });
+        if (repeated) {
+          const repeatedBooking = await prisma.booking.findUnique({
+            where: { paymentId: repeated.id }
+          });
+          return repeatedBooking?.id === bookingId
+            ? { payment: serializePayment(repeated), booking: serializeBooking(repeatedBooking) }
+            : { error: "IDEMPOTENCY_KEY_CONFLICT", statusCode: 409 };
+        }
+      }
+      throw error;
+    }
   }
 
   const existing = payments.get(idempotencyKey);
@@ -295,6 +370,27 @@ export async function reconcilePayment({
   }
   const booking = [...bookings.values()].find((item) => item.id === bookingId);
   if (!booking) return { error: "BOOKING_NOT_FOUND", statusCode: 404 };
+  const slot = slots.get(booking.slotId);
+  const stateConflict = paymentStateConflict(
+    booking.status.toUpperCase(),
+    slot?.status?.toUpperCase()
+  );
+  if (stateConflict) return stateConflict;
+  if (slot.holdExpiresAt && new Date(slot.holdExpiresAt).getTime() <= Date.now()) {
+    const from = booking.status;
+    booking.status = "expired";
+    slot.status = "available";
+    slot.holdExpiresAt = null;
+    await appendAudit({
+      action: "booking.hold.expired",
+      actorId: actor?.id,
+      actorRole: actor?.role,
+      targetType: "Booking",
+      targetId: bookingId,
+      metadata: { from, slotId: booking.slotId }
+    });
+    return { error: "BOOKING_HOLD_EXPIRED", statusCode: 409 };
+  }
   const payment = {
     id: randomUUID(),
     bookingId,
@@ -307,7 +403,6 @@ export async function reconcilePayment({
     createdAt: new Date().toISOString()
   };
   payments.set(idempotencyKey, payment);
-  const slot = slots.get(booking.slotId);
   if (status === "succeeded") {
     booking.status = "confirmed";
     if (slot) slot.status = "confirmed";
@@ -317,6 +412,8 @@ export async function reconcilePayment({
   }
   await appendAudit({
     action: "payment.reconciled",
+    actorId: actor?.id,
+    actorRole: actor?.role,
     targetType: "PaymentAttempt",
     targetId: payment.id,
     metadata: { bookingId, status, provider },
@@ -352,6 +449,16 @@ export async function updateBookingStatus(bookingId, status, actor, reason = "Ad
       `;
       if (!booking) return null;
       if (booking.status === nextStatus) return serializeBooking(booking);
+      if (!canTransitionBooking(booking.status, nextStatus)) {
+        return { error: "INVALID_BOOKING_TRANSITION", statusCode: 409 };
+      }
+      const [slot] = await tx.$queryRaw`
+        SELECT * FROM "BookingSlot" WHERE id = ${booking.slotId} FOR UPDATE
+      `;
+      if (!slot) return { error: "BOOKING_STATE_CONFLICT", statusCode: 409 };
+      if (nextStatus === "CONFIRMED" && slot.status !== "HOLD") {
+        return { error: "BOOKING_STATE_CONFLICT", statusCode: 409 };
+      }
       const updated = await tx.booking.update({
         where: { id: bookingId },
         data: {
@@ -387,7 +494,23 @@ export async function updateBookingStatus(bookingId, status, actor, reason = "Ad
   const booking = [...bookings.values()].find((item) => item.id === bookingId);
   if (!booking) return null;
   const from = booking.status;
+  if (from === lower(nextStatus)) return booking;
+  if (!canTransitionBooking(from.toUpperCase(), nextStatus)) {
+    return { error: "INVALID_BOOKING_TRANSITION", statusCode: 409 };
+  }
+  const slot = slots.get(booking.slotId);
+  if (nextStatus === "CONFIRMED" && slot?.status !== "held") {
+    return { error: "BOOKING_STATE_CONFLICT", statusCode: 409 };
+  }
   booking.status = lower(nextStatus);
+  if (slot && ["CANCELLED", "EXPIRED", "FAILED"].includes(nextStatus)) {
+    slot.status = "available";
+    slot.holdExpiresAt = null;
+  }
+  if (slot && nextStatus === "CONFIRMED") {
+    slot.status = "confirmed";
+    slot.holdExpiresAt = null;
+  }
   await appendAudit({
     action: "booking.status.updated",
     actorId: actor.id,

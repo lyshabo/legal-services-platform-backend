@@ -21,13 +21,21 @@ export async function createAssessment(input = {}) {
     : normalizeStatus(input.status, urgency);
   if (prismaEnabled()) {
     const prisma = await getPrisma();
-    const assessment = await prisma.preliminaryAssessment.create({
-      data: { language, jurisdiction, issue, urgency, status }
+    return prisma.$transaction(async (tx) => {
+      const assessment = await tx.preliminaryAssessment.create({
+        data: { language, jurisdiction, issue, urgency, status }
+      });
+      await tx.auditEvent.create({
+        data: {
+          action: "assessment.created",
+          targetType: "PreliminaryAssessment",
+          targetId: assessment.id,
+          assessmentId: assessment.id,
+          metadata: { status }
+        }
+      });
+      return assessment;
     });
-    await prisma.auditEvent.create({
-      data: { action: "assessment.created", targetType: "PreliminaryAssessment", targetId: assessment.id, metadata: { status } }
-    });
-    return assessment;
   }
   const assessment = { id: `assessment-${randomUUID()}`, language, jurisdiction, issue, urgency, status, submittedAt: new Date().toISOString() };
   memory.unshift(assessment);

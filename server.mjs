@@ -114,8 +114,8 @@ async function handleApi(request, response) {
     return true;
   }
   if (request.method === "GET" && path === "/api/admin/session") {
-    const session = await getSession(request);
-    json(response, 200, { authenticated: Boolean(session), user: session?.user ?? null });
+    const user = await requireRole(request);
+    json(response, 200, { authenticated: Boolean(user), user: user ?? null });
     return true;
   }
   if (request.method === "POST" && path === "/api/assessments") {
@@ -312,7 +312,8 @@ async function handleApi(request, response) {
     }
     const result = await reconcilePayment({
       ...(await readJson(request)),
-      bookingId: decodeURIComponent(adminPaymentMatch[1])
+      bookingId: decodeURIComponent(adminPaymentMatch[1]),
+      actor: user
     });
     json(response, result.error ? result.statusCode ?? 400 : 200, result);
     return true;

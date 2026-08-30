@@ -2,6 +2,12 @@ import test from "node:test";
 import assert from "node:assert/strict";
 import { execFileSync } from "node:child_process";
 import { createOidcProvider } from "../auth.config.mjs";
+import {
+  createDevSession,
+  getSession,
+  parseCookies,
+  sessionCookie
+} from "../server-auth.mjs";
 
 test("OIDC provider is created only from complete approved environment configuration", () => {
   assert.equal(createOidcProvider({}), null);
@@ -60,4 +66,13 @@ test("development authentication requires an explicit strong secret", () => {
       ),
     /DEV_ADMIN_KEY must be supplied/
   );
+});
+
+test("development sessions expire server-side and cookie parsing preserves encoded values", async () => {
+  assert.equal(parseCookies("token=a%3Db%3Dc").token, "a=b=c");
+  const session = createDevSession();
+  const cookie = sessionCookie(session).split(";")[0];
+  assert.equal((await getSession({ headers: { cookie } }))?.id, session.id);
+  session.expiresAt = new Date(Date.now() - 1).toISOString();
+  assert.equal(await getSession({ headers: { cookie } }), null);
 });

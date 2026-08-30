@@ -4,6 +4,7 @@ import { hasPermission } from "./auth.config.mjs";
 
 const sessions = new Map();
 const SESSION_COOKIE = "lsp_session";
+const SESSION_TTL_MS = 60 * 60 * 1000;
 const DEV_ADMIN_KEY = process.env.DEV_ADMIN_KEY || "";
 export const appEnvironment = process.env.APP_ENV || "development";
 export const authAdapterName =
@@ -19,7 +20,13 @@ export function parseCookies(header = "") {
   return Object.fromEntries(
     header
       .split(";")
-      .map((part) => part.trim().split("="))
+      .map((part) => {
+        const normalized = part.trim();
+        const separator = normalized.indexOf("=");
+        return separator > 0
+          ? [normalized.slice(0, separator), normalized.slice(separator + 1)]
+          : [];
+      })
       .filter(([key, value]) => key && value)
       .map(([key, value]) => [key, decodeURIComponent(value)])
   );
@@ -37,7 +44,8 @@ export function createDevSession() {
       role: "platform_admin",
       name: "Development administrator"
     },
-    createdAt: new Date().toISOString()
+    createdAt: new Date().toISOString(),
+    expiresAt: new Date(Date.now() + SESSION_TTL_MS).toISOString()
   };
   sessions.set(sessionToken, session);
   return session;
@@ -49,7 +57,13 @@ export async function getSession(request) {
     return getAuthSessionFromCookie(request.headers.cookie || "");
   }
   const tokenValue = parseCookies(request.headers.cookie)[SESSION_COOKIE];
-  return tokenValue ? sessions.get(tokenValue) ?? null : null;
+  if (!tokenValue) return null;
+  const session = sessions.get(tokenValue) ?? null;
+  if (session && new Date(session.expiresAt).getTime() <= Date.now()) {
+    sessions.delete(tokenValue);
+    return null;
+  }
+  return session;
 }
 
 export function sessionCookie(session) {
@@ -104,7 +118,8 @@ export function sessionHasRole(session, role = "PLATFORM_ADMIN") {
 
 export async function requirePermission(request, permission) {
   const session = await getSession(request);
-  if (!session || !hasPermission(session.user.role.toUpperCase(), permission)) return null;
+  const role = session?.user?.role;
+  if (!role || !hasPermission(role.toUpperCase(), permission)) return null;
   return session.user;
 }
 

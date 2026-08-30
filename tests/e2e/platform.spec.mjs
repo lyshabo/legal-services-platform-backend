@@ -231,6 +231,23 @@ test("launch controls support development login, versioning, and local gate stat
   await expect(page.getByText(/service.version.created/i).first()).toBeVisible();
 });
 
+test("admin session lifecycle enforces RBAC before login and after logout", async ({ page }) => {
+  const deniedBeforeLogin = await page.request.get("/api/admin/bookings");
+  expect(deniedBeforeLogin.status()).toBe(401);
+
+  await page.goto("/#/admin");
+  await page.locator("#admin-login-form input[name=key]").fill(developmentAdminKey);
+  await page.locator("#admin-login-form button[type=submit]").click();
+  await expect(page.getByText(/Authenticated as Development administrator/i)).toBeVisible();
+  expect((await page.request.get("/api/admin/bookings")).status()).toBe(200);
+
+  await page.locator("#admin-logout").click();
+  await expect(page.locator("#admin-login-form")).toBeVisible();
+  const session = await (await page.request.get("/api/admin/session")).json();
+  expect(session.authenticated).toBe(false);
+  expect((await page.request.get("/api/admin/bookings")).status()).toBe(401);
+});
+
 test("booking loads localized slots and reconciles development payment", async ({ page }) => {
   await page.request.post("/api/dev/reset-bookings");
   await page.goto("/#/book/service-orientation");
@@ -297,7 +314,7 @@ test("admin evidence filter labels and status options are localized", async ({ p
   }
 });
 
-test("admin updates booking status and reconciles payment", async ({ page }) => {
+test("admin prevents terminal booking revival and reconciles an active booking", async ({ page }) => {
   const slotsResponse = await page.request.get("/api/booking/slots?timezone=UTC");
   const { slots } = await slotsResponse.json();
   expect(slots.length).toBeGreaterThan(0);
@@ -321,6 +338,34 @@ test("admin updates booking status and reconciles payment", async ({ page }) => 
   await status.selectOption("cancelled");
   await expect(page.locator(`[data-booking-status="${booking.id}"]`)).toHaveValue("cancelled");
   await page.locator(`[data-reconcile-booking="${booking.id}"]`).click();
+  await expect(page.getByText("BOOKING_NOT_PAYABLE")).toBeVisible();
+  await expect(page.locator(`[data-booking-status="${booking.id}"]`)).toHaveValue("cancelled");
+
+  const refreshedSlotsResponse = await page.request.get("/api/booking/slots?timezone=UTC");
+  const { slots: refreshedSlots } = await refreshedSlotsResponse.json();
+  const activeBookingResponse = await page.request.post("/api/booking", {
+    data: {
+      serviceId: refreshedSlots[0].serviceId,
+      slotId: refreshedSlots[0].id,
+      locale: "en",
+      clientTimezone: "UTC",
+      idempotencyKey: `admin-active-e2e-${Date.now()}`
+    }
+  });
+  expect(activeBookingResponse.ok()).toBeTruthy();
+  const activeBooking = await activeBookingResponse.json();
+  await page.reload();
+  const activeStatus = page.locator(`[data-booking-status="${activeBooking.id}"]`);
+  await expect(activeStatus).toBeVisible();
+  await page.locator(`[data-reconcile-booking="${activeBooking.id}"]`).click();
   await expect(page.getByText(/Payment reconciled and booking state refreshed/i)).toBeVisible();
-  await expect(page.locator(`[data-booking-status="${booking.id}"]`)).toHaveValue("confirmed");
+  await expect(page.locator(`[data-booking-status="${activeBooking.id}"]`)).toHaveValue("confirmed");
+  const auditResponse = await page.request.get("/api/admin/audit?action=payment.reconciled");
+  expect(auditResponse.ok()).toBeTruthy();
+  const audit = await auditResponse.json();
+  expect(
+    audit.events.some(
+      (event) => event.actorId === "dev-admin" && event.metadata?.bookingId === activeBooking.id
+    )
+  ).toBeTruthy();
 });
