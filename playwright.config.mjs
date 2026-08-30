@@ -5,7 +5,8 @@ process.env.E2E_DEV_ADMIN_KEY ||= randomBytes(32).toString("hex");
 
 export default defineConfig({
   testDir: "./tests/e2e",
-  fullyParallel: true,
+  fullyParallel: false,
+  workers: 1,
   reporter: "list",
   use: {
     baseURL: "http://127.0.0.1:4173",
@@ -15,7 +16,7 @@ export default defineConfig({
   webServer: {
     command: "node server.mjs",
     url: "http://127.0.0.1:4173",
-    reuseExistingServer: true,
+    reuseExistingServer: false,
     timeout: 20_000,
     env: {
       ...process.env,
