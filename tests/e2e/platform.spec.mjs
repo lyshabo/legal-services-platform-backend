@@ -74,6 +74,7 @@ test("preliminary legal assessment exposes missing, unsupported, and attorney-ap
   await page.goto("/#/assessment");
   await page.locator("#assessment-form button[type=submit]").click();
   await expect(page.locator(".result-status strong")).toHaveText("MISSING_INFORMATION");
+  await page.locator('select[name="language"]').selectOption({ label: "English" });
   await page.locator('input[name="jurisdiction"]').fill("UNSUPPORTED");
   await page.locator('select[name="issue"]').selectOption({ label: "International matter" });
   await page.locator("#assessment-form button[type=submit]").click();
