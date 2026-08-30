@@ -96,6 +96,7 @@ test("thought leadership evidence metadata is explicit in all locales", async ({
     await page.selectOption("#locale-select", locale);
     await expect(page.locator(".thought-leadership-section")).toBeVisible();
     await expect(page.locator(".evidence-fields")).toHaveCount(17);
+    await page.locator(".evidence-details").first().locator("summary").click();
     for (const label of labels) {
       await expect(page.locator(".evidence-fields dt", { hasText: label }).first()).toBeVisible();
     }
