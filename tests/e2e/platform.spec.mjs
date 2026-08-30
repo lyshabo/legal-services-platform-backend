@@ -26,6 +26,15 @@ test("multilingual navigation updates visible content", async ({ page }) => {
   await expect(page.getByRole("heading", { name: "國際法。非洲視角。策略洞見。" })).toBeVisible();
 });
 
+test("public demo link uses the approved GitHub Pages destination", async ({ page }) => {
+  await page.goto("/#/home");
+  const link = page.locator('a[href="https://lyshabo.github.io/legal-services-platform-backend/"]');
+  await expect(link).toHaveAttribute("target", "_blank");
+  await expect(link).toHaveAttribute("rel", /noopener/);
+  await expect(link).toHaveAttribute("rel", /noreferrer/);
+  await expect(link).toHaveText("Open public static demo");
+});
+
 test("preliminary legal assessment captures structured intake and escalates urgency", async ({ page }) => {
   await page.goto("/#/assessment");
   await expect(page.getByRole("heading", { name: /Preliminary Legal Assessment/i })).toBeVisible();
