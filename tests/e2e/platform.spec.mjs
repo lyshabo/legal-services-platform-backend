@@ -104,10 +104,26 @@ test("thought leadership evidence metadata is explicit in all locales", async ({
 
 test("About redesign preserves CV sourcing, publication gates, and multilingual structure", async ({ page }) => {
   const expected = {
-    en: ["Education", "Bar Memberships & Admissions", "Selected Experience", "Counsel", "Board of Advisors"],
-    fr: ["Formation", "Barreaux et admissions", "Expérience sélectionnée", "Conseil", "Conseil consultatif"],
-    zh: ["教育背景", "律师协会会员与执业资格", "精选经历", "合作律师", "顾问委员会"],
-    "zh-Hant": ["教育背景", "律師公會會員與執業資格", "精選經歷", "合作律師", "顧問委員會"]
+    en: {
+      headings: ["Education", "Bar Memberships & Admissions", "Selected Experience", "Counsel", "Board of Advisors"],
+      title: "Dispute Resolution Specialist | PhD Candidate in Investment Arbitration",
+      doctoralStatus: "PhD Candidate in Investment Arbitration"
+    },
+    fr: {
+      headings: ["Formation", "Barreaux et admissions", "Expérience sélectionnée", "Conseil", "Conseil consultatif"],
+      title: "Spécialiste du règlement des différends | Doctorante en arbitrage d’investissement",
+      doctoralStatus: "Doctorante en arbitrage d’investissement"
+    },
+    zh: {
+      headings: ["教育背景", "律师协会会员与执业资格", "精选经历", "合作律师", "顾问委员会"],
+      title: "争议解决专业人士 | 投资仲裁博士研究生",
+      doctoralStatus: "投资仲裁博士研究生"
+    },
+    "zh-Hant": {
+      headings: ["教育背景", "律師公會會員與執業資格", "精選經歷", "合作律師", "顧問委員會"],
+      title: "爭議解決專業人士 | 投資仲裁博士研究生",
+      doctoralStatus: "投資仲裁博士研究生"
+    }
   };
 
   await page.goto("/#/about");
@@ -116,9 +132,12 @@ test("About redesign preserves CV sourcing, publication gates, and multilingual 
   await expect(portrait).toBeVisible();
   expect(await portrait.evaluate((image) => image.complete && image.naturalWidth > 0)).toBeTruthy();
 
-  for (const [locale, headings] of Object.entries(expected)) {
+  for (const [locale, content] of Object.entries(expected)) {
     await page.selectOption("#locale-select", locale);
-    for (const heading of headings) {
+    await expect(page.getByRole("heading", { name: "Tezzeta Mbuya N'Gungwa", exact: true })).toBeVisible();
+    await expect(page.locator(".about-professional-title")).toHaveText(content.title);
+    await expect(page.locator(".credential-timeline article").first()).toContainText(content.doctoralStatus);
+    for (const heading of content.headings) {
       await expect(page.getByRole("heading", { name: heading, exact: true })).toBeVisible();
     }
     await expect(page.locator(".credential-timeline article")).toHaveCount(4);

@@ -1,6 +1,6 @@
 # About Page Claims Review
 
-**Reviewed:** August 30, 2026  
+**Reviewed:** August 30, 2026
 **Asset:** Main About page and browser-only static demo  
 **Sources:** `CV Brick court.docx`, existing gated About/Thought Leadership content  
 **Publication call:** Blocked pending evidence and responsible-reviewer approval.
@@ -52,3 +52,21 @@ Before production publication, collect:
 8. Qualified French, Simplified Chinese, and Traditional Chinese review with named reviewers, target regions, terminology decisions, and sign-off dates.
 9. Consultation workflow and jurisdiction approval.
 
+## Consolidated Published-Copy Review
+
+**Reviewed:** August 30, 2026
+**Call:** Suitable for the gated development preview; not approved for production publication.
+
+| Revised wording | Type | Call | Remaining substantiation |
+|---|---|---|---|
+| `Legal researcher, international law specialist, and dispute-resolution specialist` | Professional-positioning and implied capability claim | Use in development preview | Map the descriptors to approved CV evidence and obtain responsible-reviewer approval. |
+| `PhD Candidate in Investment Arbitration` and locale equivalents | Specific factual claim | Use only with the existing gate | Current University of Essex enrolment record, approved research wording, and publication permission. |
+| Research and advisory work relating to governments, investors, mining operations, international organizations, and commercial disputes | Experience-scope claim | Use only as CV-attributed wording | Role or institution records and confirmation that the wording does not imply undisclosed clients or representation. |
+| `Independent advisory and legal research work` and locale equivalents | Professional-experience claim | Lower risk than `Independent Counsel`; still gated | Current role and date confirmation, jurisdiction review, and approved public description. |
+| `Research-led approach` | Implied capability claim | Use with qualification | Evidence mapping and continued wording that it is informational/advisory support, not a promised outcome. |
+| `Tezzeta Mbuya N'Gungwa` | Identity claim | Existing published display name; approval still required | Authoritative identity record linking the published name to the CV name `Tezzeta Mbuya`, plus written approval of the display name. |
+
+The Simplified and Traditional Chinese hero titles now use `争议解决专业人士` and
+`爭議解決專業人士`, not the regulated `律师` or `律師` label. The French experience
+entry no longer uses the ambiguous `Conseil indépendante`. All three non-English versions
+remain qualified-translation-review drafts.
