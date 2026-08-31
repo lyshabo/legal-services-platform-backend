@@ -228,3 +228,24 @@
       parent repository.
 - [ ] Automated checks are not represented as qualified legal, service-scope,
       jurisdiction, or translation approval.
+
+## Narrow approvals and single-path Pages
+
+- [ ] Approval records and skill source are staged by exact path and the cached
+      file list contains no packaged skill, unrelated code, report, or artifact.
+- [ ] Missing authenticated approver names, authority bases, decisions, and
+      actual sign-off dates remain explicitly blocked and unsigned.
+- [ ] The Pages run is tied to the exact source commit and every workflow/job
+      conclusion is recorded.
+- [ ] Artifact name, ID, size, expiry, download endpoint, and formal
+      API-provided `sha256:` digest are captured.
+- [ ] Two or more deployed-URL requests record status, final URL, `ETag`,
+      `Last-Modified`, `Cache-Control`, `Age`, cache status, and hit count.
+- [ ] Stable validators and cache progression or revalidation are confirmed.
+- [ ] Pages `build_type`, checked-in workflows, and all exact-commit runs are
+      compared for duplicate legacy and Actions deployment paths.
+- [ ] Exactly one authoritative Pages path remains configured.
+- [ ] When Actions is selected, a fresh workflow run succeeds without a new
+      legacy Pages run for the verification commit.
+- [ ] Push, workflow, artifact, deployment, public-content, and CDN evidence are
+      reported as independent layers.

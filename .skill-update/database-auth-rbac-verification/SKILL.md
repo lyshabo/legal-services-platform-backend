@@ -963,3 +963,35 @@ professional legal-services catalog:
    staged diff. Exclude unrelated hunks, dirty reports, generated artifacts,
    secrets, and the nested static-demo entry from the parent commit. Report
    qualified legal and translation approvals independently from test results.
+
+### Approval records and single-path Pages verification
+
+Apply these checks when approval evidence and a GitHub Pages deployment are
+updated together:
+
+1. Commit approval records and reusable skill source by exact path only.
+   Inspect the cached file list and patch, exclude packaged skills and unrelated
+   application/report changes, and use a focused message describing the
+   approval and verification controls.
+2. Never replace a missing approver, authority basis, decision, or sign-off date
+   from a placeholder request. Retain `Name not supplied`, `Not signed`, and a
+   blocking decision until authenticated reviewer details are actually
+   provided.
+3. Query the Pages workflow by the exact source commit. Record workflow and job
+   conclusions, artifact name, ID, size, expiry, authenticated download URL, and
+   the API-provided formal `sha256:` digest.
+4. Fetch the deployed URL at least twice. Record status, final URL, `ETag`,
+   `Last-Modified`, `Cache-Control`, `Age`, cache status, and cache-hit count.
+   Confirm a stable validator and increasing age or a documented revalidation;
+   do not infer propagation from a single response.
+5. Detect duplicate Pages paths by comparing repository Pages `build_type`,
+   checked-in workflows, and all runs for the exact commit. Treat simultaneous
+   legacy branch publishing and Actions deployment as a configuration defect,
+   even when both runs succeed.
+6. Select one authoritative path. Prefer the checked-in Actions workflow when
+   explicit artifact, digest, job, and deployment evidence is required. Change
+   repository settings through an authenticated API without exposing tokens,
+   dispatch a fresh run, and verify that no new legacy deployment run appears
+   for the verification commit.
+7. Report source push, workflow execution, artifact integrity, deployment
+   status, public content, and CDN propagation as separate evidence layers.
