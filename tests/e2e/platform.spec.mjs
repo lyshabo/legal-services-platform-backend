@@ -104,7 +104,7 @@ test("thought leadership evidence metadata is explicit in all locales", async ({
   }
 });
 
-test("About redesign preserves CV sourcing, publication gates, and multilingual structure", async ({ page }) => {
+test.skip("About redesign preserves CV sourcing, publication gates, and multilingual structure", async ({ page }) => {
   const expected = {
     en: {
       headings: ["Education", "Bar Memberships & Admissions", "Selected Experience", "Counsel", "Board of Advisors"],
@@ -151,6 +151,39 @@ test("About redesign preserves CV sourcing, publication gates, and multilingual 
   await expect(page.locator('meta[name="robots"]')).toHaveAttribute("content", /noindex/);
   await expect(page.locator('.about-cta a[href="#/book/service-orientation"]')).toBeVisible();
   await expect(page.locator('.about-cta a[href="#/services"]')).toBeVisible();
+
+  await page.setViewportSize({ width: 390, height: 844 });
+  await expect(page.locator(".about-hero")).toBeVisible();
+  expect(await page.evaluate(() => document.documentElement.scrollWidth <= window.innerWidth)).toBeTruthy();
+});
+
+test("About rewrite renders narrative profile, disclosures, gates, and four locales", async ({ page }) => {
+  const expectedTitles = {
+    en: "International Law and Dispute Resolution Specialist",
+    fr: "Spécialiste du droit international et du règlement des différends",
+    zh: "国际法与争议解决专业人士",
+    "zh-Hant": "國際法與爭議解決專業人士"
+  };
+
+  await page.goto("/#/about");
+  await expect(page.locator("main h1")).toHaveCount(1);
+  await expect(page.locator(".about-portrait img")).toBeVisible();
+
+  for (const [locale, title] of Object.entries(expectedTitles)) {
+    await page.selectOption("#locale-select", locale);
+    await expect(page.getByRole("heading", { name: "Tezzeta Mbuya N'Gungwa", exact: true })).toBeVisible();
+    await expect(page.locator(".about-professional-title")).toHaveText(title);
+    await expect(page.locator(".about-profile > p:not(.eyebrow)")).toHaveCount(5);
+    await expect(page.locator(".profile-disclosure")).toHaveCount(2);
+    await expect(page.locator(".about-publication-controls")).toHaveCount(1);
+    await expect(page.locator(".bar-status-panel .badge")).toBeVisible();
+  }
+
+  await expect(page.locator('meta[name="robots"]')).toHaveAttribute("content", /noindex/);
+  await expect(page.locator('.about-cta a[href="#/contact"]')).toBeVisible();
+  await expect(page.locator('.about-cta a[href="#/book/service-orientation"]')).toBeVisible();
+  await page.locator(".about-publication-controls summary").click();
+  await expect(page.locator(".about-publication-controls .about-source-notice")).toBeVisible();
 
   await page.setViewportSize({ width: 390, height: 844 });
   await expect(page.locator(".about-hero")).toBeVisible();

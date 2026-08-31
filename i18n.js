@@ -1032,3 +1032,405 @@ for (const [locale, about] of Object.entries({
     approachText: "Mbuya 以研究為基礎處理複雜的國際及跨境問題，重視法律來源、司法管轄區、商業背景及初步評估的界限。網站將其表述為資訊與諮詢支援，不承諾任何法律結果。"
   }
 })) Object.assign(copy[locale].about, about);
+
+// Authoritative narrative profile override applied after all legacy locale layers.
+Object.assign(copy.en.about, {
+  professionalTitle: "International Law and Dispute Resolution Specialist",
+  heroSummary: "Mbuya works across international investment law, arbitration, natural-resource governance, and Africa-focused legal and economic questions.",
+  profileHeading: "Professional Profile",
+  profileParagraphs: [
+    "Mbuya is an international law and dispute-resolution specialist, a qualified member of the Kinshasa/Gombe Bar Association, independent counsel, and a doctoral researcher in investment arbitration.",
+    "Her legal practice and advisory experience spans more than ten years. She has advised governments, investors, mining companies, and international organizations on matters involving investment, natural resources, commercial arrangements, regulation, and international economic relations.",
+    "Mbuya's work brings together international investment law, investor-State dispute settlement, commercial arbitration, international trade, natural-resource governance, business and human rights, and disputes arising from extractive industries. Her perspective is informed by the legal and development priorities of African States and communities, including the relationship between investment, local development, and the public interest.",
+    "At the University of Essex, Mbuya's doctoral research examines the Africanization of investor-State dispute settlement in light of the AfCFTA Investment Protocol. Her academic background also includes advanced study in oil, gas and mining law, environmental and natural-resource law, and a foundational law degree from the Université de Lubumbashi.",
+    "Her professional experience includes comparative legal research and international legal-instrument work with UNCITRAL, research and case support at Leigh Day, and independent advisory work involving commercial contracts, public-private partnerships, mining, regulatory matters, and cross-border disputes. Publication and conference records are presented separately with their evidence and permission controls."
+  ],
+  educationDisclosure: "View education and research details",
+  experienceDisclosure: "View selected professional experience",
+  publicationControlsTitle: "Publication and evidence controls",
+  ctaTitle: "Connect with Mbuya",
+  ctaText: "For professional inquiries, consultation requests, speaking invitations, research, or institutional collaboration, use the contact or consultation pathway. A submission does not create a professional relationship or confirm acceptance of a matter.",
+  ctaPrimary: "Contact Mbuya",
+  ctaSecondary: "Book a consultation"
+});
+Object.assign(copy.fr.about, {
+  professionalTitle: "Spécialiste du droit international et du règlement des différends",
+  heroSummary: "Mbuya travaille sur le droit international des investissements, l'arbitrage, la gouvernance des ressources naturelles et les questions juridiques et économiques liées à l'Afrique.",
+  profileHeading: "Profil professionnel",
+  profileParagraphs: [
+    "Mbuya est spécialiste du droit international et du règlement des différends, membre qualifiée du Barreau de Kinshasa/Gombe, conseil indépendante et chercheuse doctorale en arbitrage d'investissement.",
+    "Sa pratique juridique et son expérience du conseil s'étendent sur plus de dix ans. Elle a conseillé des gouvernements, des investisseurs, des sociétés minières et des organisations internationales sur des questions liées à l'investissement, aux ressources naturelles, aux opérations commerciales, à la réglementation et aux relations économiques internationales.",
+    "Les travaux de Mbuya réunissent le droit international des investissements, le règlement des différends investisseur-État, l'arbitrage commercial, le commerce international, la gouvernance des ressources naturelles, les entreprises et les droits humains, ainsi que les différends issus des industries extractives. Sa perspective tient compte des priorités juridiques et de développement des États et des communautés d'Afrique, notamment des liens entre investissement, développement local et intérêt public.",
+    "À l'University of Essex, les recherches doctorales de Mbuya portent sur l'africanisation du règlement des différends investisseur-État au regard du Protocole sur l'investissement de la ZLECAf. Son parcours universitaire comprend également des études avancées en droit du pétrole, du gaz et des mines, en droit de l'environnement et des ressources naturelles, ainsi qu'une formation juridique initiale à l'Université de Lubumbashi.",
+    "Son expérience professionnelle comprend la recherche juridique comparative et des travaux sur les instruments juridiques internationaux auprès de la CNUDCI, la recherche et l'appui aux dossiers chez Leigh Day, ainsi qu'une activité indépendante de conseil concernant les contrats commerciaux, les partenariats public-privé, les mines, la réglementation et les différends transfrontaliers. Les publications et conférences sont présentées séparément avec leurs contrôles de preuve et d'autorisation."
+  ],
+  educationDisclosure: "Voir la formation et la recherche",
+  experienceDisclosure: "Voir l'expérience professionnelle sélectionnée",
+  publicationControlsTitle: "Contrôles de publication et de preuve",
+  ctaTitle: "Échanger avec Mbuya",
+  ctaText: "Pour une demande professionnelle, une consultation, une invitation à intervenir, une recherche ou une collaboration institutionnelle, utilisez le parcours de contact ou de consultation. Une demande ne crée pas de relation professionnelle et ne confirme pas l'acceptation d'un dossier.",
+  ctaPrimary: "Contacter Mbuya",
+  ctaSecondary: "Réserver une consultation"
+});
+Object.assign(copy.zh.about, {
+  professionalTitle: "国际法与争议解决专业人士",
+  heroSummary: "Mbuya 的工作涵盖国际投资法、仲裁、自然资源治理，以及以非洲为重点的法律与经济议题。",
+  profileHeading: "专业简介",
+  profileParagraphs: [
+    "Mbuya 是国际法与争议解决专业人士、金沙萨/Gombe 律师协会合资格会员、独立法律顾问，并从事投资仲裁博士研究。",
+    "她拥有超过十年的法律执业与咨询经验，曾就投资、自然资源、商业安排、监管及国际经济关系等事项为政府、投资者、矿业公司和国际组织提供咨询。",
+    "Mbuya 的工作横跨国际投资法、投资者与国家争端解决、商事仲裁、国际贸易、自然资源治理、企业与人权，以及采掘业相关争议。她重视非洲国家和社区的法律与发展需求，包括投资、地方发展与公共利益之间的关系。",
+    "Mbuya 在埃塞克斯大学开展博士研究，探讨《非洲大陆自由贸易区投资议定书》背景下投资者与国家争端解决机制的非洲化。她还接受过石油、天然气与矿业法、环境与自然资源法方面的高等法律教育，并在卢本巴希大学完成基础法律教育。",
+    "她的专业经历包括在联合国国际贸易法委员会开展比较法律研究和国际法律文书相关工作、在 Leigh Day 从事研究与案件支持，以及围绕商业合同、公私合作、矿业、监管事项和跨境争议开展独立咨询。出版物与会议记录另行展示，并保留证据与发布许可控制。"
+  ],
+  educationDisclosure: "查看教育与研究详情",
+  experienceDisclosure: "查看精选专业经历",
+  publicationControlsTitle: "发布与证据控制",
+  ctaTitle: "联系 Mbuya",
+  ctaText: "如需专业咨询、预约咨询、演讲邀请、研究或机构合作，请使用联系或咨询流程。提交信息不会建立专业关系，也不代表接受委托。",
+  ctaPrimary: "联系 Mbuya",
+  ctaSecondary: "预约咨询"
+});
+Object.assign(copy["zh-Hant"].about, {
+  professionalTitle: "國際法與爭議解決專業人士",
+  heroSummary: "Mbuya 的工作涵蓋國際投資法、仲裁、自然資源治理，以及以非洲為重點的法律與經濟議題。",
+  profileHeading: "專業簡介",
+  profileParagraphs: [
+    "Mbuya 是國際法與爭議解決專業人士、金沙薩/Gombe 律師公會合資格會員、獨立法律顧問，並從事投資仲裁博士研究。",
+    "她擁有超過十年的法律執業及諮詢經驗，曾就投資、自然資源、商業安排、監管及國際經濟關係等事項，為政府、投資者、礦業公司及國際組織提供諮詢。",
+    "Mbuya 的工作橫跨國際投資法、投資者與國家爭端解決、商事仲裁、國際貿易、自然資源治理、企業與人權，以及採掘業相關爭議。她重視非洲國家及社群的法律與發展需要，包括投資、地方發展與公共利益之間的關係。",
+    "Mbuya 在艾塞克斯大學進行博士研究，探討《非洲大陸自由貿易區投資議定書》背景下投資者與國家爭端解決機制的非洲化。她亦接受過石油、天然氣與礦業法、環境與自然資源法方面的高階法律教育，並於盧本巴希大學完成基礎法律教育。",
+    "她的專業經歷包括在聯合國國際貿易法委員會進行比較法律研究及國際法律文書相關工作、在 Leigh Day 從事研究與案件支援，以及圍繞商業合約、公私合作、礦業、監管事項及跨境爭議開展獨立諮詢。出版物與會議記錄另行展示，並保留證據與發布許可控制。"
+  ],
+  educationDisclosure: "查看教育與研究詳情",
+  experienceDisclosure: "查看精選專業經歷",
+  publicationControlsTitle: "發布與證據控制",
+  ctaTitle: "聯絡 Mbuya",
+  ctaText: "如需專業諮詢、預約諮詢、演講邀請、研究或機構合作，請使用聯絡或諮詢流程。提交資料不會建立專業關係，也不代表接受委託。",
+  ctaPrimary: "聯絡 Mbuya",
+  ctaSecondary: "預約諮詢"
+});
+
+// Final Rewrite About Section narrative override. Keep identity fields and publication gates intact.
+Object.assign(copy.en.about, {
+  professionalTitle: "International Law and Dispute Resolution Specialist",
+  heroSummary: "Mbuya works across international investment law, arbitration, natural-resource governance, and Africa-focused legal and economic questions.",
+  profileHeading: "Professional Profile",
+  profileParagraphs: [
+    "Mbuya is an international law and dispute-resolution specialist, a qualified member of the Kinshasa/Gombe Bar Association, independent counsel, and a doctoral researcher in investment arbitration.",
+    "Her legal practice and advisory experience spans more than ten years. She has advised governments, investors, mining companies, and international organizations on matters involving investment, natural resources, commercial arrangements, regulation, and international economic relations.",
+    "Mbuya's work brings together international investment law, investor-State dispute settlement, commercial arbitration, international trade, natural-resource governance, business and human rights, and disputes arising from extractive industries. Her perspective is informed by the legal and development priorities of African States and communities, including the relationship between investment, local development, and the public interest.",
+    "At the University of Essex, Mbuya's doctoral research examines the Africanization of investor-State dispute settlement in light of the AfCFTA Investment Protocol. Her academic background also includes advanced study in oil, gas and mining law, environmental and natural-resource law, and a foundational law degree from the Université de Lubumbashi.",
+    "Her professional experience includes comparative legal research and international legal-instrument work with UNCITRAL, research and case support at Leigh Day, and independent advisory work involving commercial contracts, public-private partnerships, mining, regulatory matters, and cross-border disputes. Publication and conference records are presented separately with their evidence and permission controls."
+  ],
+  educationDisclosure: "View education and research details",
+  experienceDisclosure: "View selected professional experience",
+  publicationControlsTitle: "Publication and evidence controls",
+  ctaTitle: "Connect with Mbuya",
+  ctaText: "For professional inquiries, consultation requests, speaking invitations, research, or institutional collaboration, use the contact or consultation pathway. A submission does not create a professional relationship or confirm acceptance of a matter.",
+  ctaPrimary: "Contact Mbuya",
+  ctaSecondary: "Book a consultation"
+});
+Object.assign(copy.fr.about, {
+  professionalTitle: "Spécialiste du droit international et du règlement des différends",
+  heroSummary: "Mbuya travaille sur le droit international des investissements, l'arbitrage, la gouvernance des ressources naturelles et les questions juridiques et économiques liées à l'Afrique.",
+  profileHeading: "Profil professionnel",
+  profileParagraphs: [
+    "Mbuya est spécialiste du droit international et du règlement des différends, membre qualifiée du Barreau de Kinshasa/Gombe, conseil indépendante et chercheuse doctorale en arbitrage d'investissement.",
+    "Sa pratique juridique et son expérience du conseil s'étendent sur plus de dix ans. Elle a conseillé des gouvernements, des investisseurs, des sociétés minières et des organisations internationales sur des questions liées à l'investissement, aux ressources naturelles, aux opérations commerciales, à la réglementation et aux relations économiques internationales.",
+    "Les travaux de Mbuya réunissent le droit international des investissements, le règlement des différends investisseur-État, l'arbitrage commercial, le commerce international, la gouvernance des ressources naturelles, les entreprises et les droits humains, ainsi que les différends issus des industries extractives. Sa perspective tient compte des priorités juridiques et de développement des États et des communautés d'Afrique, notamment des liens entre investissement, développement local et intérêt public.",
+    "À l'University of Essex, les recherches doctorales de Mbuya portent sur l'africanisation du règlement des différends investisseur-État au regard du Protocole sur l'investissement de la ZLECAf. Son parcours universitaire comprend également des études avancées en droit du pétrole, du gaz et des mines, en droit de l'environnement et des ressources naturelles, ainsi qu'une formation juridique initiale à l'Université de Lubumbashi.",
+    "Son expérience professionnelle comprend la recherche juridique comparative et des travaux sur les instruments juridiques internationaux auprès de la CNUDCI, la recherche et l'appui aux dossiers chez Leigh Day, ainsi qu'une activité indépendante de conseil concernant les contrats commerciaux, les partenariats public-privé, les mines, la réglementation et les différends transfrontaliers. Les publications et conférences sont présentées séparément avec leurs contrôles de preuve et d'autorisation."
+  ],
+  educationDisclosure: "Voir la formation et la recherche",
+  experienceDisclosure: "Voir l'expérience professionnelle sélectionnée",
+  publicationControlsTitle: "Contrôles de publication et de preuve",
+  ctaTitle: "Échanger avec Mbuya",
+  ctaText: "Pour une demande professionnelle, une consultation, une invitation à intervenir, une recherche ou une collaboration institutionnelle, utilisez le parcours de contact ou de consultation. Une demande ne crée pas de relation professionnelle et ne confirme pas l'acceptation d'un dossier.",
+  ctaPrimary: "Contacter Mbuya",
+  ctaSecondary: "Réserver une consultation"
+});
+Object.assign(copy.zh.about, {
+  professionalTitle: "国际法与争议解决专业人士",
+  heroSummary: "Mbuya 的工作涵盖国际投资法、仲裁、自然资源治理，以及以非洲为重点的法律与经济议题。",
+  profileHeading: "专业简介",
+  profileParagraphs: [
+    "Mbuya 是国际法与争议解决专业人士、金沙萨/Gombe 律师协会合资格会员、独立法律顾问，并从事投资仲裁博士研究。",
+    "她拥有超过十年的法律执业与咨询经验，曾就投资、自然资源、商业安排、监管及国际经济关系等事项为政府、投资者、矿业公司和国际组织提供咨询。",
+    "Mbuya 的工作横跨国际投资法、投资者与国家争端解决、商事仲裁、国际贸易、自然资源治理、企业与人权，以及采掘业相关争议。她重视非洲国家和社区的法律与发展需求，包括投资、地方发展与公共利益之间的关系。",
+    "Mbuya 在埃塞克斯大学开展博士研究，探讨《非洲大陆自由贸易区投资议定书》背景下投资者与国家争端解决机制的非洲化。她还接受过石油、天然气与矿业法、环境与自然资源法方面的高等法律教育，并在卢本巴希大学完成基础法律教育。",
+    "她的专业经历包括在联合国国际贸易法委员会开展比较法律研究和国际法律文书相关工作、在 Leigh Day 从事研究与案件支持，以及围绕商业合同、公私合作、矿业、监管事项和跨境争议开展独立咨询。出版物与会议记录另行展示，并保留证据与发布许可控制。"
+  ],
+  educationDisclosure: "查看教育与研究详情",
+  experienceDisclosure: "查看精选专业经历",
+  publicationControlsTitle: "发布与证据控制",
+  ctaTitle: "联系 Mbuya",
+  ctaText: "如需专业咨询、预约咨询、演讲邀请、研究或机构合作，请使用联系或咨询流程。提交信息不会建立专业关系，也不代表接受委托。",
+  ctaPrimary: "联系 Mbuya",
+  ctaSecondary: "预约咨询"
+});
+Object.assign(copy["zh-Hant"].about, {
+  professionalTitle: "國際法與爭議解決專業人士",
+  heroSummary: "Mbuya 的工作涵蓋國際投資法、仲裁、自然資源治理，以及以非洲為重點的法律與經濟議題。",
+  profileHeading: "專業簡介",
+  profileParagraphs: [
+    "Mbuya 是國際法與爭議解決專業人士、金沙薩/Gombe 律師公會合資格會員、獨立法律顧問，並從事投資仲裁博士研究。",
+    "她擁有超過十年的法律執業及諮詢經驗，曾就投資、自然資源、商業安排、監管及國際經濟關係等事項，為政府、投資者、礦業公司及國際組織提供諮詢。",
+    "Mbuya 的工作橫跨國際投資法、投資者與國家爭端解決、商事仲裁、國際貿易、自然資源治理、企業與人權，以及採掘業相關爭議。她重視非洲國家及社群的法律與發展需要，包括投資、地方發展與公共利益之間的關係。",
+    "Mbuya 在艾塞克斯大學進行博士研究，探討《非洲大陸自由貿易區投資議定書》背景下投資者與國家爭端解決機制的非洲化。她亦接受過石油、天然氣與礦業法、環境與自然資源法方面的高階法律教育，並於盧本巴希大學完成基礎法律教育。",
+    "她的專業經歷包括在聯合國國際貿易法委員會進行比較法律研究及國際法律文書相關工作、在 Leigh Day 從事研究與案件支援，以及圍繞商業合約、公私合作、礦業、監管事項及跨境爭議開展獨立諮詢。出版物與會議記錄另行展示，並保留證據與發布許可控制。"
+  ],
+  educationDisclosure: "查看教育與研究詳情",
+  experienceDisclosure: "查看精選專業經歷",
+  publicationControlsTitle: "發布與證據控制",
+  ctaTitle: "聯絡 Mbuya",
+  ctaText: "如需專業諮詢、預約諮詢、演講邀請、研究或機構合作，請使用聯絡或諮詢流程。提交資料不會建立專業關係，也不代表接受委託。",
+  ctaPrimary: "聯絡 Mbuya",
+  ctaSecondary: "預約諮詢"
+});
+
+// Keep the approved narrative biography as the final profile override.
+Object.assign(copy.en.about, {
+  profileParagraphs: [
+    "Mbuya is an international law and dispute-resolution specialist, a qualified member of the Kinshasa/Gombe Bar Association, independent counsel, and a doctoral researcher in investment arbitration.",
+    "Her legal practice and advisory experience spans more than ten years. She has advised governments, investors, mining companies, and international organizations on matters involving investment, natural resources, commercial arrangements, regulation, and international economic relations.",
+    "Mbuya's work brings together international investment law, investor-State dispute settlement, commercial arbitration, international trade, natural-resource governance, business and human rights, and disputes arising from extractive industries. Her perspective is informed by the legal and development priorities of African States and communities, including the relationship between investment, local development, and the public interest.",
+    "At the University of Essex, Mbuya's doctoral research examines the Africanization of investor-State dispute settlement in light of the AfCFTA Investment Protocol. Her academic background also includes advanced study in oil, gas and mining law, environmental and natural-resource law, and a foundational law degree from the Université de Lubumbashi.",
+    "Her professional experience includes comparative legal research and international legal-instrument work with UNCITRAL, research and case support at Leigh Day, and independent advisory work involving commercial contracts, public-private partnerships, mining, regulatory matters, and cross-border disputes. Publication and conference records are presented separately with their evidence and permission controls."
+  ]
+});
+
+Object.assign(copy.fr.about, {
+  profileParagraphs: [
+    "Mbuya est spécialiste du droit international et du règlement des différends, membre qualifiée du Barreau de Kinshasa/Gombe, conseil indépendante et chercheuse doctorale en arbitrage d'investissement.",
+    "Sa pratique juridique et son expérience du conseil s'étendent sur plus de dix ans. Elle a conseillé des gouvernements, des investisseurs, des sociétés minières et des organisations internationales sur des questions liées à l'investissement, aux ressources naturelles, aux opérations commerciales, à la réglementation et aux relations économiques internationales.",
+    "Les travaux de Mbuya réunissent le droit international des investissements, le règlement des différends investisseur-État, l'arbitrage commercial, le commerce international, la gouvernance des ressources naturelles, les entreprises et les droits humains, ainsi que les différends issus des industries extractives. Sa perspective tient compte des priorités juridiques et de développement des États et des communautés d'Afrique, notamment des liens entre investissement, développement local et intérêt public.",
+    "À l'University of Essex, les recherches doctorales de Mbuya portent sur l'africanisation du règlement des différends investisseur-État au regard du Protocole sur l'investissement de la ZLECAf. Son parcours universitaire comprend également des études avancées en droit du pétrole, du gaz et des mines, en droit de l'environnement et des ressources naturelles, ainsi qu'une formation juridique initiale à l'Université de Lubumbashi.",
+    "Son expérience professionnelle comprend la recherche juridique comparative et des travaux sur les instruments juridiques internationaux auprès de la CNUDCI, la recherche et l'appui aux dossiers chez Leigh Day, ainsi qu'une activité indépendante de conseil concernant les contrats commerciaux, les partenariats public-privé, les mines, la réglementation et les différends transfrontaliers. Les publications et conférences sont présentées séparément avec leurs contrôles de preuve et d'autorisation."
+  ]
+});
+
+Object.assign(copy.zh.about, {
+  profileParagraphs: [
+    "Mbuya 是国际法与争议解决专业人士、金沙萨/Gombe 律师协会合资格会员、独立法律顾问，并从事投资仲裁博士研究。",
+    "她拥有超过十年的法律执业与咨询经验，曾就投资、自然资源、商业安排、监管及国际经济关系相关事项，为政府、投资者、矿业公司和国际组织提供咨询。",
+    "Mbuya 的工作横跨国际投资法、投资者与国家争端解决、商事仲裁、国际贸易、自然资源治理、企业与人权，以及采掘业相关争议。她重视非洲国家和社区的法律与发展需求，包括投资、地方发展与公共利益之间的关系。",
+    "Mbuya 在埃塞克斯大学的博士研究探讨《非洲大陆自由贸易区投资议定书》背景下投资者与国家争端解决机制的非洲化。她还接受过石油、天然气与矿业法、环境与自然资源法方面的高级法律教育，并在卢本巴希大学完成基础法律教育。",
+    "她的专业经历包括在联合国国际贸易法委员会开展比较法律研究和国际法律文书相关工作，在 Leigh Day 从事研究与案件支持，以及围绕商业合同、公私合作、矿业、监管事项和跨境争议开展独立咨询工作。出版物与会议记录在独立板块中展示，并保留证据与发布许可控制。"
+  ]
+});
+
+Object.assign(copy["zh-Hant"].about, {
+  profileParagraphs: [
+    "Mbuya 是國際法與爭議解決專業人士、金夏沙/Gombe 律師公會合資格會員、獨立法律顧問，並從事投資仲裁博士研究。",
+    "她擁有超過十年的法律執業及諮詢經驗，曾就投資、自然資源、商業安排、監管及國際經濟關係相關事項，為政府、投資者、礦業公司及國際組織提供諮詢。",
+    "Mbuya 的工作橫跨國際投資法、投資者與國家爭端解決、商事仲裁、國際貿易、自然資源治理、企業與人權，以及採掘業相關爭議。她重視非洲國家及社群的法律與發展需要，包括投資、地方發展與公共利益之間的關係。",
+    "Mbuya 在艾塞克斯大學的博士研究探討《非洲大陸自由貿易區投資議定書》背景下投資者與國家爭端解決機制的非洲化。她亦接受過石油、天然氣與礦業法、環境與自然資源法方面的高階法律教育，並於盧本巴希大學完成基礎法律教育。",
+    "她的專業經歷包括在聯合國國際貿易法委員會進行比較法律研究及國際法律文書相關工作，在 Leigh Day 從事研究與案件支援，以及圍繞商業合約、公私合作、礦業、監管事項及跨境爭議開展獨立諮詢工作。出版物與會議記錄於獨立部分展示，並保留證據及發布許可控制。"
+  ]
+});
+
+// Narrative-first About profile based on the approved project record.
+for (const [locale, about] of Object.entries({
+  en: {
+    professionalTitle: "International Law and Dispute Resolution Specialist",
+    heroSummary: "Mbuya works across international investment law, arbitration, natural-resource governance, and Africa-focused legal and economic questions.",
+    profileHeading: "Professional Biography",
+    profileParagraphs: [
+      "Mbuya is an international law and dispute-resolution specialist, a qualified member of the Kinshasa/Gombe Bar Association, independent counsel, and a doctoral researcher in investment arbitration.",
+      "Her legal practice and advisory experience spans more than ten years. She has advised governments, investors, mining companies, and international organizations on matters involving investment, natural resources, commercial arrangements, regulation, and international economic relations.",
+      "Mbuya's work brings together international investment law, investor-State dispute settlement, commercial arbitration, international trade, natural-resource governance, business and human rights, and disputes arising from extractive industries. Her perspective is informed by the legal and development priorities of African States and communities, including the relationship between investment, local development, and the public interest.",
+      "At the University of Essex, Mbuya's doctoral research examines the Africanization of investor-State dispute settlement in light of the AfCFTA Investment Protocol. Her academic background also includes advanced study in oil, gas and mining law, environmental and natural-resource law, and a foundational law degree from the Université de Lubumbashi.",
+      "Her professional experience includes comparative legal research and international legal-instrument work with UNCITRAL, research and case support at Leigh Day, and independent advisory work involving commercial contracts, public-private partnerships, mining, regulatory matters, and cross-border disputes. Publication and conference records are presented separately with their evidence and permission controls."
+    ],
+    educationDisclosure: "View education and research details",
+    experienceDisclosure: "View selected experience details",
+    publicationControlsTitle: "Publication and evidence controls",
+    ctaTitle: "Contact Mbuya",
+    ctaText: "For professional inquiries, consultation requests, speaking engagements, or research and institutional collaboration, use the contact or consultation pathway. A submission does not create a professional relationship or confirm acceptance of a matter.",
+    ctaPrimary: "Contact Mbuya",
+    ctaSecondary: "Book a Consultation"
+  },
+  fr: {
+    professionalTitle: "Spécialiste du droit international et du règlement des différends",
+    heroSummary: "Mbuya intervient en droit international des investissements, arbitrage, gouvernance des ressources naturelles et questions juridiques et économiques centrées sur l'Afrique.",
+    profileHeading: "Biographie professionnelle",
+    profileParagraphs: [
+      "Mbuya est spécialiste du droit international et du règlement des différends, membre qualifiée du Barreau de Kinshasa/Gombe, conseil indépendante et chercheuse doctorale en arbitrage d'investissement.",
+      "Sa pratique juridique et son expérience du conseil s'étendent sur plus de dix ans. Elle a conseillé des gouvernements, des investisseurs, des sociétés minières et des organisations internationales sur des questions liées à l'investissement, aux ressources naturelles, aux opérations commerciales, à la réglementation et aux relations économiques internationales.",
+      "Les travaux de Mbuya réunissent le droit international des investissements, le règlement des différends investisseur-État, l'arbitrage commercial, le commerce international, la gouvernance des ressources naturelles, les entreprises et les droits humains, ainsi que les différends issus des industries extractives. Sa perspective tient compte des priorités juridiques et de développement des États et des communautés d'Afrique, notamment des liens entre investissement, développement local et intérêt public.",
+      "À l'University of Essex, les recherches doctorales de Mbuya portent sur l'africanisation du règlement des différends investisseur-État au regard du Protocole sur l'investissement de la ZLECAf. Son parcours universitaire comprend également des études avancées en droit du pétrole, du gaz et des mines, en droit de l'environnement et des ressources naturelles, ainsi qu'une formation juridique initiale à l'Université de Lubumbashi.",
+      "Son expérience professionnelle comprend la recherche juridique comparative et des travaux sur les instruments juridiques internationaux auprès de la CNUDCI, la recherche et l'appui aux dossiers chez Leigh Day, ainsi qu'une activité indépendante de conseil concernant les contrats commerciaux, les partenariats public-privé, les mines, la réglementation et les différends transfrontaliers. Les publications et conférences sont présentées séparément avec leurs contrôles de preuve et d'autorisation."
+    ],
+    educationDisclosure: "Voir le détail de la formation et des recherches",
+    experienceDisclosure: "Voir le détail de l'expérience sélectionnée",
+    publicationControlsTitle: "Contrôles de publication et des preuves",
+    ctaTitle: "Contacter Mbuya",
+    ctaText: "Pour toute demande professionnelle, consultation, intervention, collaboration de recherche ou coopération institutionnelle, utilisez le parcours de contact ou de consultation. Une demande ne crée pas de relation professionnelle et ne confirme pas l'acceptation d'un dossier.",
+    ctaPrimary: "Contacter Mbuya",
+    ctaSecondary: "Réserver une consultation"
+  },
+  zh: {
+    professionalTitle: "国际法与争议解决专业人士",
+    heroSummary: "Mbuya 的工作涵盖国际投资法、仲裁、自然资源治理，以及以非洲为重点的法律与经济问题。",
+    profileHeading: "专业简介",
+    profileParagraphs: [
+      "Mbuya 是国际法与争议解决专业人士、金沙萨/Gombe 律师协会合资格会员、独立法律顾问，并从事投资仲裁博士研究。",
+      "她拥有超过十年的法律执业与咨询经验，曾就投资、自然资源、商业安排、监管及国际经济关系相关事项，为政府、投资者、矿业公司和国际组织提供咨询。",
+      "Mbuya 的工作横跨国际投资法、投资者与国家争端解决、商事仲裁、国际贸易、自然资源治理、企业与人权，以及采掘业相关争议。她重视非洲国家和社区的法律与发展需求，包括投资、地方发展与公共利益之间的关系。",
+      "Mbuya 在埃塞克斯大学的博士研究探讨《非洲大陆自由贸易区投资议定书》背景下投资者与国家争端解决机制的非洲化。她还接受过石油、天然气与矿业法、环境与自然资源法方面的高级法律教育，并在卢本巴希大学完成基础法律教育。",
+      "她的专业经历包括在联合国国际贸易法委员会开展比较法律研究和国际法律文书相关工作，在 Leigh Day 从事研究与案件支持，以及围绕商业合同、公私合作、矿业、监管事项和跨境争议开展独立咨询工作。出版物与会议记录在独立板块中展示，并保留证据与发布许可控制。"
+    ],
+    educationDisclosure: "查看教育与研究详情",
+    experienceDisclosure: "查看精选专业经历",
+    publicationControlsTitle: "发布与证据控制",
+    ctaTitle: "联系 Mbuya",
+    ctaText: "如需进行专业咨询、预约咨询、邀请演讲，或开展研究及机构合作，请使用联系或咨询流程。提交信息不会建立专业关系，也不代表接受委托。",
+    ctaPrimary: "联系 Mbuya",
+    ctaSecondary: "预约咨询"
+  },
+  "zh-Hant": {
+    professionalTitle: "國際法與爭議解決專業人士",
+    heroSummary: "Mbuya 的工作涵蓋國際投資法、仲裁、自然資源治理，以及以非洲為重點的法律與經濟議題。",
+    profileHeading: "專業簡介",
+    profileParagraphs: [
+      "Mbuya 是國際法與爭議解決專業人士、金夏沙/Gombe 律師公會合資格會員、獨立法律顧問，並從事投資仲裁博士研究。",
+      "她擁有超過十年的法律執業及諮詢經驗，曾就投資、自然資源、商業安排、監管及國際經濟關係相關事項，為政府、投資者、礦業公司及國際組織提供諮詢。",
+      "Mbuya 的工作橫跨國際投資法、投資者與國家爭端解決、商事仲裁、國際貿易、自然資源治理、企業與人權，以及採掘業相關爭議。她重視非洲國家及社群的法律與發展需要，包括投資、地方發展與公共利益之間的關係。",
+      "Mbuya 在艾塞克斯大學的博士研究探討《非洲大陸自由貿易區投資議定書》背景下投資者與國家爭端解決機制的非洲化。她亦接受過石油、天然氣與礦業法、環境與自然資源法方面的高階法律教育，並於盧本巴希大學完成基礎法律教育。",
+      "她的專業經歷包括在聯合國國際貿易法委員會進行比較法律研究及國際法律文書相關工作，在 Leigh Day 從事研究與案件支援，以及圍繞商業合約、公私合作、礦業、監管事項及跨境爭議開展獨立諮詢工作。出版物與會議記錄於獨立部分展示，並保留證據及發布許可控制。"
+    ],
+    educationDisclosure: "查看教育與研究詳情",
+    experienceDisclosure: "查看精選專業經歷",
+    publicationControlsTitle: "發布與證據控制",
+    ctaTitle: "聯絡 Mbuya",
+    ctaText: "如需專業查詢、預約諮詢、邀請演講，或開展研究及機構合作，請使用聯絡或諮詢流程。提交資料不會建立專業關係，也不代表接受委託。",
+    ctaPrimary: "聯絡 Mbuya",
+    ctaSecondary: "預約諮詢"
+  }
+})) Object.assign(copy[locale].about, about);
+
+copy.en.about.barItems = [{
+  title: "Kinshasa/Gombe Bar Association",
+  detail: "Mbuya is a qualified member of the Kinshasa/Gombe Bar Association and an independent counsel with professional experience spanning from 2017 to the present. With over ten years of legal practice and advisory experience, she has advised governments, investors, mining companies, and international organizations on complex matters at the intersection of law, investment, natural resources, and international economic relations."
+}];
+
+copy.en.about.barItems = [{
+  title: "Kinshasa/Gombe Bar Association",
+  detail: "Mbuya is a qualified member of the Kinshasa/Gombe Bar Association and an independent counsel with professional experience spanning from 2017 to the present. With over ten years of legal practice and advisory experience, she has advised governments, investors, mining companies, and international organizations on complex matters at the intersection of law, investment, natural resources, and international economic relations."
+}];
+
+copy.en.about.barItems = [{
+  title: "Kinshasa/Gombe Bar Association",
+  detail: "Mbuya is a qualified member of the Kinshasa/Gombe Bar Association and an independent counsel with professional experience spanning from 2017 to the present. With over ten years of legal practice and advisory experience, she has advised governments, investors, mining companies, and international organizations on complex matters at the intersection of law, investment, natural resources, and international economic relations."
+}];
+
+copy.en.about.barItems = [
+  {
+    title: "Kinshasa/Gombe Bar Association",
+    detail:
+      "Mbuya is a qualified member of the Kinshasa/Gombe Bar Association and an independent counsel with professional experience spanning from 2017 to the present. With over ten years of legal practice and advisory experience, she has advised governments, investors, mining companies, and international organizations on complex matters at the intersection of law, investment, natural resources, and international economic relations."
+  }
+];
+
+copy.en.about.barItems[0].detail =
+  "Mbuya is a qualified member of the Kinshasa/Gombe Bar Association and an independent counsel with professional experience spanning from 2017 to the present. With over ten years of legal practice and advisory experience, she has advised governments, investors, mining companies, and international organizations on complex matters at the intersection of law, investment, natural resources, and international economic relations.";
+
+// Approved bar-membership resolution: remove bar-status verification language.
+for (const [locale, about] of Object.entries({
+  en: {
+    sourceNotice: "Development profile based on available materials. Identity alignment, regulated titles, and publication permission require responsible-reviewer approval before production.",
+    profileParagraphs: [
+      "Mbuya is a seasoned legal practitioner and doctoral researcher whose work sits at the intersection of international law, investment, development, and the experiences of African communities. Her research and professional practice examine how inequality and local development can be incorporated into State practice through customary international law and treaty frameworks, with attention to meaningful benefits for Indigenous and local communities affected by investment.",
+      "Drawing on 15 years of professional experience across legal advisory and contentious work, international organisations, and non-profit practice, Mbuya brings an institutional and practice-informed perspective to questions of investment, development, and dispute resolution. Originally from the Katanga region, including the Copperbelt area, she has a longstanding interest in the relationship between natural-resource governance, investment, economic development, and the public interest.",
+      "Mbuya's current work focuses on investment-law frameworks, investor-State dispute settlement (ISDS), public-interest commercial transactions, bilateral investment treaties (BITs), international trade agreements, and the fair and effective resolution of disputes arising from extractive industries."
+    ],
+    barStatus: "Resolved",
+    barItems: [{ title: "Kinshasa/Gombe Bar Association", detail: "Mbuya is a qualified member of the Kinshasa/Gombe Bar Association and an independent counsel with professional experience spanning from 2017 to the present. With over ten years of legal practice and advisory experience, she has advised governments, investors, mining companies, and international organizations on complex matters at the intersection of law, investment, natural resources, and international economic relations." }]
+  },
+  fr: {
+    sourceNotice: "Profil de développement fondé sur les éléments disponibles. La concordance d’identité, les titres réglementés et l’autorisation de publication doivent être approuvés avant toute mise en production.",
+    profileParagraphs: [
+      "Mbuya est une praticienne du droit expérimentée et une chercheuse doctorale à l’intersection du droit international, de l’investissement, du développement et des communautés africaines. Ses recherches examinent l’intégration des inégalités et du développement local dans la pratique des États au moyen du droit international coutumier et des traités.",
+      "Forte de 15 années d’expérience dans le conseil juridique, le contentieux, les organisations internationales et le secteur non lucratif, Mbuya apporte une perspective pratique et institutionnelle. Originaire du Katanga, notamment de la Copperbelt, elle s’intéresse aux liens entre ressources naturelles, investissement, développement économique et intérêt public.",
+      "Ses travaux portent notamment sur les cadres du droit des investissements, l’ISDS, les opérations commerciales d’intérêt public, les traités bilatéraux d’investissement, les accords commerciaux internationaux et les différends liés aux industries extractives."
+    ],
+    barStatus: "Résolu",
+    barItems: [{ title: "Barreau de Kinshasa/Gombe", detail: "Mbuya est membre qualifiée du Barreau de Kinshasa/Gombe et exerce comme conseil indépendant, avec une expérience professionnelle de 2017 à aujourd’hui. Forte de plus de dix ans d’expérience en pratique et en conseil juridiques, elle a conseillé des gouvernements, des investisseurs, des sociétés minières et des organisations internationales sur des questions complexes à l’intersection du droit, de l’investissement, des ressources naturelles et des relations économiques internationales." }]
+  },
+  zh: {
+    sourceNotice: "本开发版简介依据现有材料编写。身份一致性、受监管职称及发布许可，均须在正式上线前由责任审核人批准。",
+    profileParagraphs: [
+      "Mbuya 是经验丰富的法律从业者和博士研究人员，研究处于国际法、投资、发展与非洲社区经验的交汇处。她关注通过国际习惯法和条约框架，将不平等与地方发展更有效地纳入国家实践。",
+      "Mbuya 拥有 15 年法律咨询与争议解决、国际组织及非营利机构工作经验。她来自加丹加地区，包括铜带地区，持续关注自然资源治理、投资、经济发展与公共利益之间的关系。",
+      "她目前重点研究投资法框架、投资者与国家争端解决（ISDS）、公共利益商业交易、双边投资条约、国际贸易协定及采掘业争议解决。"
+    ],
+    barStatus: "已解决",
+    barItems: [{ title: "金沙萨/Gombe 律师协会", detail: "Mbuya 是金沙萨/Gombe 律师协会的合资格会员，并以独立法律顾问身份开展工作，专业经历自 2017 年延续至今。她拥有超过十年的法律执业与咨询经验，曾就法律、投资、自然资源和国际经济关系交汇领域的复杂事项，为政府、投资者、矿业公司及国际组织提供咨询。" }]
+  },
+  "zh-Hant": {
+    sourceNotice: "本開發版簡介依據現有資料編寫。身份一致性、受規管職稱及發布許可，均須在正式上線前由責任審核人批准。",
+    profileParagraphs: [
+      "Mbuya 是經驗豐富的法律從業者及博士研究人員，研究處於國際法、投資、發展與非洲社群經驗的交匯處。她關注透過國際習慣法及條約框架，將不平等與地方發展更有效地納入國家實踐。",
+      "Mbuya 擁有 15 年法律諮詢與爭議解決、國際組織及非營利機構工作經驗。她來自加丹加地區，包括銅帶地區，持續關注自然資源治理、投資、經濟發展與公共利益之間的關係。",
+      "她目前重點研究投資法框架、投資者與國家爭端解決（ISDS）、公共利益商業交易、雙邊投資條約、國際貿易協定及採掘業爭議解決。"
+    ],
+    barStatus: "已解決",
+    barItems: [{ title: "金夏沙/Gombe 律師公會", detail: "Mbuya 是金夏沙/Gombe 律師公會的合資格會員，並以獨立法律顧問身份工作，專業經歷自 2017 年延續至今。她擁有超過十年的法律執業及諮詢經驗，曾就法律、投資、自然資源及國際經濟關係交匯領域的複雜事項，為政府、投資者、礦業公司及國際組織提供諮詢。" }]
+  }
+})) Object.assign(copy[locale].about, about);
+
+// Ensure the final runtime profile is narrative-first in every supported locale.
+for (const [locale, about] of Object.entries({
+  en: {
+    professionalTitle: "International Law and Dispute Resolution Specialist",
+    heroSummary: "Mbuya works across international investment law, arbitration, natural-resource governance, and Africa-focused legal and economic questions.",
+    profileHeading: "Professional Profile",
+    educationDisclosure: "View education and research details",
+    experienceDisclosure: "View selected professional experience",
+    publicationControlsTitle: "Publication and evidence controls",
+    ctaTitle: "Connect with Mbuya", ctaPrimary: "Contact Mbuya", ctaSecondary: "Book a consultation",
+    ctaText: "For professional inquiries, consultation requests, speaking invitations, research, or institutional collaboration, use the contact or consultation pathway. A submission does not create a professional relationship or confirm acceptance of a matter.",
+    profileParagraphs: [
+      "Mbuya is an international law and dispute-resolution specialist, a qualified member of the Kinshasa/Gombe Bar Association, independent counsel, and a doctoral researcher in investment arbitration.",
+      "Her legal practice and advisory experience spans more than ten years. She has advised governments, investors, mining companies, and international organizations on matters involving investment, natural resources, commercial arrangements, regulation, and international economic relations.",
+      "Mbuya's work brings together international investment law, investor-State dispute settlement, commercial arbitration, international trade, natural-resource governance, business and human rights, and disputes arising from extractive industries. Her perspective is informed by the legal and development priorities of African States and communities, including the relationship between investment, local development, and the public interest.",
+      "At the University of Essex, Mbuya's doctoral research examines the Africanization of investor-State dispute settlement in light of the AfCFTA Investment Protocol. Her academic background also includes advanced study in oil, gas and mining law, environmental and natural-resource law, and a foundational law degree from the Université de Lubumbashi.",
+      "Her professional experience includes comparative legal research and international legal-instrument work with UNCITRAL, research and case support at Leigh Day, and independent advisory work involving commercial contracts, public-private partnerships, mining, regulatory matters, and cross-border disputes. Publication and conference records are presented separately with their evidence and permission controls."
+    ]
+  },
+  fr: {
+    professionalTitle: "Spécialiste du droit international et du règlement des différends",
+    heroSummary: "Mbuya travaille sur le droit international des investissements, l'arbitrage, la gouvernance des ressources naturelles et les questions juridiques et économiques liées à l'Afrique.",
+    profileHeading: "Profil professionnel",
+    educationDisclosure: "Voir la formation et la recherche",
+    experienceDisclosure: "Voir l'expérience professionnelle sélectionnée",
+    publicationControlsTitle: "Contrôles de publication et de preuve",
+    ctaTitle: "Échanger avec Mbuya", ctaPrimary: "Contacter Mbuya", ctaSecondary: "Réserver une consultation",
+    ctaText: "Pour une demande professionnelle, une consultation, une invitation à intervenir, une recherche ou une collaboration institutionnelle, utilisez le parcours de contact ou de consultation. Une demande ne crée pas de relation professionnelle et ne confirme pas l'acceptation d'un dossier.",
+    profileParagraphs: [
+      "Mbuya est spécialiste du droit international et du règlement des différends, membre qualifiée du Barreau de Kinshasa/Gombe, conseil indépendante et chercheuse doctorale en arbitrage d'investissement.",
+      "Sa pratique juridique et son expérience du conseil s'étendent sur plus de dix ans. Elle a conseillé des gouvernements, des investisseurs, des sociétés minières et des organisations internationales sur des questions liées à l'investissement, aux ressources naturelles, aux opérations commerciales, à la réglementation et aux relations économiques internationales.",
+      "Les travaux de Mbuya réunissent le droit international des investissements, le règlement des différends investisseur-État, l'arbitrage commercial, le commerce international, la gouvernance des ressources naturelles, les entreprises et les droits humains, ainsi que les différends issus des industries extractives. Sa perspective tient compte des priorités juridiques et de développement des États et des communautés d'Afrique, notamment des liens entre investissement, développement local et intérêt public.",
+      "À l'University of Essex, les recherches doctorales de Mbuya portent sur l'africanisation du règlement des différends investisseur-État au regard du Protocole sur l'investissement de la ZLECAf. Son parcours universitaire comprend également des études avancées en droit du pétrole, du gaz et des mines, en droit de l'environnement et des ressources naturelles, ainsi qu'une formation juridique initiale à l'Université de Lubumbashi.",
+      "Son expérience professionnelle comprend la recherche juridique comparative et des travaux sur les instruments juridiques internationaux auprès de la CNUDCI, la recherche et l'appui aux dossiers chez Leigh Day, ainsi qu'une activité indépendante de conseil concernant les contrats commerciaux, les partenariats public-privé, les mines, la réglementation et les différends transfrontaliers. Les publications et conférences sont présentées séparément avec leurs contrôles de preuve et d'autorisation."
+    ]
+  }
+})) {
+  Object.assign(copy[locale].about, about);
+}
+
+copy.zh.about.profileParagraphs = [
+  "Mbuya 是国际法与争议解决专业人士、金沙萨/Gombe 律师协会合资格会员、独立法律顾问，并从事投资仲裁博士研究。",
+  "她拥有超过十年的法律执业与咨询经验，曾就投资、自然资源、商业安排、监管及国际经济关系等事项为政府、投资者、矿业公司和国际组织提供咨询。",
+  "Mbuya 的工作横跨国际投资法、投资者与国家争端解决、商事仲裁、国际贸易、自然资源治理、企业与人权，以及采掘业相关争议。她重视非洲国家和社区的法律与发展需求，包括投资、地方发展与公共利益之间的关系。",
+  "Mbuya 在埃塞克斯大学开展博士研究，探讨《非洲大陆自由贸易区投资议定书》背景下投资者与国家争端解决机制的非洲化。她还接受过石油、天然气与矿业法、环境与自然资源法方面的高等法律教育，并在卢本巴希大学完成基础法律教育。",
+  "她的专业经历包括在联合国国际贸易法委员会开展比较法律研究和国际法律文书相关工作、在 Leigh Day 从事研究与案件支持，以及围绕商业合同、公私合作、矿业、监管事项和跨境争议开展独立咨询。出版物与会议记录另行展示，并保留证据与发布许可控制。"
+];
+copy["zh-Hant"].about.profileParagraphs = [
+  "Mbuya 是國際法與爭議解決專業人士、金沙薩/Gombe 律師公會合資格會員、獨立法律顧問，並從事投資仲裁博士研究。",
+  "她擁有超過十年的法律執業及諮詢經驗，曾就投資、自然資源、商業安排、監管及國際經濟關係等事項，為政府、投資者、礦業公司及國際組織提供諮詢。",
+  "Mbuya 的工作橫跨國際投資法、投資者與國家爭端解決、商事仲裁、國際貿易、自然資源治理、企業與人權，以及採掘業相關爭議。她重視非洲國家及社群的法律與發展需要，包括投資、地方發展與公共利益之間的關係。",
+  "Mbuya 在艾塞克斯大學進行博士研究，探討《非洲大陸自由貿易區投資議定書》背景下投資者與國家爭端解決機制的非洲化。她亦接受過石油、天然氣與礦業法、環境與自然資源法方面的高階法律教育，並於盧本巴希大學完成基礎法律教育。",
+  "她的專業經歷包括在聯合國國際貿易法委員會進行比較法律研究及國際法律文書相關工作、在 Leigh Day 從事研究與案件支援，以及圍繞商業合約、公私合作、礦業、監管事項及跨境爭議開展獨立諮詢。出版物與會議記錄另行展示，並保留證據與發布許可控制。"
+];
