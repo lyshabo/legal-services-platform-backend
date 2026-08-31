@@ -58,6 +58,30 @@ test("static public routes support filtering, detail navigation, and guidance in
   await expect(page.locator("#guidance-result")).toContainText(/language|jurisdiction|topic/i);
 });
 
+test("static services expose all requested categories with gated international-law scope", async ({ page }) => {
+  await page.goto("/#/services");
+  for (const title of [
+    "Expert Witness Services",
+    "Legal Representation",
+    "Legal Consultancy",
+    "Environmental Law",
+    "Environmental, Social and Governance (ESG) Advisory"
+  ]) {
+    await expect(page.getByRole("heading", { name: title, exact: true })).toBeVisible();
+  }
+  for (const category of ["expert-witness", "representation", "consultancy", "environmental-law", "esg-advisory"]) {
+    await page.locator("#service-filters select[name=category]").selectOption(category);
+    await expect(page.locator("#service-results .catalog-card")).toHaveCount(1);
+    await expect(page.locator("#service-results .catalog-card")).toContainText("Development fixture");
+    await page.locator("#service-filters select[name=category]").selectOption("all");
+  }
+  for (const serviceId of ["service-expert-witness", "service-legal-consultancy", "service-environmental-law", "service-esg-advisory"]) {
+    await page.goto(`/#/service/${serviceId}`);
+    await expect(page.locator("#main")).toContainText(/international-law/i);
+    await expect(page.locator("button[data-booking]")).toBeDisabled();
+  }
+});
+
 test("static admin route remains a non-authenticated demo boundary", async ({ page }) => {
   await page.goto("/#/admin");
   await expect(page.locator("body")).toContainText("temporary static demo");

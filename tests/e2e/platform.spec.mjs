@@ -200,15 +200,40 @@ test("service filtering narrows catalog results", async ({ page }) => {
 
 test("service category filters are localized in all four locales", async ({ page }) => {
   const expected = {
-    en: ["All categories", "Advisory support", "Document review", "International Law", "Legal Research"],
-    fr: ["Toutes les catégories", "Soutien consultatif", "Revue de documents", "Droit international", "Recherche juridique"],
-    zh: ["所有分类", "咨询支持", "文件审查", "国际法", "法律研究"],
-    "zh-Hant": ["所有類別", "諮詢支援", "文件審查", "國際法", "法律研究"]
+    en: ["All categories", "Advisory support", "Document review", "International Law", "Legal Research", "Expert Witness Services", "Legal Representation", "Legal Consultancy", "Environmental Law", "ESG Advisory"],
+    fr: ["Toutes les catégories", "Soutien consultatif", "Revue de documents", "Droit international", "Recherche juridique", "Services d’expertise juridique", "Représentation juridique", "Conseil juridique", "Droit de l’environnement", "Conseil ESG"],
+    zh: ["所有分类", "咨询支持", "文件审查", "国际法", "法律研究", "专家证人服务", "法律代理", "法律咨询", "环境法", "ESG 咨询"],
+    "zh-Hant": ["所有類別", "諮詢支援", "文件審查", "國際法", "法律研究", "專家證人服務", "法律代理", "法律諮詢", "環境法", "ESG 諮詢"]
   };
   for (const [locale, labels] of Object.entries(expected)) {
     await page.goto("/#/services");
     await page.selectOption("#locale-select", locale);
     await expect(page.locator("#service-filters option")).toHaveText(labels);
+  }
+});
+
+test("new service categories remain evidence-gated and integrate international law", async ({ page }) => {
+  await page.goto("/#/services");
+  const expectedTitles = [
+    "Expert Witness Services",
+    "Legal Representation",
+    "Legal Consultancy",
+    "Environmental Law",
+    "Environmental, Social and Governance (ESG) Advisory"
+  ];
+  for (const title of expectedTitles) {
+    await expect(page.getByRole("heading", { name: title, exact: true })).toBeVisible();
+  }
+  for (const category of ["expert-witness", "representation", "consultancy", "environmental-law", "esg-advisory"]) {
+    await page.locator("#service-filters select[name=category]").selectOption(category);
+    await expect(page.locator("#service-results .catalog-card")).toHaveCount(1);
+    await expect(page.locator("#service-results .catalog-card")).toContainText("Development fixture");
+    await page.locator("#service-filters select[name=category]").selectOption("all");
+  }
+  for (const serviceId of ["service-expert-witness", "service-legal-consultancy", "service-environmental-law", "service-esg-advisory"]) {
+    await page.goto(`/#/service/${serviceId}`);
+    await expect(page.locator("#main")).toContainText(/international-law/i);
+    await expect(page.locator("button[data-booking]")).toBeDisabled();
   }
 });
 
