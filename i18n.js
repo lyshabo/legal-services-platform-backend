@@ -793,12 +793,13 @@ Object.assign(copy.en.about, {
   displayName: "Tezzeta Mbuya N'Gungwa",
   photoAlt: "Professional portrait of Tezzeta Mbuya N'Gungwa",
   professionalTitle: "Dispute Resolution Specialist | PhD Candidate in Investment Arbitration",
-  sourceNotice: "Development profile based on supplied CV materials. Identity alignment, current bar status, regulated titles, and publication permission require responsible-reviewer approval before production.",
-  heroSummary: "A legal researcher and dispute-resolution specialist working across international investment law, arbitration, public international law, commercial disputes, and Africa-focused legal development.",
+  sourceNotice: "Development profile based on available materials. Identity alignment, current bar status, regulated titles, and publication permission require responsible-reviewer approval before production.",
+  heroSummary: "A legal researcher and dispute-resolution specialist working across international investment law, arbitration, development, natural-resource governance, and Africa-focused legal questions.",
   profileHeading: "Professional Profile",
   profileParagraphs: [
-    "Tezzeta Mbuya is a legal researcher, international law specialist, and dispute-resolution specialist. The supplied CV describes work spanning international investment law, international arbitration, public international law, commercial disputes, legal research, drafting, and cross-border matters.",
-    "Her doctoral research at the University of Essex examines the Africanization of investor-State dispute settlement in light of the AfCFTA Investment Protocol. The CV also records research and advisory work relating to governments, investors, mining operations, international organizations, and commercial disputes.",
+    "Mbuya is a seasoned legal practitioner and doctoral researcher whose work sits at the intersection of international law, investment, development, and the experiences of African communities. Her research and professional practice examine how inequality and local development can be incorporated into State practice through customary international law and treaty frameworks, with attention to meaningful benefits for Indigenous and local communities affected by investment.",
+    "Drawing on 15 years of professional experience across legal advisory and contentious work, international organisations, and non-profit practice, Mbuya brings an institutional and practice-informed perspective to questions of investment, development, and dispute resolution. Originally from the Katanga region, including the Copperbelt area, she has a longstanding interest in the relationship between natural-resource governance, investment, economic development, and the public interest.",
+    "Mbuya's current work focuses on investment-law frameworks, investor-State dispute settlement (ISDS), public-interest commercial transactions, bilateral investment treaties (BITs), international trade agreements, and the fair and effective resolution of disputes arising from extractive industries.",
     "This profile is an evidence-led development draft. Current bar status, authorization to practise, client relationships, and professional outcomes must not be treated as independently verified until the designated reviewers approve the supporting evidence."
   ],
   educationTitle: "Education",
@@ -811,17 +812,17 @@ Object.assign(copy.en.about, {
   barTitle: "Bar Memberships & Admissions",
   barStatus: "Current-status verification required",
   barItems: [
-    { title: "Kinshasa/Gombe Bar Association", detail: "The supplied CV describes Tezzeta as a qualified member and lists independent-counsel work from 2017 to the present. An authenticated current official record and publication approval are required before this is treated as a production claim." }
+    { title: "Kinshasa/Gombe Bar Association", detail: "A current authenticated official record, identity match, jurisdiction confirmation, and publication approval are required before any bar-admission or current-status statement is treated as a production claim." }
   ],
   experienceTitle: "Selected Experience",
   experience: [
-    { period: "Sep - Nov 2024", role: "Legal Intern", organization: "United Nations Commission on International Trade Law (UNCITRAL)", detail: "CV-supplied experience includes comparative legal research, briefing materials, conference support, and work relating to international conventions, model laws, and legal instruments." },
-    { period: "2017 - Present", role: "Independent advisory and legal research work", organization: "Kinshasa/Gombe Bar Association (CV-supplied context)", detail: "The CV describes commercial-contract, dispute, labour, regulatory, mining-infrastructure, investment, and advisory work. Current status, jurisdiction, and public wording remain gated." },
-    { period: "2017", role: "Legal Intern", organization: "Leigh Day", detail: "The CV describes research and case-support work involving multinational mining companies, human rights, corporate accountability, environmental damage, witness statements, and compensation claims." },
-    { period: "2010 - 2017", role: "Of Counsel", organization: "Kinshasa/Gombe Bar Association", detail: "The CV lists work concerning production-sharing agreements, public-private partnerships, joint ventures, mining titles, regulatory compliance, ESG, tax and customs disputes, treaty-claim negotiations, and commercial disputes." }
+    { period: "Sep - Nov 2024", role: "Legal Intern", organization: "United Nations Commission on International Trade Law (UNCITRAL)", detail: "Comparative legal research, briefing materials, conference support, and work relating to international conventions, model laws, and legal instruments." },
+    { period: "2017 - Present", role: "Independent advisory and legal research work", organization: "Kinshasa/Gombe Bar Association", detail: "Work described across commercial contracts, disputes, labour, regulation, mining infrastructure, investment, and advisory support. Current status, jurisdiction, and public wording remain gated." },
+    { period: "2017", role: "Legal Intern", organization: "Leigh Day", detail: "Research and case-support work involving multinational mining companies, human rights, corporate accountability, environmental damage, witness statements, and compensation claims." },
+    { period: "2010 - 2017", role: "Of Counsel", organization: "Kinshasa/Gombe Bar Association", detail: "Work concerning production-sharing agreements, public-private partnerships, joint ventures, mining titles, regulatory compliance, ESG, tax and customs disputes, treaty-claim negotiations, and commercial disputes." }
   ],
   approachTitle: "Approach",
-  approachText: "The supplied materials support a research-led approach to complex international and cross-border questions, with careful attention to legal sources, jurisdiction, commercial context, and the limits of any preliminary assessment. The website presents this as informational and advisory support, not a promise of a legal outcome.",
+  approachText: "Mbuya applies a research-led approach to complex international and cross-border questions, with careful attention to legal sources, jurisdiction, commercial context, and the limits of any preliminary assessment. The website presents this as informational and advisory support, not a promise of a legal outcome.",
   approachValues: ["Rigorous legal research", "International and African perspective", "Clear jurisdictional boundaries", "Attorney review before individualized advice"],
   languagesTitle: "Languages",
   languages: ["French - Native", "English - Fluent", "Spanish - Basic"],
@@ -976,3 +977,58 @@ Object.assign(copy["zh-Hant"].about, {
   ctaPrimary: "預約諮詢",
   ctaSecondary: "瀏覽法律服務"
 });
+
+// About.docx-aligned public copy. Identity fields retain the full name; prose uses Mbuya.
+for (const [locale, about] of Object.entries({
+  fr: {
+    sourceNotice: "Profil de développement fondé sur les éléments disponibles. La concordance d’identité, le statut actuel au barreau, les titres réglementés et l’autorisation de publication doivent être approuvés avant toute mise en production.",
+    heroSummary: "Chercheuse juridique et spécialiste du règlement des différends, travaillant sur le droit international des investissements, le développement, la gouvernance des ressources naturelles et les questions juridiques africaines.",
+    profileParagraphs: [
+      "Mbuya est une praticienne du droit expérimentée et une chercheuse doctorale dont les travaux se situent à l’intersection du droit international, de l’investissement, du développement et des réalités des communautés africaines. Ses recherches examinent comment les inégalités et le développement local peuvent être mieux intégrés à la pratique des États au moyen du droit international coutumier et des traités, en prêtant attention aux bénéfices des communautés autochtones et locales touchées par les investissements.",
+      "Forte de 15 années d’expérience dans le conseil juridique et le contentieux, les organisations internationales et le secteur non lucratif, Mbuya apporte une perspective à la fois pratique et institutionnelle. Originaire de la région du Katanga, notamment de la Copperbelt, elle s’intéresse depuis longtemps aux liens entre gouvernance des ressources naturelles, investissement, développement économique et intérêt public.",
+      "Ses travaux actuels portent notamment sur les cadres du droit des investissements, le règlement des différends investisseur-État (ISDS), les opérations commerciales d’intérêt public, les traités bilatéraux d’investissement, les accords commerciaux internationaux et le règlement équitable des différends liés aux industries extractives."
+    ],
+    barItems: [{ title: "Barreau de Kinshasa/Gombe", detail: "Un document officiel actuel authentifié, une concordance d’identité, une confirmation de juridiction et une autorisation de publication sont requis avant toute affirmation relative à l’admission ou au statut actuel." }],
+    experience: [
+      { period: "sept. - nov. 2024", role: "Stagiaire juridique", organization: "Commission des Nations Unies pour le droit commercial international (CNUDCI)", detail: "Recherche juridique comparative, préparation de notes, soutien aux conférences et travaux sur les conventions, lois types et instruments juridiques internationaux." },
+      { period: "2017 - aujourd’hui", role: "Recherche juridique indépendante et appui consultatif", organization: "Barreau de Kinshasa/Gombe", detail: "Travaux décrits en contrats commerciaux, différends, droit du travail, réglementation, infrastructures minières, investissement et appui consultatif. Le statut actuel et la juridiction restent soumis à approbation." },
+      { period: "2017", role: "Stagiaire juridique", organization: "Leigh Day", detail: "Recherche et soutien contentieux concernant les sociétés minières multinationales, les droits humains, la responsabilité des entreprises, les dommages environnementaux et les demandes d’indemnisation." },
+      { period: "2010 - 2017", role: "Conseil juridique", organization: "Barreau de Kinshasa/Gombe", detail: "Travaux concernant les accords de partage de production, partenariats public-privé, coentreprises, titres miniers, conformité, ESG, fiscalité, douanes, négociations liées aux traités et différends commerciaux." }
+    ],
+    approachText: "Mbuya adopte une approche fondée sur la recherche pour les questions internationales et transfrontalières complexes, avec une attention portée aux sources, à la juridiction, au contexte commercial et aux limites de toute évaluation préliminaire. Le site présente cette démarche comme un appui informatif et consultatif, sans promesse de résultat juridique."
+  },
+  zh: {
+    sourceNotice: "本开发版简介依据现有材料编写。身份一致性、当前律师协会状态、受监管职称及发布许可，均须在正式上线前由责任审核人批准。",
+    heroSummary: "从事国际投资法、争议解决、发展、自然资源治理及非洲法律问题研究的法律研究人员和争议解决专业人士。",
+    profileParagraphs: [
+      "Mbuya 是一名经验丰富的法律从业者和博士研究人员，研究处于国际法、投资、发展与非洲社区经验的交汇处。她关注如何通过国际习惯法和条约框架，将不平等与地方发展更有效地纳入国家实践，并重视受投资影响的原住民和地方社区能否获得有意义的利益。",
+      "Mbuya 拥有 15 年法律咨询与争议解决、国际组织及非营利机构工作经验，兼具法律实践与机构参与视角。她来自加丹加地区，包括铜带地区，因此持续关注自然资源治理、投资、经济发展与公共利益之间的关系。",
+      "她目前重点研究投资法框架、投资者与国家争端解决（ISDS）、符合公共利益的商业交易、双边投资条约、国际贸易协定，以及与采掘业相关争议的公平有效解决。"
+    ],
+    barItems: [{ title: "金沙萨/Gombe 律师协会", detail: "在任何律师资格或当前状态表述用于正式发布前，必须取得经认证的当前官方记录、身份匹配、司法管辖范围确认及发布许可。" }],
+    experience: [
+      { period: "2024年9月至11月", role: "法律实习生", organization: "联合国国际贸易法委员会（UNCITRAL）", detail: "开展比较法律研究、准备简报材料、支持会议，并参与国际公约、示范法和法律文书相关工作。" },
+      { period: "2017年至今", role: "独立法律研究与咨询支持", organization: "金沙萨/Gombe 律师协会", detail: "涉及商事合同、争议、劳动与监管、矿业基础设施、投资及咨询支持的工作。当前状态和司法管辖范围仍须审核批准。" },
+      { period: "2017年", role: "法律实习生", organization: "Leigh Day", detail: "参与涉及跨国矿业公司、人权、企业责任、环境损害、证人陈述及赔偿请求的研究和案件支持。" },
+      { period: "2010 - 2017年", role: "法律顾问", organization: "金沙萨/Gombe 律师协会", detail: "涉及产品分成协议、公私合作、合资、矿权、监管合规、ESG、税务与海关争议、条约索赔谈判及商事争议工作。" }
+    ],
+    approachText: "Mbuya 以研究为基础处理复杂的国际及跨境问题，重视法律来源、司法管辖区、商业背景及初步评估的界限。网站将其表述为信息与咨询支持，不承诺任何法律结果。"
+  },
+  "zh-Hant": {
+    sourceNotice: "本開發版簡介依據現有資料編寫。身份一致性、現行律師公會狀態、受規管職稱及發布許可，均須在正式上線前由責任審核人批准。",
+    heroSummary: "從事國際投資法、爭議解決、發展、自然資源治理及非洲法律問題研究的法律研究人員和爭議解決專業人士。",
+    profileParagraphs: [
+      "Mbuya 是一名經驗豐富的法律從業者及博士研究人員，研究處於國際法、投資、發展與非洲社群經驗的交匯處。她關注如何透過國際習慣法及條約框架，將不平等與地方發展更有效地納入國家實踐，並重視受投資影響的原住民及地方社群能否獲得有意義的利益。",
+      "Mbuya 擁有 15 年法律諮詢與爭議解決、國際組織及非營利機構工作經驗，兼具法律實踐與機構參與視角。她來自加丹加地區，包括銅帶地區，因此持續關注自然資源治理、投資、經濟發展與公共利益之間的關係。",
+      "她目前重點研究投資法框架、投資者與國家爭端解決（ISDS）、符合公共利益的商業交易、雙邊投資條約、國際貿易協定，以及與採掘業相關爭議的公平有效解決。"
+    ],
+    barItems: [{ title: "金夏沙/Gombe 律師公會", detail: "在任何律師資格或現行狀態表述用於正式發布前，必須取得經認證的現行官方記錄、身份匹配、司法管轄範圍確認及發布許可。" }],
+    experience: [
+      { period: "2024年9月至11月", role: "法律實習生", organization: "聯合國國際貿易法委員會（UNCITRAL）", detail: "進行比較法律研究、準備簡報材料、支援會議，並參與國際公約、示範法及法律文書相關工作。" },
+      { period: "2017年至今", role: "獨立法律研究與諮詢支援", organization: "金夏沙/Gombe 律師公會", detail: "涉及商業合約、爭議、勞動與監管、礦業基礎設施、投資及諮詢支援的工作。現行狀態和司法管轄範圍仍須審核批准。" },
+      { period: "2017年", role: "法律實習生", organization: "Leigh Day", detail: "參與涉及跨國礦業公司、人權、企業責任、環境損害、證人陳述及賠償請求的研究和案件支援。" },
+      { period: "2010 - 2017年", role: "法律顧問", organization: "金夏沙/Gombe 律師公會", detail: "涉及產品分成協議、公私合作、合資、礦權、監管合規、ESG、稅務與海關爭議、條約索賠談判及商業爭議工作。" }
+    ],
+    approachText: "Mbuya 以研究為基礎處理複雜的國際及跨境問題，重視法律來源、司法管轄區、商業背景及初步評估的界限。網站將其表述為資訊與諮詢支援，不承諾任何法律結果。"
+  }
+})) Object.assign(copy[locale].about, about);

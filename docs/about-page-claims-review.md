@@ -70,3 +70,43 @@ The Simplified and Traditional Chinese hero titles now use `争议解决专业�
 `爭議解決專業人士`, not the regulated `律师` or `律師` label. The French experience
 entry no longer uses the ambiguous `Conseil indépendante`. All three non-English versions
 remain qualified-translation-review drafts.
+
+## About.docx Update Review
+
+**Reviewed:** August 31, 2026
+**Scope:** Main About page and mirrored static demo in English, French,
+Simplified Chinese, and Traditional Chinese
+**Publication call:** Suitable for the gated development preview only.
+
+### Legal-claims review
+
+| Claim family | Review result | Evidence or owner action |
+|---|---|---|
+| `Mbuya` as prose subject and `Tezzeta Mbuya N'Gungwa` as identity field | Lower-risk naming convention applied | Identity reviewer must confirm the display-name mapping and approved public form. |
+| Seasoned legal practitioner and doctoral researcher | Source-supported profile wording; not a current authorization claim | Identity/credential reviewer must confirm the wording and publication permission. |
+| 15 years of professional experience | Specific factual claim | Provide dated role records or authenticated employment/engagement evidence. |
+| Katanga and Copperbelt background | Biographical factual claim | Confirm biographical accuracy and permission to publish geographic background. |
+| International investment, development, natural-resource governance, ISDS, BITs, trade, and extractives focus | Subject-matter positioning | Map each area to an approved research or experience source; keep practice/authorization implications gated. |
+| UNCITRAL, Leigh Day, and Kinshasa/Gombe references | Named-institution or regulated-status claims | Obtain institution/role confirmation, identity match, jurisdiction review, and publication permission. |
+| Current bar status and admission | Regulated credential | Current authenticated Bar record and jurisdiction confirmation remain required. |
+| Informational/advisory support and no promised outcome | Risk-control language | Retain in every locale; attorney/product reviewer to approve final disclaimer placement. |
+
+### Qualified-translation review
+
+| Locale | Language track | Status | Required sign-off |
+|---|---|---|---|
+| `en` | English | Draft reviewed | Content/claims reviewer approval of source wording. |
+| `fr` | French | Translation-review gated | Authenticated French reviewer, qualification basis, target regions, terminology decisions, and sign-off date. |
+| `zh` | Simplified Chinese | Translation-review gated | Authenticated Simplified Chinese reviewer, qualification basis, target regions, terminology decisions, and sign-off date. |
+| `zh-Hant` | Traditional Chinese | Translation-review gated | Authenticated Traditional Chinese reviewer, qualification basis, target regions, terminology decisions, and sign-off date. |
+
+### Integrity checks
+
+- Public About strings contain no CV, resume, curriculum-vitae, `简历`, or `履历`
+  references after the update.
+- Identity fields retain `Tezzeta Mbuya N'Gungwa`; prose uses `Mbuya`.
+- Existing current-status, evidence, noindex, and publication gates remain in
+  place.
+- Education and experience structures remain stable across locales.
+- Publication remains blocked pending authenticated evidence and qualified
+  translation sign-off.
