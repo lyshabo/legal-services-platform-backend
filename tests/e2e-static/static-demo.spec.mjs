@@ -7,12 +7,20 @@ const demoScopeTitles = {
   zh: "\u6b64\u4e34\u65f6\u6f14\u793a\u5305\u542b\u7684\u5185\u5bb9",
   "zh-Hant": "\u6b64\u81e8\u6642\u793a\u7bc4\u5305\u542b\u7684\u5167\u5bb9"
 };
+const aboutTitles = {
+  en: "International Law and Dispute Resolution",
+  fr: "Droit international et règlement des différends",
+  zh: "国际法与争议解决",
+  "zh-Hant": "國際法與爭議解決"
+};
 
 test("static About route preserves locale, resolved Bar status, and noindex", async ({ page }) => {
   for (const locale of locales) {
     await page.goto("/#/about");
     await page.selectOption("#locale-select", locale);
     await expect(page.locator("h1").first()).toHaveText("Tezzeta Mbuya N'Gungwa");
+    await expect(page.locator(".about-professional-title")).toHaveText(aboutTitles[locale]);
+    await expect(page.locator(".about-profile")).not.toContainText(/specialist|spécialiste|专业人士|專業人士/);
     await expect(page.locator(".bar-status-panel .badge")).toBeVisible();
     await expect(page.locator(".bar-status-panel")).toContainText("Mbuya");
     await expect(page.locator(".experience-list article")).toHaveCount(4);

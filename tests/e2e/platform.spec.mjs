@@ -159,10 +159,10 @@ test.skip("About redesign preserves CV sourcing, publication gates, and multilin
 
 test("About rewrite renders narrative profile, disclosures, gates, and four locales", async ({ page }) => {
   const expectedTitles = {
-    en: "International Law and Dispute Resolution Specialist",
-    fr: "Spécialiste du droit international et du règlement des différends",
-    zh: "国际法与争议解决专业人士",
-    "zh-Hant": "國際法與爭議解決專業人士"
+    en: "International Law and Dispute Resolution",
+    fr: "Droit international et règlement des différends",
+    zh: "国际法与争议解决",
+    "zh-Hant": "國際法與爭議解決"
   };
 
   await page.goto("/#/about");
@@ -177,6 +177,7 @@ test("About rewrite renders narrative profile, disclosures, gates, and four loca
     await expect(page.locator(".profile-disclosure")).toHaveCount(2);
     await expect(page.locator(".about-publication-controls")).toHaveCount(1);
     await expect(page.locator(".bar-status-panel .badge")).toBeVisible();
+    await expect(page.locator(".about-profile")).not.toContainText(/specialist|spécialiste|专业人士|專業人士/);
   }
 
   await expect(page.locator('meta[name="robots"]')).toHaveAttribute("content", /noindex/);
