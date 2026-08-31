@@ -196,3 +196,35 @@
 - [ ] The nested static-demo repository is never staged in the parent.
 - [ ] A push is not described as a deployment without workflow and public-asset
       evidence for the exact commit.
+
+## DOCX-driven multilingual services
+
+- [ ] The supplied DOCX was extracted locally and its requested service list
+      was mapped to the existing taxonomy, routes, filters, and gate model.
+- [ ] Requested, preserved, added, merged, and cross-cutting categories are
+      reconciled explicitly; the final category count is internally consistent.
+- [ ] English, French, Simplified Chinese, and Traditional Chinese records each
+      contain title, summary, audience, included scope, and exclusions.
+- [ ] Filter, card, and detail labels are localized and no internal category
+      slug is displayed publicly.
+- [ ] New service records remain fixtures with evidence pending, booking
+      disabled, and production publication blocked.
+- [ ] Representation, expert-witness, consultancy, environmental, and ESG
+      wording does not imply authorization, appointment, admissibility,
+      certification, approval, assurance, deadline protection, or outcomes.
+- [ ] The approval record identifies service owner, legal reviewer, required
+      qualifications, jurisdictions, conflicts controls, engagement terms,
+      evidence location, permission, decision, and sign-off date.
+- [ ] The browser-only mirror matches reviewed content without gaining backend,
+      authentication, database, booking, payment, provider, or confidential
+      submission capabilities.
+- [ ] Browser tests cover all four locale labels, category filtering, cards,
+      detail routes, fixture/evidence state, exclusions, required subject
+      wording, and disabled controls.
+- [ ] Syntax, strict UTF-8/mojibake, unit, main Playwright, and named
+      static-demo regression results are recorded independently.
+- [ ] Main and static-demo commits are separate, staged diffs are inspected,
+      unrelated hunks are excluded, and the nested mirror is not staged in the
+      parent repository.
+- [ ] Automated checks are not represented as qualified legal, service-scope,
+      jurisdiction, or translation approval.

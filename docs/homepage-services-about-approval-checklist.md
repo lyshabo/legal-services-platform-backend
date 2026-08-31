@@ -58,6 +58,29 @@
 | Verify ESG Advisory scope | ESG framework competence, certification boundaries, jurisdiction, and no-assurance wording | Service owner + qualified counsel | ☐ Open | |
 | Approve engagement and no-relationship wording | Consultation, intake, conflicts, acceptance, confidentiality, and deadline language | Operations + counsel | ☐ Open | |
 
+### 2A. New Service Approval Records
+
+**Record review date:** August 31, 2026
+
+The named person below is recorded as the proposed owner of the service-scope
+evidence because the public platform is presented under that identity. This is
+not a legal-review appointment or approval. No authenticated qualified legal
+approver or completed sign-off was found in the repository.
+
+| Service | Named evidence owner | Qualified approver | Evidence locations reviewed | Review decision | Sign-off date |
+|---|---|---|---|---|---|
+| Expert Witness Services | Tezzeta Mbuya N'Gungwa — proposed service-scope evidence owner; authority to approve this service remains undocumented | Name not supplied — qualified counsel with relevant procedural and jurisdictional competence required | `Skywork AI Editor Prompt.docx`; `data.js` record `service-expert-witness`; `static-demo/data.js` mirror; `docs/homepage-services-about-content-review.md`; this checklist | **BLOCKED — NOT APPROVED.** Provide authenticated qualifications, defined subject expertise, jurisdictions and forums, independence/conflict process, appointment and admissibility boundaries, permitted report/testimony scope, and approved engagement wording. | Not signed |
+| Legal Representation | Tezzeta Mbuya N'Gungwa — proposed service-scope evidence owner; authority and operating-entity responsibility remain undocumented | Name not supplied — qualified counsel for every proposed jurisdiction required | `Skywork AI Editor Prompt.docx`; `data.js` record `service-legal-representation`; `static-demo/data.js` mirror; `docs/homepage-services-about-content-review.md`; this checklist | **BLOCKED — NOT APPROVED.** Provide current authorization by jurisdiction, responsible provider/entity, conflicts and client-eligibility process, engagement acceptance, confidentiality and deadline procedures, client-care obligations, insurance or regulatory information where applicable, and approved no-relationship wording. | Not signed |
+| Legal Consultancy | Tezzeta Mbuya N'Gungwa — proposed service-scope evidence owner; service classification remains undocumented | Name not supplied — qualified counsel for scope, jurisdiction, and engagement review required | `Skywork AI Editor Prompt.docx`; `data.js` record `service-legal-consultancy`; `static-demo/data.js` mirror; `docs/homepage-services-about-content-review.md`; this checklist | **BLOCKED — NOT APPROVED.** Classify research support, legal advice, academic consultancy, or other service form; provide jurisdictions, deliverables, local-law limitations, local-counsel referral rules, conflicts controls, reliance terms, and approved engagement wording. | Not signed |
+| Environmental Law | Tezzeta Mbuya N'Gungwa — proposed service-scope evidence owner; environmental-law service authority remains undocumented | Name not supplied — qualified environmental and jurisdictional legal reviewer required | `Skywork AI Editor Prompt.docx`; `data.js` record `service-environmental-law`; `static-demo/data.js` mirror; `docs/homepage-services-about-content-review.md`; this checklist | **BLOCKED — NOT APPROVED.** Provide relevant qualifications and experience, supported jurisdictions and regulatory subjects, research/advice classification, permit and enforcement boundaries, specialist-referral rules, and approval of the no-permit, no-certification, and no-outcome wording. | Not signed |
+| Environmental, Social and Governance (ESG) Advisory | Tezzeta Mbuya N'Gungwa — proposed service-scope evidence owner; ESG framework and delivery responsibility remain undocumented | Name not supplied — qualified ESG, legal, and jurisdictional reviewer required | `Skywork AI Editor Prompt.docx`; `data.js` record `service-esg-advisory`; `static-demo/data.js` mirror; `docs/homepage-services-about-content-review.md`; this checklist | **BLOCKED — NOT APPROVED.** Provide supported frameworks, competence evidence, jurisdictions, methodology and deliverables; distinguish legal analysis from certification, assurance, investment advice, and regulatory approval; document specialist referral, reliance, and engagement terms. | Not signed |
+
+**Shared blocking controls:** Retain `fixture: true`,
+`evidenceStatus: "pending"`, disabled booking, four-locale translation-review
+gates, and production publication prohibition until each record has an
+authenticated qualified approver, reproducible supporting evidence, an explicit
+decision, and an actual sign-off date.
+
 ## 3. Marketing and Claim Review
 
 | Check | Evidence required | Reviewer / owner | Status | Sign-off |

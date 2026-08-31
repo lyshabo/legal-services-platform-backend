@@ -1,6 +1,6 @@
 ---
 name: database-auth-rbac-verification
-description: Repeatable full-stack verification workflow for environment-variable classification, secret-surface scanning, CI/runtime/migration scope separation, Skywork AI Editor live-verification prompts, guarded dispatch, mirrored GitHub Pages publishing, deployed-link and CDN cache verification, static-demo regression testing, Docker Compose PostgreSQL, Prisma migrations and seeds, Auth.js/OIDC sign-in, database sessions, server-side RBAC, transactional repository checks, Playwright browser verification, and fail-closed evidence reporting. Use when a repository needs database-backed authentication, persistence, deployment configuration, static-demo publishing, secret boundaries, or a prompt-driven live verification run brought up, verified, reviewed, or repaired end to end.
+description: Repeatable full-stack verification workflow for environment-variable classification, secret-surface scanning, CI/runtime/migration scope separation, DOCX-driven multilingual service mapping, Skywork AI Editor live-verification prompts, guarded dispatch, mirrored GitHub Pages publishing, deployed-link and CDN cache verification, static-demo regression testing, Docker Compose PostgreSQL, Prisma migrations and seeds, Auth.js/OIDC sign-in, database sessions, server-side RBAC, transactional repository checks, Playwright browser verification, and fail-closed evidence reporting. Use when a repository needs database-backed authentication, persistence, deployment configuration, legal-service catalog updates, static-demo publishing, secret boundaries, or a prompt-driven live verification run brought up, verified, reviewed, or repaired end to end.
 ---
 
 # Database Auth Rbac Verification
@@ -924,3 +924,42 @@ rewritten, mirrored, or prepared for reviewer sign-off:
    identity handling, locale-specific lower-risk titles, claim-count integrity,
    retained evidence disclosures, closed publication gates, correct
    `<html lang>`, and no horizontal overflow.
+
+### DOCX-driven multilingual service mapping
+
+Apply these checks when a supplied DOCX requests additions or changes to a
+professional legal-services catalog:
+
+1. Extract the DOCX locally and map each requested category to the existing
+   service taxonomy, routes, filters, detail metadata, booking controls, and
+   publication model before editing. Preserve compatible existing categories;
+   document intentional overlaps such as a cross-cutting International Law
+   grouping.
+2. Reconcile the requested category count and names against the implemented
+   catalog. Do not silently merge, omit, or append categories without recording
+   the architecture decision.
+3. Add English, French, Simplified Chinese, and Traditional Chinese as separate
+   records with equivalent title, summary, audience, included scope, and
+   exclusions. Localize filter and card labels; never expose internal slugs.
+4. Treat every new legal-service claim as unapproved unless authenticated
+   evidence establishes the service model, responsible provider, current
+   authorization, jurisdictions, qualifications, conflicts process,
+   engagement terms, and permitted public wording.
+5. Keep new records `fixture: true`, evidence pending, booking disabled, and
+   production publication blocked. A card, route, translation, or passing test
+   is not evidence that the service is offered or authorized.
+6. Apply service-specific gates for representation, expert-witness work,
+   consultancy, environmental law, and ESG. Do not imply representation,
+   appointment, admissibility, certification, regulatory approval, compliance
+   assurance, local-law authority, deadline protection, or outcomes.
+7. Mirror only the reviewed browser content into the dedicated static-demo
+   repository. Do not add authentication, database, booking, payment,
+   providers, or confidential-submission capability to the mirror.
+8. Add focused browser assertions for all category labels in all four locales,
+   filtering, cards, detail routes, fixture badges, evidence state, exclusions,
+   cross-cutting subject wording, and disabled booking. Run syntax, strict
+   UTF-8/mojibake, unit, main Playwright, and named static-demo suites.
+9. Commit the main and static-demo repositories separately after inspecting the
+   staged diff. Exclude unrelated hunks, dirty reports, generated artifacts,
+   secrets, and the nested static-demo entry from the parent commit. Report
+   qualified legal and translation approvals independently from test results.

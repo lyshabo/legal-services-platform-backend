@@ -1,4 +1,4 @@
 interface:
   display_name: "Database Auth RBAC Verification"
-  short_description: "Verify secrets, DB, auth, RBAC, Pages, and deployment"
-  default_prompt: "Use $database-auth-rbac-verification to classify environment variables, scan secret surfaces, verify PostgreSQL persistence, Auth.js/OIDC sign-in, RBAC, transactional repositories, mirrored GitHub Pages publishing, deployed links, CDN cache headers, static-demo regressions, deployment workflows, browser flows, and fail-closed evidence."
+  short_description: "Verify DB, auth, services, Pages, and gates"
+  default_prompt: "Use $database-auth-rbac-verification to map DOCX-driven multilingual legal services, preserve legal-claim and publication gates, synchronize the browser-only static mirror, verify PostgreSQL persistence, Auth.js/OIDC, RBAC, Pages/CDN evidence, and run complete browser regressions."
