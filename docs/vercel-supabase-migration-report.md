@@ -46,6 +46,14 @@ document protection, payment processing, or production approval.
 
 ## Manual Configuration Required
 
+### August 29, 2026 verification retry
+
+The approved Vercel, Supabase, and Auth.js/OIDC values were rechecked without
+printing values. The execution process and GitHub `preview-verification`
+environment still exposed none of the required names. The guarded workflow was
+therefore not dispatched. Prisma migration, seed, connectivity, live contracts,
+external OIDC, and Vercel deployment remain `BLOCKED`/`NOT RUN`.
+
 1. Create or connect a Vercel project to the private backend repository.
 2. Create separate Supabase databases/credentials for each environment. Set
    pooled `DATABASE_URL` in Vercel runtime and keep direct `DIRECT_URL` only in

@@ -11,3 +11,26 @@ dist/
 .DS_Store
 Thumbs.db
 ~$*
+
+# Local runtime state and generated verification output
+.server.pid
+data/
+test-results/
+.tmp-static-review/
+
+# Nested or packaged development fixtures
+static-demo/
+temp-forward-test/
+temp-forward-test.zip
+*.skill
+
+# Local source materials and generated editorial working files
+CV Brick court.docx
+IMG-20260830-WA*.jpg
+portrait-contact-sheet.jpg
+Legal Services Platform - AI Editor Implementation Prompt.md
+Legal Services Platform - Claude Code Session Prompt.md
+Legal Services Platform - Complete Skywork AI Editor Prompt.md
+Legal Services Platform - Live Verification Skywork AI Editor Prompt.md
+Legal Services Platform - Revised.docx
+build_revised_legal_platform_doc.py

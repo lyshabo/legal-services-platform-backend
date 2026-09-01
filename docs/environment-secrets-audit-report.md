@@ -10,6 +10,16 @@ webhook secrets as production-grade secrets in every environment.
 
 Audit date: August 29, 2026.
 
+### August 29, 2026 recheck
+
+After the request to resume live verification, the ten required values were
+checked by name, presence, scope, and length only. None were visible in the
+managed or unsandboxed execution process, User or Machine environment scopes,
+ignored local environment files, or the GitHub `preview-verification`
+environment. No workflow was dispatched. This is recorded as `BLOCKED` for
+secret-channel availability and `NOT RUN` for the guarded workflow; no live
+database, external OIDC, or Vercel result is inferred.
+
 ## Environment Variable Audit
 
 | Variable | Required? | Purpose | Scope and configuration |

@@ -611,6 +611,8 @@ for (const service of requestedServiceCategories) {
   services.push(service);
 }
 
+applyServiceEvidence(services);
+
 export const products = [
   {
     id: "product-guide",
