@@ -451,6 +451,37 @@ function detailBlock(title, text) {
   return `<article class="detail-block"><h2>${escapeHtml(title)}</h2><p>${escapeHtml(text)}</p></article>`;
 }
 
+function serviceEvidenceView(service) {
+  if (!service.evidence) return "";
+  const labels = serviceEvidenceLabels[state.locale] ?? serviceEvidenceLabels.en;
+  const jurisdiction =
+    service.evidence.jurisdiction[state.locale] ?? service.evidence.jurisdiction.en;
+  const reviewStatus =
+    service.evidence.reviewStatus[state.locale] ?? service.evidence.reviewStatus.en;
+  const references = service.evidence.references
+    .map(
+      (reference) => `
+        <li>
+          <a href="${escapeHtml(reference.url)}" target="_blank" rel="noopener noreferrer">
+            ${escapeHtml(reference.citation)}
+          </a>
+        </li>
+      `
+    )
+    .join("");
+  return `
+    <article class="detail-block service-evidence" data-evidence-status="${escapeHtml(service.evidenceStatus)}">
+      <h2>${escapeHtml(labels.basis)}</h2>
+      <h3>${escapeHtml(labels.jurisdiction)}</h3>
+      <p>${escapeHtml(jurisdiction)}</p>
+      <h3>${escapeHtml(labels.status)}</h3>
+      <p>${escapeHtml(reviewStatus)}</p>
+      <h3>${escapeHtml(labels.references)}</h3>
+      <ol class="reference-list">${references}</ol>
+    </article>
+  `;
+}
+
 function libraryView() {
   const c = t();
   const filtered = products.filter((item) => {
