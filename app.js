@@ -19,6 +19,32 @@ import {
 import { copy } from "./i18n.js";
 
 const PUBLIC_DEMO_URL = "https://lyshabo.github.io/legal-services-platform-backend/";
+const serviceEvidenceLabels = {
+  en: {
+    basis: "Evidence and scope basis",
+    jurisdiction: "Jurisdiction-specific review",
+    references: "References",
+    status: "Publication and professional review status"
+  },
+  fr: {
+    basis: "Fondement des sources et du périmètre",
+    jurisdiction: "Examen propre à la juridiction",
+    references: "Références",
+    status: "Statut de publication et de revue professionnelle"
+  },
+  zh: {
+    basis: "证据与服务范围依据",
+    jurisdiction: "司法管辖区专项审查",
+    references: "参考资料",
+    status: "发布与专业审查状态"
+  },
+  "zh-Hant": {
+    basis: "證據與服務範圍依據",
+    jurisdiction: "司法管轄區專項審查",
+    references: "參考資料",
+    status: "發布與專業審查狀態"
+  }
+};
 
 const app = document.querySelector("#app");
 const staticDemo = document.documentElement.dataset.staticDemo === "true";
@@ -407,6 +433,7 @@ function serviceDetailView(id) {
         ${detailBlock(c.services.audience, tr.audience)}
         ${detailBlock(c.services.included, tr.included)}
         ${detailBlock(c.services.excluded, tr.excluded)}
+        ${serviceEvidenceView(service)}
       </div>
       <aside class="action-panel">
         <h2>${escapeHtml(c.nav.services)}</h2>

@@ -1,3 +1,5 @@
+import { applyServiceEvidence } from "./service-evidence.js";
+
 export const platformConfig = {
   environment: "development",
   fixtureMode: true,

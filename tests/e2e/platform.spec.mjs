@@ -237,6 +237,39 @@ test("new service categories remain evidence-gated and integrate international l
   }
 });
 
+test("every service detail has differentiated evidence metadata in all four locales", async ({ page }) => {
+  const serviceIds = [
+    "service-orientation",
+    "service-document-review",
+    "service-international-arbitration",
+    "service-investment-law",
+    "service-cross-border-business",
+    "service-extractive-industries",
+    "service-business-human-rights",
+    "service-afcfta-trade",
+    "service-international-research",
+    "service-expert-witness",
+    "service-legal-representation",
+    "service-legal-consultancy",
+    "service-environmental-law",
+    "service-esg-advisory"
+  ];
+  for (const locale of ["en", "fr", "zh", "zh-Hant"]) {
+    for (const serviceId of serviceIds) {
+      await page.goto(`/#/service/${serviceId}`);
+      await page.selectOption("#locale-select", locale);
+      await expect(page.locator(".service-evidence")).toHaveAttribute("data-evidence-status", "pending");
+      expect(await page.locator(".service-evidence .reference-list li").count()).toBeGreaterThan(0);
+      await expect(page.locator(".detail-block").nth(0)).not.toHaveText("");
+      await expect(page.locator(".detail-block").nth(1)).not.toHaveText("");
+      await expect(page.locator(".detail-block").nth(2)).not.toHaveText("");
+      await expect(page.locator(".service-evidence")).toContainText(
+        /review|examen|审查|審查|source|sources|参考|參考/i
+      );
+    }
+  }
+});
+
 test("legal compendium catalog remains gated with publication metadata and disabled purchase", async ({ page }) => {
   await page.goto("/#/home");
   await expect(page.getByRole("heading", { name: "Legal Compendiums" }).first()).toBeVisible();

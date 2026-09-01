@@ -995,3 +995,71 @@ updated together:
    for the verification commit.
 7. Report source push, workflow execution, artifact integrity, deployment
    status, public content, and CDN propagation as separate evidence layers.
+
+### Deterministic packaging and dependency monitoring
+
+Apply these controls when publishing a reusable verification skill or tracking
+an upstream deployment dependency:
+
+1. Validate the skill directory before packaging. Confirm the source matches
+   the intended commit or reviewed diff and that no generated package, secret,
+   report, cache, or unrelated workspace file is inside the skill directory.
+2. Package the unchanged source twice and compare SHA-256 hashes and byte sizes.
+   Treat differing outputs as a deterministic-packaging failure; investigate
+   timestamps, file ordering, metadata, or unintended inputs before publishing.
+3. Register only the final validated package. Record source commit, file count,
+   byte size, SHA-256, validation result, and whether the installed files match
+   the packaged source.
+4. Populate approval records only from actual authenticated reviewer data.
+   Require one record per service with reviewer name, authority or qualification
+   basis, decision, actual sign-off date, and reproducible evidence location.
+   Bracketed templates, role labels, proposed owners, or future intentions are
+   not approval evidence.
+5. Preserve `Name not supplied`, `BLOCKED - NOT APPROVED`, and `Not signed`
+   whenever any mandatory approval field is missing or cannot be authenticated.
+6. For unresolved upstream dependencies, create a read-only scheduled monitor
+   with a defined cadence, time zone, official issue or pull-request references,
+   release/tag checks, and immutable-SHA verification. Do not grant repository
+   write access merely to monitor status.
+7. A monitor may recommend an update only when an official fixed release exists.
+   It must not edit repositories, suppress warnings, or adopt an unmerged pull
+   request, branch head, or unreleased commit automatically.
+8. Record automation name, ID, status, cadence, time zone, next scheduled run,
+   checked sources, no-change behavior, and the human action required after a
+   fixed release is detected.
+
+### Evidence-first service detail rendering
+
+Apply these checks when a DOCX requires an evidence map for each service
+detail route:
+
+1. Inventory every individual service record before editing. Reconcile the
+   record count against the filter taxonomy and document any cross-cutting
+   category such as International Law.
+2. Map each record as `Service Category -> Legal/Academic Concept -> Source(s)
+   -> Supported Principle -> Application`. A source must support the specific
+   proposition being shown, not merely the general topic.
+3. Store source title, issuing body, date or `n.d.`, APA 7 citation text, and a
+   stable HTTPS URL as structured metadata. Render references accessibly on the
+   detail route with safe external-link attributes.
+4. Render a localized evidence-status notice and jurisdiction-specific caveat
+   for every locale. Keep source-supported legal concepts separate from proof
+   of provider qualification, authorization, service availability, or outcomes.
+5. Differentiate `audience`, `included`, and `excluded` text for every record.
+   Address representation, filing, negotiation, litigation, deadlines,
+   procedural rights, expert appointment/admissibility, permits,
+   certification, regulatory approval, investment advice, and outcome limits
+   where relevant to the category.
+6. Keep newly revised records fail closed: `fixture: true`,
+   `evidenceStatus: "pending"`, booking disabled unless an existing explicit
+   development fixture requires otherwise, and production publication blocked.
+7. Mirror the evidence module, detail rendering, locale labels, and browser
+   assertions into the dedicated static-demo repository without importing from
+   the parent repository or exposing backend capabilities.
+8. Run a route matrix for all records in `en`, `fr`, `zh`, and `zh-Hant`.
+   Verify heading, three scope blocks, evidence status, at least one reference,
+   localized jurisdiction caveat, `<html lang>`, disabled controls, and no
+   horizontal overflow.
+9. Register the evidence review document separately from code commits. Report
+   source verification, legal review, jurisdiction review, and translation
+   review as independent gates; passing tests do not clear any of them.

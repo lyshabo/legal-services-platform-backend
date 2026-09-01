@@ -249,3 +249,56 @@
       legacy Pages run for the verification commit.
 - [ ] Push, workflow, artifact, deployment, public-content, and CDN evidence are
       reported as independent layers.
+
+## Deterministic packaging and upstream monitoring
+
+- [ ] The skill validates and its source matches the intended commit or
+      reviewed diff.
+- [ ] The skill directory excludes generated packages, secrets, reports,
+      caches, and unrelated workspace files.
+- [ ] Two packages created from unchanged source have identical SHA-256 hashes
+      and byte sizes.
+- [ ] Package evidence records source commit, file count, byte size, SHA-256,
+      validation result, and installed-source parity.
+- [ ] Each approved service record contains an authenticated reviewer name,
+      authority basis, decision, actual sign-off date, and evidence location.
+- [ ] Placeholder fields, role labels, or proposed owners do not clear an
+      approval or publication gate.
+- [ ] Missing mandatory approval data remains `Name not supplied`,
+      `BLOCKED - NOT APPROVED`, and `Not signed`.
+- [ ] Upstream dependency monitoring is read-only and records cadence, time
+      zone, official issue/PR/release sources, and immutable-SHA checks.
+- [ ] The monitor does not edit repositories, suppress warnings, or adopt
+      unreleased or unmerged code.
+- [ ] Automation evidence records name, ID, status, next run, no-change
+      behavior, and the human action required when a fixed release appears.
+
+## Evidence-first service detail rendering
+
+- [ ] Every individual service record was inventoried before editing.
+- [ ] Record count is reconciled against filter categories and cross-cutting
+      taxonomy decisions are documented.
+- [ ] Each service has a `Service Category -> Concept -> Sources ->
+      Supported Principle -> Application` evidence map.
+- [ ] Structured source metadata includes title, issuing body, date or `n.d.`,
+      APA 7 citation text, and a stable HTTPS URL.
+- [ ] APA references render accessibly on each detail route with safe external
+      link attributes.
+- [ ] Audience, included, and excluded text is differentiated per service and
+      locale rather than copied from a generic template.
+- [ ] Service-specific limits cover representation, filing, negotiation,
+      litigation, deadlines, expert appointment/admissibility, permits,
+      certification, regulatory approval, investment advice, and outcomes where
+      relevant.
+- [ ] Legal concepts supported by sources are kept separate from provider
+      qualification, authorization, service availability, and outcome claims.
+- [ ] Revised records remain fixtures, evidence-pending, publication-blocked,
+      and booking-disabled except for an explicit pre-existing dev fixture.
+- [ ] Main and static-demo evidence modules are self-contained and synchronized.
+- [ ] Route matrix passes for every service in `en`, `fr`, `zh`, and `zh-Hant`.
+- [ ] Each route exposes localized evidence status, jurisdiction caveat, three
+      scope blocks, at least one reference, correct `<html lang>`, and no
+      horizontal overflow.
+- [ ] Evidence review artifact is registered separately from code commits.
+- [ ] Legal, jurisdiction, source, and qualified-translation approvals remain
+      independent of automated test results.
