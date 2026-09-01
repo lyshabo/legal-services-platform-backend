@@ -16,7 +16,7 @@ of `origin/main`.
 
 | File / artifact | Initial status | Classification | Decision | Reason / evidence | Action | Risk check |
 |---|---|---|---|---|---|---|
-| `app.js` | Modified | Required application and Services source plus one unrelated hunk | PRESERVE Services; REVERT unrelated | `bf29aa7` contained evidence labels and route call, while the required renderer was still unstaged; the remaining booking-admin hunk was unrelated | Renderer committed in `542ef6c`; unrelated booking hunk restored | Main and focused route tests verify the renderer; booking behavior returns to committed state |
+| `app.js` | Modified | Required application and Services source plus booking-admin regression fix | PRESERVE | `bf29aa7` contained evidence labels and route call, while the required renderer was still unstaged. Full browser validation then proved the booking error-rendering hunk was required to preserve `BOOKING_NOT_PAYABLE` feedback. | Renderer committed in `542ef6c`; booking state/render fix restored after defect verification | Main route and admin booking tests cover both behaviors |
 | `data.js` | Modified | Required Services source | PRESERVE | Imports `service-evidence.js`; the missing invocation is required to attach evidence and revised four-locale scope to all records | Commit the required `applyServiceEvidence(services)` invocation | Import and route tests fail without the invocation |
 | `tests/e2e-static/static-demo.spec.mjs` | Modified | Required regression source | PRESERVE | Covers all 14 service routes and four locales in the browser-only mirror | Committed in `542ef6c` | Static-demo focused test passed |
 | `docs/environment-secrets-audit-report.md` | Modified | Legitimate tracked evidence | PRESERVE | Records an actual fail-closed secret-channel recheck and explicitly avoids inferring live results | Commit the evidence addition | Removing it would erase verification history |
@@ -55,7 +55,8 @@ of `origin/main`.
   architecture, implementation status, launch gates, threat model, translation
   review, forward-test report, consistency audit, and tracked verification
   report updates.
-- **Reverted:** The unrelated booking-admin error-display hunk in `app.js`.
+- **Reverted:** None. The initially questioned booking-admin hunk was retained
+  after the full browser suite proved it was required behavior.
 - **Deleted:** None. Potentially important local material was retained.
 - **Added to `.gitignore`:** Runtime PID/data, test and screenshot output,
   packaged skills, nested repositories/fixtures, uploaded evidence, and
@@ -68,5 +69,21 @@ of `origin/main`.
 
 ## Checkpoint 3: Final Verification
 
-Record the final unit, Playwright, readiness, commit, and `git status` results
-after the cleanup commit is created.
+- Unit tests: 18 passed, 0 failed, 1 live-Prisma test skipped because no approved
+  live database was configured.
+- Main Playwright: 23 passed, 0 failed, 1 obsolete test intentionally skipped,
+  using one worker.
+- Static-demo Playwright: 8 passed, 0 failed, using one worker.
+- Focused remediation tests: assessment escalation and terminal-booking
+  reconciliation both passed.
+- JavaScript syntax and patch checks passed.
+- Repository secret audit found no audited credential patterns or weak secret
+  defaults in tracked files.
+- Production readiness correctly remains `BLOCKED` by unresolved identity,
+  jurisdiction, privacy, security, AI, commerce, localization, and
+  non-production-provider gates.
+- `bf29aa7` remains intact in commit history. `542ef6c` completes the Services
+  renderer and static regression coverage; `e64d5ea` records the deliberate
+  cleanup and preservation decisions.
+- Final `git status`, unstaged diff, and staged diff are checked after the final
+  remediation commit.

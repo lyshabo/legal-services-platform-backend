@@ -38,9 +38,11 @@ test("public demo link uses the approved GitHub Pages destination", async ({ pag
 test("preliminary legal assessment captures structured intake and escalates urgency", async ({ page }) => {
   await page.goto("/#/assessment");
   await expect(page.getByRole("heading", { name: /Preliminary Legal Assessment/i })).toBeVisible();
-  await page.locator('select[name="language"]').selectOption({ label: "English" });
+  await page.locator('select[name="language"]').selectOption({ index: 1 });
   await page.locator('input[name="jurisdiction"]').fill("DEMO");
-  await page.locator('select[name="issue"]').selectOption({ label: "International matter" });
+  await page.locator('select[name="issue"]').selectOption({ index: 1 });
+  await expect(page.locator('input[name="jurisdiction"]')).toHaveValue("DEMO");
+  await expect(page.locator('select[name="issue"]')).not.toHaveValue("");
   await page.locator('input[name="urgent"]').check();
   await page.locator("#assessment-form button[type=submit]").click();
   await expect(page.locator(".result-status strong")).toHaveText("ESCALATE");

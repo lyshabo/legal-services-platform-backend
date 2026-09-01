@@ -1652,8 +1652,8 @@ function bindEvents() {
       );
       const payload = await response.json();
       if (!response.ok) {
-        document.querySelector("#booking-admin-result").textContent =
-          payload.error || "Payment reconciliation failed.";
+        state.adminFlash = payload.error || "Payment reconciliation failed.";
+        render();
         return;
       }
       state.adminFlash = "Payment reconciled and booking state refreshed.";
