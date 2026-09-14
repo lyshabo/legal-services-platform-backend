@@ -90,12 +90,12 @@ of `origin/main`.
 
 ## Checkpoint 4: Corrected Pages Deployment and Public Route Verification
 
-**Verification date:** September 14, 2026  
-**Static-demo source commit:** `679f1b483b1b711a3867a42626330f4790821fc7`  
-**Pages workflow run:** `33461712791`  
-**Workflow and deploy-job conclusion:** `success` / `success`  
-**Artifact:** `github-pages` (ID `9783378819`, 384,787 bytes)  
-**Artifact digest:** `sha256:5fea68b4f35f9c9cd23adcf9978f025c0e2d644f71c1ddc7bb02e963c8ca12bf`  
+**Verification date:** September 14, 2026
+**Static-demo source commit:** `679f1b483b1b711a3867a42626330f4790821fc7`
+**Pages workflow run:** `33461712791`
+**Workflow and deploy-job conclusion:** `success` / `success`
+**Artifact:** `github-pages` (ID `9783378819`, 384,787 bytes)
+**Artifact digest:** `sha256:5fea68b4f35f9c9cd23adcf9978f025c0e2d644f71c1ddc7bb02e963c8ca12bf`
 **Deployment URL:** `https://legal-services-platform.github.io/legal-services-platform-static-demo-20260828/`
 
 The corrected curated artifact includes `service-evidence.js`, which was
