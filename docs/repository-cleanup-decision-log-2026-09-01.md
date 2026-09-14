@@ -140,3 +140,50 @@ order number `8132`, and bar `KINSHASA/GOMBE`. This is recorded as an
 authenticated source reference for the Bar item; identity-match, scope,
 current-status wording, and publication-permission decisions remain separate
 review fields and are not inferred from the URL alone.
+
+## Checkpoint 6: Gated DRC Library and Experience Deployment
+
+**Verification date:** September 14, 2026
+**Main repository commit:** `08202a6dc87c2eb57fc06f75b9fe3e4af212e9f4`
+**Static-demo source commit:** `eeaf36739987165e0d79a79af12ca9a6d85f7d62`
+**Pages workflow run:** `34802162536`
+**Deploy job:** `103846829730`
+**Workflow and deploy-job conclusion:** `success` / `success`
+**Artifact:** `github-pages` (ID `10331329616`, 392,023 bytes)
+**Artifact digest:** `sha256:e502a8b96b53cf57ee2c89509c46607a8045aaf1bd71eedf7c6676aef68edb14`
+**Deployment URL:** `https://legal-services-platform.github.io/legal-services-platform-static-demo-20260828/`
+
+The curated deployment added development resources for DRC laws, DRC
+regulations, DRC bylaws and implementing measures, OHADA instruments, REC
+regulations, bilateral investment treaties, and regional economic agreements.
+All entries remain fixtures. Source text, amendment and currency review,
+effective dates, republication permission, qualified legal review, and
+qualified translation review remain pending. Purchase and download controls
+remain disabled.
+
+The deployed browser verification covered the seven new categories in each of
+`en`, `fr`, `zh`, and `zh-Hant`, plus the DRC Constitution detail route and the
+date-optional About experience set in each locale. All 36 checks passed.
+Every tested category returned at least one resource, purchase controls
+remained disabled, source metadata and DRC operational-relevance fields were
+present, each About locale rendered 11 experience entries, and the seven new
+experience themes retained evidence-pending badges.
+
+Strict UTF-8 checks found no replacement characters or repeated-question-mark
+corruption in the new static resource metadata after remediation. The
+static-demo Playwright suite passed 9 of 9 tests. The main Playwright suite
+passed 24 tests with one obsolete test intentionally skipped. Unit tests
+passed 18 tests with one live-Prisma contract test skipped because no approved
+reachable PostgreSQL configuration was available.
+
+Two requests to the deployed root returned HTTP 200 with stable ETag
+`"6aa76791-4c3"`, `Last-Modified: Mon, 14 Sep 2026 03:18:41 GMT`, and
+`Cache-Control: max-age=600`; cache state changed from `MISS`, `Age: 0` to
+`HIT`, `Age: 3`, `X-Cache-Hits: 1`. Two requests to `data.js` returned HTTP
+200 with stable ETag `"6aa76792-d283"`, `Last-Modified: Mon, 14 Sep 2026
+03:18:42 GMT`, and the same `MISS` to `HIT` transition.
+
+The main remote `master` and static-demo remote `main` branch SHAs matched the
+committed source SHAs above at verification time. Historical cleanup,
+blocked-attempt, and earlier corrected-deployment evidence remains preserved
+unchanged in the preceding checkpoints.
