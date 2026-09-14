@@ -1102,6 +1102,7 @@ const selectedExperienceByLocale = {
 };
 
 for (const [locale, entries] of Object.entries(selectedExperienceByLocale)) {
+  copy[locale].about.experienceStatementsOnly = true;
   copy[locale].about.experience = entries.map(([role, organization, detail, jurisdictionalRelevance, evidenceStatus]) => ({
     period: "",
     role,

@@ -25,7 +25,9 @@ test("static About route preserves locale, resolved Bar status, and noindex", as
     await expect(page.locator(".bar-status-panel")).toContainText("Mbuya");
     await expect(page.locator(".experience-list article")).toHaveCount(14);
     expect(await page.locator(".experience-list .badge").count()).toBeGreaterThanOrEqual(7);
-    expect(await page.locator(".experience-list .experience-period").filter({ hasText: /Date not stated|Date non indiquée|日期未注明|日期未註明/ }).count()).toBeGreaterThan(0);
+    await expect(page.locator(".experience-list .experience-period")).toHaveCount(0);
+    await expect(page.locator(".experience-list h3")).toHaveCount(0);
+    await expect(page.locator(".experience-list .about-organization")).toHaveCount(0);
     await expect(page.locator(".about-profile")).not.toContainText(/Tezzeta N[’']gungwa Mbuya/);
     await expect(page.locator(".credential-timeline article")).toHaveCount(4);
     await expect(page.locator('meta[name="robots"]')).toHaveAttribute(
