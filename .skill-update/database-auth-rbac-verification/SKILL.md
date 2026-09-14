@@ -1099,3 +1099,53 @@ detail route:
    rewriting historical blocked attempts. Record preserved, ignored, reverted,
    deleted, tracked, and locally retained items, plus the final repository and
    remote SHAs.
+
+### Official-source mapping and multilingual Legal Library gates
+
+Apply these checks when a DOCX or public-site request adds DRC laws,
+regulations, bylaws, OHADA instruments, African Union or REC instruments,
+bilateral investment treaties, or regional economic agreements:
+
+1. Create one evidence record per instrument. Store the exact title, law or
+   treaty number, issuing body, instrument type, official or authenticated
+   source URL, publication issue, adoption date, publication date, effective
+   date, language, jurisdiction, and retrieval date.
+2. Separate **source identity** from **legal currency**. A source page may
+   identify an instrument without proving that it is consolidated, in force,
+   unamended, or complete. Require a currentness decision, amendment list,
+   repeal or replacement check, and an effective-date decision.
+3. Prefer official gazettes, treaty depositaries, OHADA and African Union
+   institutional pages, and authenticated professional or government
+   repositories. Treat discovery indexes such as UNCTAD treaty collections as
+   finding aids, not as proof of DRC ratification, entry into force,
+   termination, reservations, or completeness.
+4. Record republication permission as a separate field from source access.
+   A publicly viewable PDF or webpage does not automatically authorize
+   copying, OCR, translation, sale, or republication. Capture the licence,
+   terms, written permission, or an explicit `permission not established`
+   decision.
+5. Do not infer an exact law number, effective date, amendment, membership,
+   ratification, or treaty status from a DOCX summary, search snippet, index,
+   or secondary citation. Use `pending` and stop publication when the primary
+   record cannot be authenticated.
+6. Keep resources fail closed until source identity, currentness, effective
+   date, jurisdiction, permission, legal review, and four-locale translation
+   review are complete. Mark them as fixtures and disable purchase, download,
+   and text-reproduction controls.
+7. Walk through every Legal Library category and at least one detail route in
+   `en`, `fr`, `zh`, and `zh-Hant`. Verify localized category labels, source
+   metadata, currentness notice, permission notice, jurisdiction caveat,
+   `<html lang>`, disabled controls, and no horizontal overflow.
+8. Test the category matrix independently. A passing English route does not
+   clear French, Simplified Chinese, or Traditional Chinese. Record each
+   locale-category result and retain screenshots or trace references where
+   visual review is required.
+9. Keep legal-source, amendment/currentness, rights, legal-review, and
+   translation-review decisions separate in the evidence report. Browser
+   rendering, automated tests, and a public URL are implementation evidence,
+   not qualified legal approval.
+10. When any required field is missing, report the exact owner action:
+    obtain the official gazette or treaty record, verify the amendment and
+    effective-date history, confirm republication rights, or obtain named
+    qualified review. Do not replace the missing field with a likely date,
+    generic source label, or inferred permission.
