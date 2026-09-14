@@ -90,7 +90,7 @@ When `About.docx` is supplied or the About page is refreshed from a document:
    proposed sentence to a source-supported fact. Do not infer bar admission,
    current authorization, clients, outcomes, publication rights, or completed
    academic qualifications from a profile document.
-2. Preserve the exact full identity string `Tezzeta Mbuya N'Gungwa` in
+2. Preserve the exact full identity string `Tezzeta N’gungwa Mbuya` in
    display-name, title, metadata, and other identity fields. In prose
    sentences, use `Mbuya` only; do not use `Tezzeta`, `Tezzeta Mbuya`, or the
    full name as the sentence subject.
@@ -139,7 +139,7 @@ When an authorized reviewer resolves the Bar Memberships & Admissions item:
    companies, or international organizations, run a fresh claim review. Map
    each statement to authenticated evidence and keep any unsupported
    implication gated.
-5. Verify exact identity handling: retain `Tezzeta Mbuya N'Gungwa` in identity
+5. Verify exact identity handling: retain `Tezzeta N’gungwa Mbuya` in identity
    fields and use `Mbuya` in prose. Scan all four rendered locale tracks for
    forbidden `Tezzeta`-based sentence subjects and stale CV/resume wording.
 6. Run the main app and static-demo locale regression checks. Confirm the
@@ -848,7 +848,8 @@ documents or an existing credential-heavy profile:
    Synthesize qualifications, research, memberships, publications, and selected
    experience into short narrative paragraphs; keep detailed education and
    chronology in optional disclosures rather than presenting a condensed CV.
-2. Preserve the exact approved full name in identity fields and headings. Apply
+2. Preserve the exact approved full name `Tezzeta N’gungwa Mbuya` in identity
+   fields and headings. Apply
    the documented surname or short-name rule consistently in prose. Scan every
    locale for prohibited former-name variants and CV/resume source wording.
 3. Do not invent or upgrade credentials, admissions, clients, matters,
