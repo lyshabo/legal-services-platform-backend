@@ -187,3 +187,109 @@ The main remote `master` and static-demo remote `main` branch SHAs matched the
 committed source SHAs above at verification time. Historical cleanup,
 blocked-attempt, and earlier corrected-deployment evidence remains preserved
 unchanged in the preceding checkpoints.
+
+## Checkpoint 7: Standalone Selected Experience Deployment and Visual Review
+
+**Verification date:** September 14, 2026
+
+**Main repository commit:** `0d34ce6c9182d62b6672cd4052ad0623889966b8`
+
+**Static-demo source commit:** `49a3e9ea748950d9d3f1c3925a69fefdbdc2a2c3`
+
+**Pages workflow:** `Deploy static demo to GitHub Pages`
+
+**Pages workflow run:** `34808716753`
+
+**Deploy job:** `103865606025`
+
+**Workflow and deploy-job conclusion:** `success` / `success`
+
+**Artifact:** `github-pages` (ID `10333164187`, 394,568 bytes)
+
+**Artifact digest:** `sha256:51487b98868f6fd180acdd86c26b81eb88dfa8e4ee36ff9f0c2cc2e871ec54ac`
+
+**Artifact created:** September 14, 2026 at 05:11:45 UTC
+
+**Artifact expiry:** September 15, 2026 at 05:11:44 UTC
+
+**Deployment URL:** `https://legal-services-platform.github.io/legal-services-platform-static-demo-20260828/`
+
+The workflow and deploy job both completed successfully for the exact
+static-demo source commit. The deployed About route displayed the approved
+identity `Tezzeta N’gungwa Mbuya`. The deployed localization asset contained
+the updated identity and statement-only presentation flag.
+
+The live visual review covered the About page in English, French, Simplified
+Chinese, and Traditional Chinese at desktop (`1440 x 1000`) and mobile
+(`390 x 844`) viewports. Each of the eight captures rendered 14 Selected
+Experience items as standalone matter statements, with zero visible date
+fields, zero separate matter titles, and zero organization labels. Evidence
+status badges and DRC operational-relevance notes remained visible. No
+horizontal overflow, clipping, overlapping text, broken containment, or
+missing statement blocks was observed.
+
+The desktop layouts retained a balanced two-column hero, readable identity
+and professional-title wrapping, and consistent stacked experience items.
+The mobile layouts stacked the portrait, headings, disclosures, statements,
+relevance notes, and gates correctly. The fully expanded section remains
+content-dense; French mobile was the longest capture at 14,630 pixels. This is
+an optional hierarchy and scan-length refinement, not a verified functional
+or responsive-layout defect. Any later density reduction must preserve every
+evidence field, DRC relevance note, `noindex` control, and publication gate.
+
+Two requests to the deployed root document returned HTTP 200 with
+`Content-Type: text/html; charset=utf-8`, `Content-Length: 1219`,
+`Last-Modified: Mon, 14 Sep 2026 05:11:47 GMT`, stable ETag
+`"6aa78213-4c3"`, and `Cache-Control: max-age=600`. The cache transitioned
+from `X-Cache: MISS`, `Age: 0`, `X-Cache-Hits: 0` to `X-Cache: HIT`,
+`Age: 3`, `X-Cache-Hits: 1`.
+
+Two requests to the deployed `app.js` returned HTTP 200 with
+`Content-Type: application/javascript; charset=utf-8`,
+`Content-Length: 95405`, `Last-Modified: Mon, 14 Sep 2026 05:11:47 GMT`,
+stable ETag `"6aa78213-174ad"`, and `Cache-Control: max-age=600`. The cache
+again transitioned from `MISS`, `Age: 0`, `X-Cache-Hits: 0` to `HIT`,
+`Age: 3`, `X-Cache-Hits: 1`.
+
+The verification captures are retained as temporary internal evidence under
+`.tmp-static-review/2026-09-14-about-live/` and are excluded from source
+control. Browser rendering confirms implementation and responsive behavior;
+it does not constitute qualified legal-claims approval, identity approval,
+translation approval, source-currentness approval, or publication
+authorization. Those review tracks remain separate and fail closed.
+
+## Checkpoint 8: Fresh Pages and CDN Recheck
+
+**Verification date:** September 14, 2026
+
+**Exact static-demo source commit:** `49a3e9ea748950d9d3f1c3925a69fefdbdc2a2c3`
+
+**Pages workflow run:** `34808716753`
+
+**Workflow conclusion:** `success`
+
+**Deploy job:** `103865606025` (`success`)
+
+**Artifact digest:** `sha256:51487b98868f6fd180acdd86c26b81eb88dfa8e4ee36ff9f0c2cc2e871ec54ac`
+
+**Deployment URL:** `https://legal-services-platform.github.io/legal-services-platform-static-demo-20260828/`
+
+A fresh public recheck confirmed the exact deployed commit and successful
+workflow evidence above. The root document returned HTTP 200 on both requests
+with `Content-Length: 1219`, `Content-Type: text/html; charset=utf-8`,
+`Last-Modified: Mon, 14 Sep 2026 05:11:47 GMT`, ETag
+`"6aa78213-4c3"`, and `Cache-Control: max-age=600`. The CDN reported
+`X-Cache: HIT`, `X-Cache-Hits: 1`, and increasing `Age` values of 25 and 27
+seconds; the proxy layer reported `x-proxy-cache: MISS` on both responses,
+which is recorded rather than interpreted as a deployment failure.
+
+The `app.js` asset returned HTTP 200 on both requests with
+`Content-Length: 95405`, `Content-Type: application/javascript; charset=utf-8`,
+the same `Last-Modified` timestamp, ETag `"6aa78213-174ad"`, and
+`Cache-Control: max-age=600`. It likewise reported `X-Cache: HIT`,
+`X-Cache-Hits: 1`, and increasing `Age` values of 21 and 24 seconds, with
+`x-proxy-cache: MISS` on both requests.
+
+This checkpoint is append-only. It does not replace the prior visual review,
+and it does not convert browser, artifact, or CDN evidence into legal,
+credential, translation, or publication approval.
