@@ -1084,10 +1084,12 @@ detail route:
    Bar, retrieval date, identity-match decision, and publication permission
    independently. Do not infer wider authorization, experience, or service
    availability.
-5. Add date-optional experience themes only when the source omits a date.
-   Label them as selected themes, retain evidence-pending metadata, avoid named
-   client or outcome claims, and explain the DRC operational relevance without
-   turning the entry into legal advice or a current service offer.
+5. Present selected experience as concise standalone matter statements when
+   the approved design omits dates and separate titles. Do not render synthetic
+   dates, `Date not stated`, role labels, or organization labels. Retain
+   evidence-pending metadata, avoid named-client or outcome claims, and explain
+   DRC operational relevance without turning an entry into legal advice or a
+   current service offer.
 6. Verify every service detail route in `en`, `fr`, `zh`, and `zh-Hant`. For a
    14-service catalog, require 56 independent route-locale checks covering
    heading, evidence status, references, jurisdiction caveat, locale, booking
