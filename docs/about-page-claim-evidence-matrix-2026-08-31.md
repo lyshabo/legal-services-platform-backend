@@ -1,7 +1,7 @@
 # About Page Claim-Evidence Matrix
 
 **Prepared:** August 31, 2026
-**Claim set:** 21 stable items
+**Claim set:** 27 stable items
 **Publication status:** Gated. Not cleared for unrestricted production publication.
 **Applies to:** English, French, Simplified Chinese, and Traditional Chinese About copy.
 
@@ -41,16 +41,22 @@
 | C19 | Research and case support at Leigh Day | Substantiation and permission required | Experience records describe research and case support at Leigh Day | Placement confirmation, dates, role description, confidentiality and name-use permission | Institutional-permission owner | Not supplied | Pending | Pending | Not supplied | Name required; legal/content reviewer | Pending | Not supplied | Per permission terms | Blocks institution and case-support claim |
 | C20 | Independent advisory work across contracts, PPPs, mining, regulation, and cross-border disputes | Substantiation required | Independent research and advisory work involving the listed fields | Redacted matter list, role dates, jurisdictions, and advice/research/representation classification | Professional-history owner | Not supplied | Pending | Pending | Not supplied | Name required; legal/content reviewer | Pending | Not supplied | Annual | Blocks representation and complete-service implication |
 | C21 | Publications and conferences use separate evidence and permission controls | Functional statement verified | Publications and conference records remain subject to separate evidence and permission controls | Rendered disclosure, item metadata, tests, and current source | Web/content owner | `i18n.js`; `static-demo/i18n.js`; About browser tests | Not applicable | Functional control verified; item permissions remain independent | Not supplied | Name required; web/content reviewer | Functional control verified | Not supplied | Each release | Does not clear any publication or conference item |
+| C22 | Firm founded in 2026 | Substantiation required | Development profile describes the firm as founded in 2026, subject to evidence review | Formation record, registry filing, dated launch record, or authenticated founder statement | Identity/content owner | Not supplied | Pending | Pending | Not supplied | Name required; legal/content reviewer | Pending | Not supplied | At corporate-status change | Blocks public founding-year claim |
+| C23 | PhD Candidate at the University of Essex | Current-status substantiation required | Doctoral research at the University of Essex | Current enrollment or official candidate-status record, program label, and retrieval date | Academic evidence owner | Not supplied | Pending | Pending | Not supplied | Name required; academic reviewer | Pending | Not supplied | Each academic year | Blocks current candidate-status and institution claim |
+| C24 | Research on investment arbitration in the African context, including ISDS, Eurocentrism, and universalism | Substantiation and terminology review | Research examines investment arbitration and African perspectives in international law | Official research description, approved abstract, supervisor or institution record, and qualified translation review | Academic/content owner | Not supplied | Pending | Pending | Not supplied | Name required; academic and translation reviewers | Pending | Not supplied | Each research-cycle change | Blocks exact research-framing claim |
+| C25 | More than 15 years of experience across the DRC, England and Wales, and Austria | Quantified-history and jurisdiction review | Experience includes extractive-industry and dispute-resolution work across the listed jurisdictions | Dated role history, qualifying-period calculation, jurisdiction basis, and authorization distinction | Professional-history owner | Not supplied | Pending | Pending | Not supplied | Name required; legal/jurisdiction reviewer | Pending | Not supplied | Annual or status change | Blocks quantified duration and multi-jurisdiction wording |
+| C26 | Advised government entities, local communities, and businesses on extractive-industry disputes and related matters | Substantiation and confidentiality review | Experience includes extractive-industry contractual, advisory, and contentious matters | Redacted matter index, role descriptions, client-category permission, confidentiality review, and no-outcome implication | Engagement/confidentiality owner | Not supplied | Pending | Pending | Not supplied | Name required; legal/confidentiality reviewer | Pending | Not supplied | Per permission terms | Blocks client-category and dispute-experience claims |
+| C27 | Advises investors on structuring DRC investments against domestic, transnational, and international risks | Scope, authorization, and substantiation review | Investor-structuring research or advisory support may be considered through a jurisdiction and engagement review | Redacted work-product index, authorized scope, jurisdiction analysis, conflict review, and publication permission | Jurisdiction/engagement owner | Not supplied | Pending | Pending | Not supplied | Name required; legal/jurisdiction reviewer | Pending | Not supplied | Annual or status change | Blocks current investor-advisory and risk-protection implication |
 
 ## Integrity Check
 
 | Category | Count |
 |---|---:|
 | Retain or resolved with controlled evidence | 4 |
-| Substantiation required | 13 |
+| Substantiation required | 19 |
 | Terminology or scope qualification required | 3 |
 | Functional statement verified | 1 |
-| **Total** | **21** |
+| **Total** | **27** |
 
 ## Final Authorization
 

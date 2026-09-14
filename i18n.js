@@ -107,7 +107,7 @@ export const copy = {
       profileCta: "Learn More About Tezzeta",
       profileTagline: "Research-Driven. Internationally Focused. Africa-Centered.",
       profileParagraphs: [
-        "Tezzeta Mbuya N'Gungwa is a legal researcher, international law specialist, and dispute-resolution specialist whose work focuses on the intersection of international investment, commercial arbitration, international economic law, business and human rights, and Africa’s evolving legal landscape.",
+        "Mbuya is a legal researcher, international law specialist, and dispute-resolution specialist whose work focuses on the intersection of international investment, commercial arbitration, international economic law, business and human rights, and Africa’s evolving legal landscape.",
         "With a particular focus on Africa, Tezzeta brings an internationally informed perspective to complex cross-border legal and commercial matters. Her work explores how international dispute-resolution mechanisms can better respond to the realities, opportunities, and challenges of African markets.",
         "Whether supporting a business, investor, law firm, or organization, Tezzeta combines legal research with practical strategic analysis to support informed decisions on complex international legal issues."
       ],
@@ -317,7 +317,7 @@ export const copy = {
       profileCta: "En savoir plus sur Tezzeta",
       profileTagline: "Fondée sur la recherche. Tournée vers l’international. Centrée sur l’Afrique.",
       profileParagraphs: [
-        "Tezzeta Mbuya N'Gungwa est chercheuse juridique et spécialiste du droit international et du règlement des différends. Ses travaux portent sur les liens entre l’investissement international, l’arbitrage commercial, le droit économique international, les entreprises et les droits humains, et l’évolution du paysage juridique africain.",
+        "Mbuya est chercheuse juridique et spécialiste du droit international et du règlement des différends. Ses travaux portent sur les liens entre l’investissement international, l’arbitrage commercial, le droit économique international, les entreprises et les droits humains, et l’évolution du paysage juridique africain.",
         "Avec une attention particulière portée à l’Afrique, Tezzeta apporte une perspective nourrie par le contexte international aux questions juridiques et commerciales transfrontalières complexes. Ses travaux examinent comment les mécanismes internationaux de règlement des différends peuvent mieux répondre aux réalités, aux possibilités et aux défis des marchés africains.",
         "Dans le cadre d’un soutien à une entreprise, un investisseur, un cabinet d’avocats ou une organisation, Tezzeta associe recherche juridique et analyse stratégique pratique afin d’éclairer les décisions relatives à des questions complexes de droit international."
       ],
@@ -524,7 +524,7 @@ export const copy = {
       profileCta: "进一步了解 Tezzeta",
       profileTagline: "以研究为基础。立足国际。聚焦非洲。",
       profileParagraphs: [
-        "Tezzeta Mbuya N'Gungwa 是一名法律研究员、国际法及争议解决专业人士。她的工作重点关注国际投资、商事仲裁、国际经济法、企业与人权，以及不断发展的非洲法律环境之间的交叉领域。",
+      "Mbuya 是一名法律研究员、国际法及争议解决专业人士。她的工作重点关注国际投资、商事仲裁、国际经济法、企业与人权，以及不断发展的非洲法律环境之间的交叉领域。",
         "Tezzeta 尤其关注非洲，并以国际化视角研究复杂的跨境法律与商业事项。她的工作探讨国际争议解决机制如何更好地回应非洲市场的现实、机遇与挑战。",
         "在为企业、投资者、律师事务所或组织提供支持时，Tezzeta 将法律研究与实务战略分析相结合，以协助相关方就复杂的国际法律问题作出知情决定。"
       ],
@@ -707,7 +707,7 @@ copy["zh-Hant"] = {
     profileCta: "進一步了解 Tezzeta",
     profileTagline: "以研究為本。立足國際。聚焦非洲。",
     profileParagraphs: [
-      "Tezzeta Mbuya N'Gungwa 是一名法律研究員、國際法及爭議解決專業人士。她的工作重點關注國際投資、商事仲裁、國際經濟法、企業與人權，以及持續發展的非洲法律環境之間的交會領域。",
+      "Mbuya 是一名法律研究員、國際法及爭議解決專業人士。她的工作重點關注國際投資、商事仲裁、國際經濟法、企業與人權，以及持續發展的非洲法律環境之間的交會領域。",
       "Tezzeta 尤其關注非洲，並以國際視角研究複雜的跨境法律與商業事項。她的工作探討國際爭議解決機制如何更有效回應非洲市場的現實、機遇與挑戰。",
       "在為企業、投資者、律師事務所或組織提供支援時，Tezzeta 將法律研究與實務策略分析結合，以協助相關方就複雜的國際法律問題作出知情決定。"
     ],
@@ -845,7 +845,7 @@ Object.assign(copy.fr.about, {
   heroSummary: "Chercheuse juridique et spécialiste du règlement des différends travaillant sur le droit international des investissements, l’arbitrage, le droit international public, les litiges commerciaux et l’évolution du droit en Afrique.",
   profileHeading: "Profil professionnel",
   profileParagraphs: [
-    "Tezzeta Mbuya est chercheuse juridique, spécialiste du droit international et du règlement des différends. Le CV fourni décrit des travaux en droit international des investissements, arbitrage international, droit international public, litiges commerciaux, recherche juridique, rédaction et questions transfrontalières.",
+    "Mbuya est chercheuse juridique, spécialiste du droit international et du règlement des différends. Les documents disponibles décrivent des travaux en droit international des investissements, arbitrage international, droit international public, litiges commerciaux, recherche juridique, rédaction et questions transfrontalières.",
     "Ses recherches doctorales à l’Université d’Essex portent sur l’africanisation du règlement des différends investisseur-État au regard du Protocole sur l’investissement de la ZLECAf. Le CV mentionne également des travaux de recherche et d’appui consultatif concernant des gouvernements, investisseurs, activités minières, organisations internationales et différends commerciaux.",
     "Ce profil est un projet de développement fondé sur les éléments disponibles. Le statut actuel au barreau, l’autorisation d’exercer, les relations clients et les résultats professionnels ne doivent pas être présentés comme vérifiés indépendamment avant l’approbation des preuves."
   ],
@@ -892,7 +892,7 @@ Object.assign(copy.zh.about, {
   heroSummary: "从事国际投资法、仲裁、国际公法、商事争议及非洲法律发展研究的法律研究人员和争议解决专业人士。",
   profileHeading: "专业简介",
   profileParagraphs: [
-    "Tezzeta Mbuya 是法律研究人员、国际法及争议解决专业人士。所提供的简历记载了其在国际投资法、国际仲裁、国际公法、商事争议、法律研究、法律文书及跨境事务方面的工作。",
+    "Mbuya 是法律研究人员、国际法及争议解决专业人士。现有材料记载了其在国际投资法、国际仲裁、国际公法、商事争议、法律研究、法律文书及跨境事务方面的工作。",
     "她在埃塞克斯大学的博士研究聚焦《非洲大陆自由贸易区投资议定书》背景下投资者与国家争端解决机制的非洲化。简历还记载了与政府、投资者、矿业活动、国际组织及商事争议相关的研究和咨询支持工作。",
     "本简介是依据现有材料编写的开发版。在指定审核人批准相关证据前，不得将当前律师协会状态、执业授权、客户关系或专业成果表述为已经独立核实。"
   ],
@@ -939,7 +939,7 @@ Object.assign(copy["zh-Hant"].about, {
   heroSummary: "從事國際投資法、仲裁、國際公法、商事爭議及非洲法律發展研究的法律研究人員和爭議解決專業人士。",
   profileHeading: "專業簡介",
   profileParagraphs: [
-    "Tezzeta Mbuya 是法律研究人員、國際法及爭議解決專業人士。所提供的履歷記載了其在國際投資法、國際仲裁、國際公法、商事爭議、法律研究、法律文書及跨境事務方面的工作。",
+    "Mbuya 是法律研究人員、國際法及爭議解決專業人士。現有材料記載了其在國際投資法、國際仲裁、國際公法、商事爭議、法律研究、法律文書及跨境事務方面的工作。",
     "她在艾塞克斯大學的博士研究聚焦《非洲大陸自由貿易區投資議定書》背景下投資者與國家爭端解決機制的非洲化。履歷亦記載了與政府、投資者、礦業活動、國際組織及商事爭議相關的研究和諮詢支援工作。",
     "本簡介是依據現有資料編寫的開發版。在指定審核人批准相關證據前，不得將現行律師公會狀態、執業授權、客戶關係或專業成果表述為已經獨立核實。"
   ],
@@ -1032,6 +1032,65 @@ for (const [locale, about] of Object.entries({
     approachText: "Mbuya 以研究為基礎處理複雜的國際及跨境問題，重視法律來源、司法管轄區、商業背景及初步評估的界限。網站將其表述為資訊與諮詢支援，不承諾任何法律結果。"
   }
 })) Object.assign(copy[locale].about, about);
+
+// Final synchronized identity and About narrative update.
+for (const [locale, about] of Object.entries({
+  en: {
+    title: "About Tezzeta N’gungwa Mbuya",
+    profileTitle: "Meet Tezzeta N’gungwa Mbuya",
+    professionalTitle: "International Law and Dispute Resolution",
+    heroSummary: "Mbuya works across international investment law, arbitration, natural-resource governance, and Africa-focused legal and economic questions.",
+    profileParagraphs: [
+      "Mbuya founded this legal technology firm in 2026. Before founding the firm, she was a PhD Candidate at the University of Essex, where she pursued doctoral research in investment arbitration in the African context. Her work brings African perspectives and experiences to international law and considers how investor-State dispute settlement is lived in Africa, including how Eurocentrism and universalism can obscure mutual understanding among States.",
+      "Mbuya has more than 15 years of experience in extractive industries and dispute resolution across the Democratic Republic of the Congo, England and Wales, and Austria. These are experience jurisdictions; the nature, scope, and availability of any service remain subject to jurisdiction and engagement review.",
+      "Throughout her career, Mbuya has advised government entities, local communities, and businesses on disputes linked to the extractive industries sector. Her experience includes contractual, advisory, and contentious matters relating to business activities, with the specific mandate and client relationship assessed through the engagement process.",
+      "Mbuya also advises investors on structuring investments to address domestic, transnational, and international risks associated with investment in the Democratic Republic of the Congo. Any proposed work is subject to an appropriate conflict, jurisdiction, scope, and acceptance review.",
+      "Her wider research and professional interests include international investment law, commercial arbitration, international economic law, business and human rights, natural-resource governance, and the fair resolution of disputes. Publication and conference records remain subject to their separate evidence and permission controls."
+    ]
+  },
+  fr: {
+    title: "À propos de Tezzeta N’gungwa Mbuya",
+    profileTitle: "Découvrez Tezzeta N’gungwa Mbuya",
+    professionalTitle: "Droit international et règlement des différends",
+    heroSummary: "Mbuya travaille sur le droit international des investissements, l’arbitrage, la gouvernance des ressources naturelles et les questions juridiques et économiques liées à l’Afrique.",
+    profileParagraphs: [
+      "Mbuya a fondé cette entreprise de technologie juridique en 2026. Avant sa création, elle était doctorante à l’University of Essex, où elle menait des recherches doctorales sur l’arbitrage d’investissement dans le contexte africain. Ses travaux apportent des perspectives et des expériences africaines au droit international et examinent la manière dont le règlement des différends investisseur-État est vécu en Afrique, notamment lorsque l’eurocentrisme et l’universalisme peuvent faire obstacle à la compréhension mutuelle entre les États.",
+      "Mbuya compte plus de 15 ans d’expérience dans les industries extractives et le règlement des différends en République démocratique du Congo, en Angleterre et au pays de Galles, ainsi qu’en Autriche. Il s’agit de territoires d’expérience ; la nature, la portée et la disponibilité de tout service restent soumises à un examen de la juridiction et de l’engagement.",
+      "Tout au long de son parcours, Mbuya a conseillé des entités publiques, des communautés locales et des entreprises sur des différends liés au secteur extractif. Son expérience couvre des questions contractuelles, consultatives et contentieuses relatives aux activités commerciales, le mandat précis et la relation avec le client étant examinés dans le cadre de l’engagement.",
+      "Mbuya conseille également les investisseurs sur la structuration de leurs investissements afin de traiter les risques nationaux, transnationaux et internationaux liés à l’investissement en République démocratique du Congo. Toute mission proposée reste soumise à un examen des conflits, de la juridiction, du périmètre et de l’acceptation.",
+      "Ses autres travaux de recherche et domaines d’intérêt comprennent le droit international des investissements, l’arbitrage commercial, le droit économique international, les entreprises et les droits humains, la gouvernance des ressources naturelles et le règlement équitable des différends. Les publications et conférences restent soumises à leurs contrôles distincts de preuve et d’autorisation."
+    ]
+  },
+  zh: {
+    title: "关于 Tezzeta N’gungwa Mbuya",
+    profileTitle: "认识 Tezzeta N’gungwa Mbuya",
+    professionalTitle: "国际法与争议解决",
+    heroSummary: "Mbuya 专注于国际投资法、仲裁、自然资源治理，以及与非洲相关的法律和经济议题。",
+    profileParagraphs: [
+      "Mbuya 于 2026 年创办了这家法律科技公司。在创办公司之前，她是埃塞克斯大学的博士候选人，开展以非洲语境下投资仲裁为主题的博士研究。她的工作将非洲的视角与经验带入国际法，并考察投资者与国家争端解决机制在非洲语境中的实际影响，包括欧洲中心主义和普遍主义如何可能遮蔽国家之间的相互理解。",
+      "Mbuya 在刚果民主共和国、英格兰和威尔士以及奥地利的采掘业和争议解决领域拥有超过 15 年经验。这些属于经验所在司法辖区；任何服务的性质、范围和可提供性仍须经过司法辖区及委托审查。",
+      "在职业生涯中，Mbuya 曾就采掘业争议为政府实体、当地社区和企业提供建议。她的经验包括与商业活动有关的合同、咨询和争议事项，具体授权范围及客户关系须在委托流程中审查。",
+      "Mbuya 还为投资者提供投资结构建议，以应对在刚果民主共和国投资所涉及的国内、跨国和国际风险。任何拟议工作均须经过利益冲突、司法辖区、工作范围和接受程序审查。",
+      "她的其他研究和专业兴趣包括国际投资法、商事仲裁、国际经济法、企业与人权、自然资源治理以及公平解决争议。出版物和会议记录仍分别受证据及发布许可控制。"
+    ]
+  },
+  "zh-Hant": {
+    title: "關於 Tezzeta N’gungwa Mbuya",
+    profileTitle: "認識 Tezzeta N’gungwa Mbuya",
+    professionalTitle: "國際法與爭議解決",
+    heroSummary: "Mbuya 專注於國際投資法、仲裁、自然資源治理，以及與非洲相關的法律與經濟議題。",
+    profileParagraphs: [
+      "Mbuya 於 2026 年創辦這家法律科技公司。在創辦公司之前，她是埃塞克斯大學的博士候選人，進行以非洲語境下投資仲裁為主題的博士研究。她的工作把非洲的觀點與經驗帶入國際法，並探討投資者與國家爭端解決機制在非洲語境中的實際影響，包括歐洲中心主義與普遍主義如何可能遮蔽國家之間的相互理解。",
+      "Mbuya 在剛果民主共和國、英格蘭及威爾斯以及奧地利的採掘業與爭議解決領域擁有超過 15 年經驗。這些屬於經驗所在司法管轄區；任何服務的性質、範圍及可提供性仍須經過司法管轄區與委託審查。",
+      "在職業生涯中，Mbuya 曾就採掘業爭議為政府實體、地方社區及企業提供建議。她的經驗包括與商業活動有關的合約、諮詢及爭議事項，具體授權範圍及客戶關係須於委託流程中審查。",
+      "Mbuya 亦為投資者提供投資架構建議，以應對在剛果民主共和國投資所涉及的國內、跨國及國際風險。任何擬議工作均須經過利益衝突、司法管轄區、工作範圍及接受程序審查。",
+      "她的其他研究及專業興趣包括國際投資法、商事仲裁、國際經濟法、企業與人權、自然資源治理，以及公平解決爭議。出版物及會議記錄仍分別受證據及發佈許可控制。"
+    ]
+  }
+})) {
+  Object.assign(copy[locale].about, about);
+  copy[locale].displayName = "Tezzeta N’gungwa Mbuya";
+}
 
 // Final source-aligned override: date-optional selected experience themes.
 const selectedExperienceByLocale = {

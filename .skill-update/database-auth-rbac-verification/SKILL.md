@@ -1152,3 +1152,90 @@ bilateral investment treaties, or regional economic agreements:
     effective-date history, confirm republication rights, or obtain named
     qualified review. Do not replace the missing field with a likely date,
     generic source label, or inferred permission.
+
+### Four-locale About visual review and append-only deployment evidence
+
+When a deployed static demo contains the About page and Selected Experience:
+
+1. Bind the review to the exact static-demo commit and Pages run. Record the
+   workflow and deploy-job conclusions, artifact ID, byte size, formal
+   `sha256:` digest, deployment URL, and required public asset hashes.
+2. Capture desktop and mobile screenshots for `en`, `fr`, `zh`, and
+   `zh-Hant`. Expand the Selected Experience disclosure before capture so
+   standalone statements, evidence badges, and jurisdictional relevance notes
+   are actually reviewed.
+3. For every locale and viewport, verify the display identity, statement
+   count, absence of date/title/organization subfields when the approved
+   presentation is statement-only, heading hierarchy, portrait visibility,
+   CTA wrapping, text containment, and horizontal-overflow status.
+4. Summarize visual findings by locale and viewport. Distinguish verified
+   defects from optional content-density refinements, especially for long
+   translated mobile pages. Do not shorten or hide evidence metadata to make
+   a page appear shorter.
+5. Fetch the deployed root shell and at least one required JavaScript asset
+   twice. Record HTTP status, content type, `ETag`, `Last-Modified`,
+   `Cache-Control`, `Age`, cache-status headers, and hit counts. Require a
+   stable validator plus a documented `MISS` to `HIT` transition or explain
+   any revalidation behavior.
+6. Append the new deployment and visual-review checkpoint to the cleanup log.
+   Preserve all historical preserved, ignored, reverted, deleted, tracked,
+   blocked, and locally retained sections byte-for-byte; never rewrite prior
+   evidence to reflect a later implementation.
+7. Keep screenshots and traces outside source control unless explicitly
+   requested. Register the final cleanup log as the user-facing artifact.
+   If the log is committed, stage only that path and verify the exact remote
+   branch SHA after pushing.
+8. Treat browser rendering, screenshot review, and CDN propagation as
+   implementation evidence only. Keep legal-claim, identity, credential,
+   jurisdiction, image-rights, qualified-translation, source-currentness,
+   and publication-authorization gates separate and fail closed.
+
+### Multilingual About identity, claims gating, and browser regression
+
+Apply these checks when an About-page request changes the displayed identity,
+removes legacy source-language references, or adds biography, academic,
+experience, founding, or investor-advisory claims:
+
+1. Preserve the approved full display identity exactly as supplied in headings,
+   metadata, portrait alt text, and identity fields. In prose, use the
+   approved short form only; do not leave legacy full-name sentence subjects,
+   alternate name orderings, or source-document labels in rendered copy.
+2. Inspect all final locale override layers in the main and mirrored
+   static-demo repositories. Update `en`, `fr`, `zh`, and `zh-Hant` together,
+   and verify runtime objects rather than relying on console rendering of
+   UTF-8 source files.
+3. Treat each new factual statement as an independent evidence-gated claim.
+   At minimum isolate firm founding year, current doctoral-candidate status,
+   research subject and framing, quantified experience duration and
+   jurisdictions, advice to government entities/local communities/businesses,
+   contractual/advisory/contentious experience, and investor-structuring
+   support for DRC-related risks.
+4. Keep experience jurisdictions distinct from current authorization to
+   practise. Keep client-category statements distinct from current clients,
+   endorsements, outcomes, or guarantees. Preserve conflict, scope,
+   jurisdiction, acceptance, evidence, publication, and `noindex` controls.
+5. Remove legacy references such as CV wording from public prose unless the
+   source reference is intentionally retained as non-public evidence metadata.
+   Do not rewrite historical review records solely to make their old state
+   match the current public copy.
+6. Extend the claim-evidence matrix with one row per new claim. Require an
+   owner, evidence location, identity match, permission status, due date,
+   qualified reviewer, decision, and sign-off date. Missing or unauthenticated
+   fields remain `Pending`, `Not supplied`, or `Not approved`.
+7. Add browser assertions for full-name identity fields, short-form prose,
+   absence of legacy name/CV strings in rendered About content, all four
+   locales, preserved publication controls, and preserved noindex behavior.
+8. Capture desktop and mobile About screenshots for each locale after the
+   change. Record viewport, route, locale, screenshot path, and any
+   overflow, heading, CTA, portrait, density, or translation issue. Screenshots
+   support implementation review only and do not clear legal or translation
+   gates.
+9. Stage only the reviewed About source, matrix/review documents, tests, and
+   skill source in focused commits. Keep `.tmp-static-review`, test output,
+   DOCX files, packages, and unrelated reports out of source control. Mirror
+   the runtime and tests into the dedicated static-demo repository without
+   staging that repository inside the parent repository.
+10. Run syntax checks, unit tests, the main Playwright suite, and the
+    static-demo Playwright suite. Report live database skips separately from
+    ordinary failures and stop publication if identity parity, locale parity,
+    noindex, evidence controls, or browser assertions fail.
