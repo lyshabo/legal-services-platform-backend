@@ -1063,3 +1063,39 @@ detail route:
 9. Register the evidence review document separately from code commits. Report
    source verification, legal review, jurisdiction review, and translation
    review as independent gates; passing tests do not clear any of them.
+
+### DRC legal-library, Bar evidence, and deployed route verification
+
+1. Extract each supplied DRC-law DOCX locally and map every proposed law,
+   regulation, bylaw, OHADA instrument, REC instrument, bilateral investment
+   treaty, and regional economic agreement to a stable category and source
+   record. Preserve corrections and uncertainty as review notes.
+2. Prefer official gazettes, treaty depositaries, intergovernmental
+   organizations, and authenticated professional directories. Record source
+   title, issuing body, instrument type, URL, edition/effective date or
+   `pending`, currency status, and publication permission separately.
+3. Keep resources fail closed until the exact text, amendments, jurisdiction,
+   license, qualified legal review, and all four translations are approved.
+   Mark them as fixtures, disable purchase/download controls, and never infer
+   that an indexed source is current or complete.
+4. Treat a Bar directory entry as evidence for only the fields displayed by
+   that directory. Record name order, status label, registration/order number,
+   Bar, retrieval date, identity-match decision, and publication permission
+   independently. Do not infer wider authorization, experience, or service
+   availability.
+5. Add date-optional experience themes only when the source omits a date.
+   Label them as selected themes, retain evidence-pending metadata, avoid named
+   client or outcome claims, and explain the DRC operational relevance without
+   turning the entry into legal advice or a current service offer.
+6. Verify every service detail route in `en`, `fr`, `zh`, and `zh-Hant`. For a
+   14-service catalog, require 56 independent route-locale checks covering
+   heading, evidence status, references, jurisdiction caveat, locale, booking
+   gate, and public asset availability.
+7. After Pages publication, bind evidence to the exact commit and record the
+   workflow/run, deploy job, artifact ID, formal digest, deployment URL,
+   required-asset hash, and two-request CDN headers. A successful run with a
+   missing curated asset remains a failed public-content verification.
+8. Append corrected deployment evidence to the cleanup decision log without
+   rewriting historical blocked attempts. Record preserved, ignored, reverted,
+   deleted, tracked, and locally retained items, plus the final repository and
+   remote SHAs.
