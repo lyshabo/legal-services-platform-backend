@@ -87,3 +87,56 @@ of `origin/main`.
   cleanup and preservation decisions.
 - Final `git status`, unstaged diff, and staged diff are checked after the final
   remediation commit.
+
+## Checkpoint 4: Corrected Pages Deployment and Public Route Verification
+
+**Verification date:** September 14, 2026  
+**Static-demo source commit:** `679f1b483b1b711a3867a42626330f4790821fc7`  
+**Pages workflow run:** `33461712791`  
+**Workflow and deploy-job conclusion:** `success` / `success`  
+**Artifact:** `github-pages` (ID `9783378819`, 384,787 bytes)  
+**Artifact digest:** `sha256:5fea68b4f35f9c9cd23adcf9978f025c0e2d644f71c1ddc7bb02e963c8ca12bf`  
+**Deployment URL:** `https://legal-services-platform.github.io/legal-services-platform-static-demo-20260828/`
+
+The corrected curated artifact includes `service-evidence.js`, which was
+missing from the preceding `c8b942b` deployment. The public module returned
+HTTP 200 and its downloaded SHA-256 matched the committed source:
+`9d8ef2a0f297de43f02b238d3dcb12a3bdfd4bfb9fc3afad76cb176408e313bb`.
+
+Two public requests were made for the root shell and the module. Both returned
+HTTP 200 with `Cache-Control: max-age=600`, stable `Last-Modified` values, and
+stable ETags. Each resource showed the expected cache transition from
+`X-Cache: MISS`, `Age: 0` to `X-Cache: HIT`, `Age: 3`, `X-Cache-Hits: 1`.
+
+The deployed browser verification covered all 14 service detail routes in each
+of `en`, `fr`, `zh`, and `zh-Hant` (56 route-locale combinations). All 56
+checks passed. Evidence status remained `pending` for every service; the
+orientation service was the only route with booking enabled, and the other
+13 routes remained disabled as required by the browser-only publication gate.
+
+## Checkpoint 5: Supplied DRC Source Clarifications
+
+The supplied `The Democratic Republic of the Congo Laws 2.docx` and
+`about and experience.docx` were reviewed as source requests. They identify
+additional gated Legal Library subjects (including constitutional materials,
+CENAREF, Criminal Code books, banking and credit regulation, OHADA company
+law, the Digital Code, judicial-organization and dispute-resolution materials,
+environmental statutes, land and property law, hydrocarbons, tax, mining, and
+regional economic community instruments) and experience themes involving
+extractives, infrastructure, investment, human rights, environmental matters,
+tax/customs, and commercial work.
+
+These items remain **not published** until each resource or experience entry
+has a verified title, edition or effective date, jurisdiction, source location,
+translation review, rights or publication permission, and an approved
+lower-risk public description. The requested REC, bilateral-investment-treaty,
+and regional-economic-agreement categories are therefore recorded as a
+content backlog rather than inferred into the live catalog.
+
+The supplied ONA/RDC directory page
+(`https://ona-rdc.org/annuaires/mbuya-tezzeta`) was reachable on September 14,
+2026 and displayed: surname `MBUYA`, postname `TEZZETA`, status `AU TABLEAU`,
+order number `8132`, and bar `KINSHASA/GOMBE`. This is recorded as an
+authenticated source reference for the Bar item; identity-match, scope,
+current-status wording, and publication-permission decisions remain separate
+review fields and are not inferred from the URL alone.
