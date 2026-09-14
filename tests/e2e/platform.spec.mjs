@@ -138,7 +138,7 @@ test.skip("About redesign preserves CV sourcing, publication gates, and multilin
 
   for (const [locale, content] of Object.entries(expected)) {
     await page.selectOption("#locale-select", locale);
-    await expect(page.getByRole("heading", { name: "Tezzeta Mbuya N'Gungwa", exact: true })).toBeVisible();
+    await expect(page.getByRole("heading", { name: "Tezzeta N’gungwa Mbuya", exact: true })).toBeVisible();
     await expect(page.locator(".about-professional-title")).toHaveText(content.title);
     await expect(page.locator(".credential-timeline article").first()).toContainText(content.doctoralStatus);
     for (const heading of content.headings) {
@@ -174,7 +174,7 @@ test("About rewrite renders narrative profile, disclosures, gates, and four loca
 
   for (const [locale, title] of Object.entries(expectedTitles)) {
     await page.selectOption("#locale-select", locale);
-    await expect(page.getByRole("heading", { name: "Tezzeta Mbuya N'Gungwa", exact: true })).toBeVisible();
+    await expect(page.getByRole("heading", { name: "Tezzeta N’gungwa Mbuya", exact: true })).toBeVisible();
     await expect(page.locator(".about-professional-title")).toHaveText(title);
     await expect(page.locator(".about-profile > p:not(.eyebrow)")).toHaveCount(5);
     await expect(page.locator(".profile-disclosure")).toHaveCount(2);

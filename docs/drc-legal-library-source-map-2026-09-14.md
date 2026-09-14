@@ -61,4 +61,22 @@
 - African Union official treaty pages: AfCFTA and Abuja Treaty.
 - UNCTAD IIA Navigator: discovery index for DRC bilateral investment treaties.
 
+## DOCX Link Register
+
+The supplied DOCX also contains the following linked discovery or authenticated
+reproduction pages. They are recorded for traceability only; none changes the
+publication gate without instrument-level legal and rights review.
+
+| Topic | Linked page | Source type | Identity/currentness confidence | Permission status |
+|---|---|---|---|---|
+| Banking and credit | https://www.leganet.be/Legislation/Tables/droit_bancaire.htm | Secondary legal index | Identifies a source family; exact instrument and currency pending | Permission not established |
+| Land and property | https://courdescomptes.cd/wp-content/uploads/2025/07/LOI-FONCIERE-RDCONGO.pdf | Government-hosted PDF; authenticity and amendment history require review | 2025 modification claim remains unverified | Permission not established |
+| Economic, IP and trade | https://www.leganet.be/Legislation/Tables/droit_economique.htm | Secondary legal index | Discovery only; instrument-level verification pending | Permission not established |
+| Tax | https://www.leganet.be/Legislation/Tables/droitfiscal.htm | Secondary legal index | Discovery only; exact current texts pending | Permission not established |
+| Mining | https://www.leganet.be/Legislation/Tables/Mines.htm | Secondary legal index | Discovery only; consolidated currency pending | Permission not established |
+| Hydrocarbons | https://www.leganet.cd/Legislation/Droit%20economique/Code%20Minier/Loi.15.012.01.08.2015.html | Authenticated legal reproduction | Identifies Law No. 15/012; current implementing texts pending | Permission not established |
+| Judicial organization | https://www.leganet.be/Legislation/Droit%20Judiciaire/LOI.13.011.11.04.2013.htm | Authenticated legal reproduction | Identifies Organic Law No. 13/011-B; later amendments pending | Permission not established |
+| Judicial index | https://www.leganet.be/Legislation/Tables/droit_judiciaire.htm | Secondary legal index | Discovery only; exact current texts pending | Permission not established |
+| Economic index (repeat) | https://www.leganet.be/Legislation/Tables/droit_economique.htm | Secondary legal index | Duplicate discovery link; no additional evidence | Permission not established |
+
 This map is an evidence register, not legal advice and not a clearance to publish the underlying texts.

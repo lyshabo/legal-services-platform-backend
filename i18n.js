@@ -100,9 +100,9 @@ export const copy = {
       disclaimer: "This is general development-demo information. It does not create a professional relationship and is not a substitute for legal advice."
     },
     about: {
-      title: "About Tezzeta Mbuya N'Gungwa",
+      title: "About Tezzeta N’gungwa Mbuya",
       text: "International law research. African perspective.",
-      profileTitle: "Meet Tezzeta Mbuya N'Gungwa",
+      profileTitle: "Meet Tezzeta N’gungwa Mbuya",
       profileText: "Legal researcher, international law specialist, and dispute-resolution specialist focused on international investment, commercial arbitration, international economic law, business and human rights, and Africa’s evolving legal landscape.",
       profileCta: "Learn More About Tezzeta",
       profileTagline: "Research-Driven. Internationally Focused. Africa-Centered.",
@@ -310,9 +310,9 @@ export const copy = {
       disclaimer: "Il s’agit d’informations générales de démonstration. Elles ne créent pas de relation professionnelle et ne remplacent pas un conseil juridique."
     },
     about: {
-      title: "À propos de Tezzeta Mbuya N'Gungwa",
+      title: "À propos de Tezzeta N’gungwa Mbuya",
       text: "Recherche en droit international. Perspective africaine.",
-      profileTitle: "Découvrez Tezzeta Mbuya N'Gungwa",
+      profileTitle: "Découvrez Tezzeta N’gungwa Mbuya",
       profileText: "Chercheuse juridique, spécialiste du droit international et du règlement des différends, axée sur l’investissement international, l’arbitrage commercial, le droit économique international, les entreprises et les droits humains, ainsi que l’évolution du paysage juridique africain.",
       profileCta: "En savoir plus sur Tezzeta",
       profileTagline: "Fondée sur la recherche. Tournée vers l’international. Centrée sur l’Afrique.",
@@ -517,9 +517,9 @@ export const copy = {
       disclaimer: "这是开发演示的一般信息，不建立专业关系，也不能替代法律意见。"
     },
     about: {
-      title: "关于 Tezzeta Mbuya N'Gungwa",
+      title: "关于 Tezzeta N’gungwa Mbuya",
       text: "国际法研究。非洲视角。",
-      profileTitle: "认识 Tezzeta Mbuya N'Gungwa",
+      profileTitle: "认识 Tezzeta N’gungwa Mbuya",
       profileText: "法律研究员、国际法及争议解决专业人士，重点关注国际投资、商事仲裁、国际经济法、企业与人权，以及不断发展的非洲法律环境。",
       profileCta: "进一步了解 Tezzeta",
       profileTagline: "以研究为基础。立足国际。聚焦非洲。",
@@ -700,9 +700,9 @@ copy["zh-Hant"] = {
     disabled: "服務獲批前暫停預約"
   },
   about: {
-    title: "關於 Tezzeta Mbuya N'Gungwa",
+    title: "關於 Tezzeta N’gungwa Mbuya",
     text: "國際法研究。非洲視角。",
-    profileTitle: "認識 Tezzeta Mbuya N'Gungwa",
+    profileTitle: "認識 Tezzeta N’gungwa Mbuya",
     profileText: "法律研究員、國際法及爭議解決專業人士，重點關注國際投資、商事仲裁、國際經濟法、企業與人權，以及持續發展的非洲法律環境。",
     profileCta: "進一步了解 Tezzeta",
     profileTagline: "以研究為本。立足國際。聚焦非洲。",
@@ -790,8 +790,8 @@ copy["zh-Hant"] = {
 };
 
 Object.assign(copy.en.about, {
-  displayName: "Tezzeta Mbuya N'Gungwa",
-  photoAlt: "Professional portrait of Tezzeta Mbuya N'Gungwa",
+  displayName: "Tezzeta N’gungwa Mbuya",
+  photoAlt: "Professional portrait of Tezzeta N’gungwa Mbuya",
   professionalTitle: "Dispute Resolution Specialist | PhD Candidate in Investment Arbitration",
   sourceNotice: "Development profile based on available materials. Identity alignment, current bar status, regulated titles, and publication permission require responsible-reviewer approval before production.",
   heroSummary: "A legal researcher and dispute-resolution specialist working across international investment law, arbitration, development, natural-resource governance, and Africa-focused legal questions.",
@@ -838,8 +838,8 @@ Object.assign(copy.en.about, {
 });
 
 Object.assign(copy.fr.about, {
-  displayName: "Tezzeta Mbuya N'Gungwa",
-  photoAlt: "Portrait professionnel de Tezzeta Mbuya N'Gungwa",
+  displayName: "Tezzeta N’gungwa Mbuya",
+  photoAlt: "Portrait professionnel de Tezzeta N’gungwa Mbuya",
   professionalTitle: "Spécialiste du règlement des différends | Doctorante en arbitrage d’investissement",
   sourceNotice: "Profil de développement fondé sur les éléments de CV fournis. La concordance d’identité, le statut actuel au barreau, les titres réglementés et l’autorisation de publication doivent être approuvés avant toute mise en production.",
   heroSummary: "Chercheuse juridique et spécialiste du règlement des différends travaillant sur le droit international des investissements, l’arbitrage, le droit international public, les litiges commerciaux et l’évolution du droit en Afrique.",
@@ -885,8 +885,8 @@ Object.assign(copy.fr.about, {
 });
 
 Object.assign(copy.zh.about, {
-  displayName: "Tezzeta Mbuya N'Gungwa",
-  photoAlt: "Tezzeta Mbuya N'Gungwa 的专业肖像",
+  displayName: "Tezzeta N’gungwa Mbuya",
+  photoAlt: "Tezzeta N’gungwa Mbuya 的专业肖像",
   professionalTitle: "争议解决专业人士 | 投资仲裁博士研究生",
   sourceNotice: "本开发版简介依据所提供的简历材料编写。姓名一致性、当前律师协会状态、受监管职称及发布许可，均须在正式上线前由责任审核人批准。",
   heroSummary: "从事国际投资法、仲裁、国际公法、商事争议及非洲法律发展研究的法律研究人员和争议解决专业人士。",
@@ -932,8 +932,8 @@ Object.assign(copy.zh.about, {
 });
 
 Object.assign(copy["zh-Hant"].about, {
-  displayName: "Tezzeta Mbuya N'Gungwa",
-  photoAlt: "Tezzeta Mbuya N'Gungwa 的專業肖像",
+  displayName: "Tezzeta N’gungwa Mbuya",
+  photoAlt: "Tezzeta N’gungwa Mbuya 的專業肖像",
   professionalTitle: "爭議解決專業人士 | 投資仲裁博士研究生",
   sourceNotice: "本開發版簡介依據所提供的履歷資料編寫。姓名一致性、現行律師公會狀態、受規管職稱及發布許可，均須在正式上線前由責任審核人批准。",
   heroSummary: "從事國際投資法、仲裁、國際公法、商事爭議及非洲法律發展研究的法律研究人員和爭議解決專業人士。",
@@ -1032,6 +1032,86 @@ for (const [locale, about] of Object.entries({
     approachText: "Mbuya 以研究為基礎處理複雜的國際及跨境問題，重視法律來源、司法管轄區、商業背景及初步評估的界限。網站將其表述為資訊與諮詢支援，不承諾任何法律結果。"
   }
 })) Object.assign(copy[locale].about, about);
+
+// Final source-aligned override: date-optional selected experience themes.
+const selectedExperienceByLocale = {
+  en: [
+    ["Production-sharing agreement", "Selected matter theme", "Research and drafting support described for a production-sharing agreement involving a Congolese government entity and a Chinese enterprise.", "Supports review of allocation, fiscal, regulatory, and cross-border risk in DRC resource projects.", true],
+    ["BOOT hydropower agreement", "Selected matter theme", "Research and drafting support described for a build-own-operate-transfer hydropower agreement serving a mining project in the DRC.", "Helps operators assess infrastructure interfaces, concessions, performance obligations, and public-sector approvals.", true],
+    ["Mining licences and title revocation", "Selected matter theme", "Advisory support described on mining licensing and challenges connected with revocation of mining titles.", "Relevant to permitting continuity, administrative process, project finance, and dispute preparation in the DRC.", true],
+    ["Mining and oil compliance", "Selected matter theme", "Compliance research and advisory support described for Chinese and US mining and oil companies operating in the DRC.", "Helps organizations identify regulatory interfaces and escalation points before local review.", true],
+    ["Tax and customs matters", "Selected matter theme", "Support described for tax and customs questions before public institutions and courts.", "Relevant to import, export, valuation, assessment, and administrative-dispute planning for DRC operations.", true],
+    ["Asset securitization analysis", "Selected matter theme", "Merits analysis described for asset securitization in a contentious mining matter.", "Supports structured review of security, receivables, enforcement, and investment-risk questions.", true],
+    ["Joint venture", "Selected matter theme", "Drafting support described for a joint venture between a Congolese operator and a Chinese investor.", "Relevant to governance, contributions, control, dispute clauses, and cross-border investment structuring.", true],
+    ["Public-private partnership", "Selected matter theme", "Analysis described for a public-private infrastructure contract with a Chinese company.", "Supports review of allocation of public obligations, approvals, procurement interfaces, and project risk.", true],
+    ["Collective bargaining agreement", "Selected matter theme", "Advisory and drafting support described for collective bargaining arrangements in mining and oil operations.", "Relevant to workforce governance, labour obligations, and operational continuity in the DRC.", true],
+    ["Environmental impact and pollution", "Selected matter theme", "Review and discussion described for environmental-impact studies and pollution-related matters.", "Supports issue spotting around permits, environmental duties, remediation, and community impacts.", true],
+    ["Mineral transport authorizations", "Selected matter theme", "Support described for applications concerning transport authorizations for mineral resources.", "Relevant to logistics, chain-of-custody, licensing, and regulatory coordination.", true],
+    ["Investment-treaty negotiations", "Selected matter theme", "Participation in negotiations preceding an investment-treaty claim is described.", "Supports early issue framing around treaty protections, State measures, and dispute pathways.", true],
+    ["Company registrations", "Selected matter theme", "Company-registration work is described.", "Relevant to market entry, entity structuring, and initial regulatory steps in the DRC.", true],
+    ["Commercial, land, and human-rights disputes", "Selected matter theme", "The source describes research and support involving commercial contracts, insurance, shareholder disputes, land questions, community rights, and human-rights mechanisms.", "Helps organizations identify cross-cutting dispute, stakeholder, and remedy questions affecting DRC operations.", true]
+  ],
+  fr: [
+    ["Contrat de partage de production", "Thème de dossier sélectionné", "Le document décrit un appui de recherche et de rédaction concernant un contrat de partage de production impliquant une entité gouvernementale congolaise et une entreprise chinoise.", "Utile pour examiner la répartition des risques, les aspects fiscaux et réglementaires et les enjeux transfrontaliers des projets de ressources en RDC.", true],
+    ["Accord BOOT hydroélectrique", "Thème de dossier sélectionné", "Le document décrit un appui de recherche et de rédaction pour un accord build-own-operate-transfer lié à un projet minier en RDC.", "Aide à examiner les interfaces d’infrastructure, les concessions, les obligations de performance et les autorisations publiques.", true],
+    ["Permis miniers et retrait de titres", "Thème de dossier sélectionné", "Le document décrit un appui sur les permis miniers et les questions liées au retrait de titres miniers.", "Pertinent pour la continuité des permis, les procédures administratives, le financement et la préparation des différends.", true],
+    ["Conformité minière et pétrolière", "Thème de dossier sélectionné", "Le document décrit des travaux de recherche et d’appui consultatif pour des entreprises minières et pétrolières chinoises et américaines en RDC.", "Aide à repérer les interfaces réglementaires et les points d’escalade avant l’examen local.", true],
+    ["Fiscalité et douanes", "Thème de dossier sélectionné", "Le document décrit un appui sur des questions fiscales et douanières devant les institutions publiques et les juridictions.", "Pertinent pour les opérations d’importation, d’exportation, d’évaluation et les différends administratifs.", true],
+    ["Analyse de titrisation d’actifs", "Thème de dossier sélectionné", "Le document décrit une analyse du bien-fondé d’une titrisation d’actifs dans un dossier minier contentieux.", "Soutient l’examen structuré des sûretés, créances, mesures d’exécution et risques d’investissement.", true],
+    ["Coentreprise", "Thème de dossier sélectionné", "Le document décrit une aide à la rédaction d’une coentreprise entre un opérateur congolais et un investisseur chinois.", "Pertinent pour la gouvernance, les apports, le contrôle, les clauses de règlement des différends et la structuration transfrontalière.", true],
+    ["Partenariat public-privé", "Thème de dossier sélectionné", "Le document décrit une analyse d’un contrat de partenariat public-privé avec une entreprise chinoise.", "Soutient l’examen des obligations publiques, autorisations, interfaces de passation et risques de projet.", true],
+    ["Convention collective", "Thème de dossier sélectionné", "Le document décrit un appui de conseil et de rédaction pour des conventions collectives dans les secteurs minier et pétrolier.", "Pertinent pour la gouvernance de la main-d’œuvre, les obligations sociales et la continuité des opérations.", true],
+    ["Études d’impact et pollution", "Thème de dossier sélectionné", "Le document décrit l’examen d’études d’impact environnemental et de questions de pollution.", "Soutient l’identification des questions de permis, obligations environnementales, réparation et impacts communautaires.", true],
+    ["Autorisations de transport des minerais", "Thème de dossier sélectionné", "Le document décrit un appui aux demandes d’autorisations de transport de ressources minérales.", "Pertinent pour la logistique, la traçabilité, les licences et la coordination réglementaire.", true],
+    ["Négociations relatives aux traités d’investissement", "Thème de dossier sélectionné", "Le document décrit une participation à des négociations précédant une demande fondée sur un traité d’investissement.", "Soutient le cadrage initial des protections conventionnelles, mesures de l’État et voies de règlement.", true],
+    ["Immatriculation de sociétés", "Thème de dossier sélectionné", "Le document décrit des travaux d’immatriculation de sociétés.", "Pertinent pour l’entrée sur le marché, la structuration des entités et les premières démarches réglementaires.", true],
+    ["Différends commerciaux, fonciers et relatifs aux droits humains", "Thème de dossier sélectionné", "Le document décrit des travaux de recherche et d’appui concernant les contrats commerciaux, l’assurance, les différends entre actionnaires, les questions foncières, les droits des communautés et les mécanismes relatifs aux droits humains.", "Aide à repérer les enjeux transversaux de différends, de parties prenantes et de réparation liés aux activités en RDC.", true]
+  ],
+  zh: [
+    ["产品分成协议", "精选事项主题", "材料描述了就涉及刚果政府实体与中国企业的产品分成协议提供研究和起草支持。", "有助于审视刚果民主共和国资源项目中的风险分配、税务、监管及跨境问题。", true],
+    ["BOOT 水电协议", "精选事项主题", "材料描述了为刚果民主共和国矿业项目的建设—拥有—运营—移交水电协议提供研究和起草支持。", "有助于评估基础设施接口、特许安排、履约义务及公共部门审批。", true],
+    ["采矿许可与矿权撤销", "精选事项主题", "材料描述了有关采矿许可及矿权撤销问题的咨询支持。", "与许可连续性、行政程序、项目融资及刚果民主共和国争议准备相关。", true],
+    ["矿业与石油合规", "精选事项主题", "材料描述了为在刚果民主共和国运营的中国和美国矿业及石油公司提供合规研究与咨询支持。", "有助于在当地审查前识别监管接口和升级节点。", true],
+    ["税务与海关事项", "精选事项主题", "材料描述了在公共机构和法院处理税务与海关问题的支持。", "与刚果民主共和国业务的进出口、估值、评估及行政争议规划相关。", true],
+    ["资产证券化分析", "精选事项主题", "材料描述了在矿业争议事项中对资产证券化进行案情分析。", "支持对担保、应收款、执行及投资风险问题进行结构化审查。", true],
+    ["合资企业", "精选事项主题", "材料描述了为刚果运营商与中国投资者之间的合资企业提供起草支持。", "与治理、出资、控制、争议条款及跨境投资架构相关。", true],
+    ["公私合作", "精选事项主题", "材料描述了对与中国企业签订的基础设施公私合作合同进行分析。", "支持审视公共义务、审批、采购接口及项目风险分配。", true],
+    ["集体谈判协议", "精选事项主题", "材料描述了为矿业和石油业务的集体谈判安排提供咨询和起草支持。", "与刚果民主共和国的劳动力治理、劳动义务及运营连续性相关。", true],
+    ["环境影响与污染", "精选事项主题", "材料描述了对环境影响研究和污染问题进行审阅和讨论。", "支持识别许可、环境义务、修复及社区影响问题。", true],
+    ["矿产运输授权", "精选事项主题", "材料描述了协助申请矿产资源运输授权。", "与物流、供应链追踪、许可及监管协调相关。", true],
+    ["投资条约谈判", "精选事项主题", "材料描述了参与投资条约索赔前的谈判。", "支持围绕条约保护、国家措施及争议解决路径进行初步问题界定。", true],
+    ["公司注册", "精选事项主题", "材料描述了公司注册工作。", "与刚果民主共和国市场进入、实体架构及初步监管步骤相关。", true],
+    ["商业、土地与人权争议", "精选事项主题", "材料描述了涉及商业合同、保险、股东争议、土地问题、社区权利及人权机制的研究与支持。", "有助于识别影响刚果民主共和国运营的争议、利益相关方及救济问题。", true]
+  ],
+  "zh-Hant": [
+    ["產品分成協議", "精選事項主題", "材料描述了就涉及剛果政府實體與中國企業的產品分成協議提供研究及起草支援。", "有助於審視剛果民主共和國資源項目中的風險分配、稅務、監管及跨境問題。", true],
+    ["BOOT 水力發電協議", "精選事項主題", "材料描述了為剛果民主共和國礦業項目的建設—擁有—營運—移交水力發電協議提供研究及起草支援。", "有助於評估基礎設施接口、特許安排、履約義務及公共部門審批。", true],
+    ["採礦許可與礦權撤銷", "精選事項主題", "材料描述了有關採礦許可及礦權撤銷問題的諮詢支援。", "與許可連續性、行政程序、項目融資及剛果民主共和國爭議準備相關。", true],
+    ["礦業與石油合規", "精選事項主題", "材料描述了為在剛果民主共和國營運的中國及美國礦業與石油公司提供合規研究及諮詢支援。", "有助於在當地審查前識別監管接口及升級節點。", true],
+    ["稅務與海關事項", "精選事項主題", "材料描述了在公共機構及法院處理稅務與海關問題的支援。", "與剛果民主共和國業務的進出口、估值、評估及行政爭議規劃相關。", true],
+    ["資產證券化分析", "精選事項主題", "材料描述了在礦業爭議事項中對資產證券化進行案情分析。", "支援對擔保、應收款、執行及投資風險問題進行結構化審查。", true],
+    ["合資企業", "精選事項主題", "材料描述了為剛果營運商與中國投資者之間的合資企業提供起草支援。", "與治理、出資、控制、爭議條款及跨境投資架構相關。", true],
+    ["公私合作", "精選事項主題", "材料描述了對與中國企業簽訂的基礎設施公私合作合約進行分析。", "支援審視公共義務、審批、採購接口及項目風險分配。", true],
+    ["集體談判協議", "精選事項主題", "材料描述了為礦業及石油業務的集體談判安排提供諮詢及起草支援。", "與剛果民主共和國的勞動力治理、勞動義務及營運連續性相關。", true],
+    ["環境影響與污染", "精選事項主題", "材料描述了對環境影響研究及污染問題進行審閱與討論。", "支援識別許可、環境義務、修復及社區影響問題。", true],
+    ["礦產運輸授權", "精選事項主題", "材料描述了協助申請礦產資源運輸授權。", "與物流、供應鏈追蹤、許可及監管協調相關。", true],
+    ["投資條約談判", "精選事項主題", "材料描述了參與投資條約索賠前的談判。", "支援圍繞條約保障、國家措施及爭議解決途徑進行初步問題界定。", true],
+    ["公司註冊", "精選事項主題", "材料描述了公司註冊工作。", "與剛果民主共和國市場進入、實體架構及初步監管步驟相關。", true],
+    ["商業、土地與人權爭議", "精選事項主題", "材料描述了涉及商業合約、保險、股東爭議、土地問題、社區權利及人權機制的研究與支援。", "有助於識別影響剛果民主共和國營運的爭議、利益相關方及救濟問題。", true]
+  ]
+};
+
+for (const [locale, entries] of Object.entries(selectedExperienceByLocale)) {
+  copy[locale].about.experience = entries.map(([role, organization, detail, jurisdictionalRelevance, evidenceStatus]) => ({
+    period: "",
+    role,
+    organization,
+    detail,
+    jurisdictionalRelevance,
+    evidenceStatus
+  }));
+  copy[locale].about.sourceNotice = `${copy[locale].about.sourceNotice} The displayed identity is Tezzeta N’gungwa Mbuya; prose uses Mbuya.`;
+}
 
 // Date-optional selected experience themes supplied for evidence-gated review.
 const selectedExperienceThemes = {
