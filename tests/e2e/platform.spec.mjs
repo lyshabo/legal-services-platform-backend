@@ -145,7 +145,8 @@ test.skip("About redesign preserves CV sourcing, publication gates, and multilin
       await expect(page.getByRole("heading", { name: heading, exact: true })).toBeVisible();
     }
     await expect(page.locator(".credential-timeline article")).toHaveCount(4);
-    await expect(page.locator(".experience-list article")).toHaveCount(4);
+    await expect(page.locator(".experience-list article")).toHaveCount(11);
+    await expect(page.locator(".experience-list .badge")).toHaveCount(7);
     await expect(page.locator(".bar-status-panel .badge")).toBeVisible();
     await expect(page.locator(".future-team-grid .badge")).toHaveCount(2);
   }
@@ -282,6 +283,19 @@ test("legal compendium catalog remains gated with publication metadata and disab
   await page.locator(".catalog-card a").first().click();
   await expect(page.getByText(/DEMO CONTENT/)).toBeVisible();
   await expect(page.getByText(/do not, by themselves, constitute individualized legal advice/i)).toBeVisible();
+});
+
+test("DRC legal-library categories expose source metadata and remain non-purchasable", async ({ page }) => {
+  await page.goto("/#/library");
+  for (const category of ["drc-laws", "drc-regulations", "drc-bylaws", "ohada", "rec-regulations", "bilateral-investment-treaties", "regional-economic-agreements"]) {
+    await page.locator("#product-filters select[name=category]").selectOption(category);
+    await expect(page.locator("#product-results .catalog-card").first()).toBeVisible();
+    await expect(page.locator("#product-results button[disabled]").first()).toBeVisible();
+  }
+  await page.goto("/#/product/resource-drc-constitution");
+  await expect(page.locator(".detail-content")).toContainText("Source metadata");
+  await expect(page.locator(".detail-content")).toContainText("DRC operational relevance");
+  await expect(page.locator("button[disabled]")).toHaveCount(1);
 });
 
 test("guidance refuses unsupported routes and escalates urgency", async ({ page }) => {

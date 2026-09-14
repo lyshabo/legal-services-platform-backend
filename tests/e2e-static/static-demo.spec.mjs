@@ -23,7 +23,8 @@ test("static About route preserves locale, resolved Bar status, and noindex", as
     await expect(page.locator(".about-profile")).not.toContainText(/specialist|spécialiste|专业人士|專業人士/);
     await expect(page.locator(".bar-status-panel .badge")).toBeVisible();
     await expect(page.locator(".bar-status-panel")).toContainText("Mbuya");
-    await expect(page.locator(".experience-list article")).toHaveCount(4);
+    await expect(page.locator(".experience-list article")).toHaveCount(11);
+    await expect(page.locator(".experience-list .badge")).toHaveCount(7);
     await expect(page.locator(".credential-timeline article")).toHaveCount(4);
     await expect(page.locator('meta[name="robots"]')).toHaveAttribute(
       "content",
@@ -44,7 +45,7 @@ test("static public routes support filtering, detail navigation, and guidance in
 
   await page.goto("/#/library");
   await expect(page.locator("#product-filters")).toBeVisible();
-  await expect(page.locator("#product-results .catalog-card")).toHaveCount(8);
+  await expect(page.locator("#product-results .catalog-card")).toHaveCount(21);
   const detailHref = await page.locator("#product-results a").first().getAttribute("href");
   expect(detailHref).toMatch(/^#\/product\//);
   await page.goto(`/${detailHref}`);
@@ -79,6 +80,23 @@ test("static services expose all requested categories with gated international-l
     await page.goto(`/#/service/${serviceId}`);
     await expect(page.locator("#main")).toContainText(/international-law/i);
     await expect(page.locator("button[data-booking]")).toBeDisabled();
+  }
+});
+
+test("DRC investment-law library resources remain source-gated in all locales", async ({ page }) => {
+  const categories = ["drc-laws", "drc-regulations", "drc-bylaws", "ohada", "rec-regulations", "bilateral-investment-treaties", "regional-economic-agreements"];
+  for (const locale of locales) {
+    await page.goto("/#/library");
+    await page.selectOption("#locale-select", locale);
+    for (const category of categories) {
+      await page.locator("#product-filters select[name=category]").selectOption(category);
+      await expect(page.locator("#product-results .catalog-card").first()).toBeVisible();
+      await expect(page.locator("#product-results button[disabled]").first()).toBeVisible();
+    }
+    await page.goto("/#/product/resource-drc-constitution");
+    await expect(page.locator(".detail-content")).toContainText(/source|来源|來源|métadonnées/i);
+    await expect(page.locator(".detail-content")).toContainText(/DRC|RDC|刚果民主共和国|剛果民主共和國/i);
+    await expect(page.locator("button[disabled]")).toHaveCount(1);
   }
 });
 

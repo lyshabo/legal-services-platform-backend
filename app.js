@@ -530,6 +530,7 @@ function productCard(product) {
         <div><dt>${escapeHtml(meta.price)}</dt><dd>${escapeHtml(product.price || meta.pending)}</dd></div>
         <div><dt>${escapeHtml(meta.availability)}</dt><dd>${escapeHtml(meta.pending)}</dd></div>
       </dl>
+      ${product.sourceMetadata?.length ? `<p class="source-meta"><strong>${escapeHtml(resourceEvidenceLabels(state.locale).sources)}:</strong> ${escapeHtml(product.sourceMetadata[0].title)} · ${escapeHtml(tr.sourceStatus || product.sourceMetadata[0].status)}</p>` : ""}
       <a class="button button-secondary button-small" href="${routeHref("product", product.id)}">
         ${escapeHtml(t().library.readResource)}${icon("arrow")}
       </a>
@@ -545,6 +546,15 @@ function publicationMeta(locale) {
     zh: { jurisdiction: "司法管辖区", subject: "法律领域", edition: "版本", format: "格式", price: "价格", availability: "可用性", contents: "内容", placeholder: "[占位内容]", pending: "待批准", buy: "立即购买", disclaimer: "法律出版物提供法律信息和参考资料。本身不构成个性化法律意见，也不会建立律师与客户的关系。" },
     "zh-Hant": { jurisdiction: "司法管轄區", subject: "法律領域", edition: "版本", format: "格式", price: "價格", availability: "可用性", contents: "內容", placeholder: "[預留內容]", pending: "待批准", buy: "立即購買", disclaimer: "法律出版物提供法律資訊及參考資料。本身不構成個人化法律意見，也不會建立律師與客戶的關係。" }
   }[locale] || {});
+}
+
+function resourceEvidenceLabels(locale) {
+  return ({
+    en: { sources: "Source metadata", relevance: "DRC operational relevance" },
+    fr: { sources: "Métadonnées de source", relevance: "Pertinence opérationnelle pour la RDC" },
+    zh: { sources: "来源元数据", relevance: "对刚果民主共和国业务的相关性" },
+    "zh-Hant": { sources: "來源中繼資料", relevance: "對剛果民主共和國業務的相關性" }
+  }[locale] || { sources: "Source metadata", relevance: "DRC operational relevance" });
 }
 
 function productDetailView(id) {
@@ -568,6 +578,8 @@ function productDetailView(id) {
         ${detailBlock(c.library.format, tr.format)}
         ${detailBlock(c.library.limitation, tr.limitation)}
         ${detailBlock(meta.subject, product.topic || meta.placeholder)}
+        ${tr.operationalRelevance ? detailBlock(resourceEvidenceLabels(state.locale).relevance, tr.operationalRelevance) : ""}
+        ${product.sourceMetadata?.length ? detailBlock(resourceEvidenceLabels(state.locale).sources, product.sourceMetadata.map((source) => `${source.title} · ${source.sourceType} · ${tr.sourceStatus || source.status} · ${source.url}`).join("; ")) : ""}
         ${detailBlock(meta.contents, "DEMO CONTENT — REPLACE BEFORE PUBLICATION. Laws, regulations, amendments, supplementary materials, indexes, and tables of contents require verified source material.")}
       </div>
       <aside class="action-panel">
@@ -602,13 +614,17 @@ function catalogControls(prefix, search, category, categories) {
 
 function libraryControls() {
   const c = t();
-  const values = ["international-arbitration", "investment-law", "african-trade", "business-human-rights", "extractive-industries", "international-economic-law", "legal-research"];
+  const values = ["international-arbitration", "investment-law", "african-trade", "business-human-rights", "extractive-industries", "international-economic-law", "legal-research", "drc-laws", "drc-regulations", "drc-bylaws", "ohada", "rec-regulations", "bilateral-investment-treaties", "regional-economic-agreements"];
   const labelsByLocale = {
     en: ["International Arbitration", "Investment Law", "African Trade & AfCFTA", "Business & Human Rights", "Extractive Industries", "International Economic Law", "Legal Research"],
     fr: ["Arbitrage international", "Droit des investissements", "Commerce africain et ZLECAf", "Entreprises et droits humains", "Industries extractives", "Droit économique international", "Recherche juridique"],
     zh: ["国际仲裁", "投资法", "非洲贸易与非洲大陆自贸区", "企业与人权", "采掘业", "国际经济法", "法律研究"],
     "zh-Hant": ["國際仲裁", "投資法", "非洲貿易與非洲大陸自由貿易區", "企業與人權", "採掘業", "國際經濟法", "法律研究"]
   };
+  labelsByLocale.en.push("DRC laws", "DRC regulations", "DRC bylaws and implementing measures", "OHADA instruments", "REC regulations", "Bilateral investment treaties", "Regional economic agreements");
+  labelsByLocale.fr.push("Lois de la RDC", "Règlements de la RDC", "Textes d’application de la RDC", "Instruments OHADA", "Réglementations des CER", "Traités bilatéraux d’investissement", "Accords économiques régionaux");
+  labelsByLocale.zh.push("刚果民主共和国法律", "刚果民主共和国法规", "刚果民主共和国附属规则与实施措施", "OHADA 文书", "区域经济共同体法规", "双边投资协定", "区域经济协定");
+  labelsByLocale["zh-Hant"].push("剛果民主共和國法律", "剛果民主共和國法規", "剛果民主共和國附屬規則與實施措施", "OHADA 文書", "區域經濟共同體法規", "雙邊投資協定", "區域經濟協定");
   const topics = values.map((value, index) => [value, (labelsByLocale[state.locale] || labelsByLocale.en)[index]]);
   return `
     <form class="catalog-controls library-controls" id="product-filters">
@@ -870,11 +886,13 @@ function aboutView() {
           <details class="profile-disclosure"><summary>${escapeHtml(c.experienceDisclosure)}</summary><div class="experience-list">
             ${c.experience.map((item) => `
               <article>
-                <div class="experience-period">${escapeHtml(item.period)}</div>
+                <div class="experience-period">${escapeHtml(item.period || c.dateNotStated || "Date not stated")}</div>
                 <div>
                   <h3>${escapeHtml(item.role)}</h3>
                   <p class="about-organization">${escapeHtml(item.organization)}</p>
                   <p>${escapeHtml(item.detail)}</p>
+                  ${item.jurisdictionalRelevance ? `<p><strong>${escapeHtml(c.drcRelevance || "DRC operational relevance")}:</strong> ${escapeHtml(item.jurisdictionalRelevance)}</p>` : ""}
+                  ${item.evidenceStatus ? `<span class="badge">${escapeHtml(c.evidencePending || "Evidence pending")}</span>` : ""}
                 </div>
               </article>
             `).join("")}
@@ -1779,4 +1797,7 @@ async function refreshServerState() {
 
 if (!window.location.hash) window.location.hash = "#/home";
 render();
-refreshServerState().then(render);
+refreshServerState().then(() => {
+  // Avoid replacing an active intake form while a user is entering guidance.
+  if (!document.querySelector("#guidance-form")) render();
+});
