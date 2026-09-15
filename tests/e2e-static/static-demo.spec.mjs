@@ -14,6 +14,24 @@ const aboutTitles = {
   "zh-Hant": "國際法與爭議解決"
 };
 
+const backToTopLabels = {
+  en: "Back to top",
+  fr: "Retour en haut",
+  zh: "返回顶部",
+  "zh-Hant": "返回頂部"
+};
+const publicRoutes = [
+  "home",
+  "services",
+  "service/service-orientation",
+  "book/service-orientation",
+  "library",
+  "product/resource-drc-constitution",
+  "guidance",
+  "about",
+  "contact"
+];
+
 test("static About route preserves locale, resolved Bar status, and noindex", async ({ page }) => {
   for (const locale of locales) {
     await page.goto("/#/about");
@@ -38,18 +56,14 @@ test("static About route preserves locale, resolved Bar status, and noindex", as
   }
 });
 
-test("static routes provide an accessible back-to-top control for long pages", async ({ page }) => {
+test("back-to-top label and tooltip are localized in all four locales", async ({ page }) => {
   await page.goto("/#/about");
-  const button = page.locator("#back-to-top");
-  await expect(button).toBeHidden();
-  await page.evaluate(() => window.scrollTo(0, 900));
-  await expect(button).toBeVisible();
-  await expect(button).toHaveAttribute("aria-label", "Back to top");
-  await button.focus();
-  await expect(button).toBeFocused();
-  await button.click();
-  await page.waitForTimeout(350);
-  expect(await page.evaluate(() => window.scrollY)).toBeLessThan(40);
+  for (const locale of locales) {
+    await page.selectOption("#locale-select", locale);
+    const button = page.locator("#back-to-top");
+    await expect(button).toHaveAttribute("aria-label", backToTopLabels[locale]);
+    await expect(button).toHaveAttribute("title", backToTopLabels[locale]);
+  }
 });
 
 test("static public routes support filtering, detail navigation, and guidance intake", async ({ page }) => {
@@ -176,6 +190,41 @@ for (const viewport of [
   { name: "desktop", width: 1440, height: 1000 },
   { name: "mobile", width: 390, height: 844 }
 ]) {
+  test(`back-to-top behavior covers every public route on ${viewport.name}`, async ({ page }) => {
+    await page.setViewportSize({ width: viewport.width, height: viewport.height });
+    await page.emulateMedia({ reducedMotion: "reduce" });
+
+    for (const route of publicRoutes) {
+      await page.goto(`/#/${route}`);
+      const button = page.locator("#back-to-top");
+      await expect(button).toBeHidden();
+
+      const maxScroll = await page.evaluate(
+        () => document.documentElement.scrollHeight - window.innerHeight
+      );
+      if (maxScroll >= 480) {
+        await page.evaluate(() =>
+          window.scrollTo(0, Math.min(900, document.documentElement.scrollHeight))
+        );
+        await expect(button, `${route} should expose the control after scrolling`).toBeVisible();
+        await button.focus();
+        await expect(button).toBeFocused();
+        await button.click();
+        expect(
+          await page.evaluate(() => window.scrollY),
+          `${route} should return to the top`
+        ).toBeLessThan(40);
+        await expect(button).toBeHidden();
+      } else {
+        await page.evaluate(() => window.scrollTo(0, document.documentElement.scrollHeight));
+        await expect(
+          button,
+          `${route} should stay hidden when the page cannot reach the threshold`
+        ).toBeHidden();
+      }
+    }
+  });
+
   test(`public routes remain accessible and overflow-free on ${viewport.name}`, async ({ page }) => {
     await page.setViewportSize({ width: viewport.width, height: viewport.height });
 

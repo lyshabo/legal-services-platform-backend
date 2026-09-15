@@ -293,3 +293,67 @@ the same `Last-Modified` timestamp, ETag `"6aa78213-174ad"`, and
 This checkpoint is append-only. It does not replace the prior visual review,
 and it does not convert browser, artifact, or CDN evidence into legal,
 credential, translation, or publication approval.
+
+## Checkpoint 9: Back to Top Deployment, CDN, and Screenshot Evidence
+
+**Verification date:** September 15, 2026
+
+**Main repository commit:** `cf69eebcc569ca5bcf269ac214b20959d4e352d7`
+
+**Static-demo source commit:** `ca7d1f45986d4faccce1493c4e58624338a7db9c`
+
+**Pages workflow:** `Deploy static demo to GitHub Pages`
+
+**Pages workflow run:** `34934906328`
+
+**Deploy job:** `104270626644`
+
+**Workflow and deploy-job conclusion:** `success` / `success`
+
+**Artifact:** `github-pages` (ID `10382748572`, 397,724 bytes)
+
+**Artifact digest:** `sha256:0c35f12d9218065f4ba57a1495b99d9fa9356723b340253bb2594edac8bf2c6c`
+
+**Artifact created:** September 15, 2026 at 05:58:30 UTC
+
+**Deployment URL:** `https://legal-services-platform.github.io/legal-services-platform-static-demo-20260828/`
+
+The exact static-demo commit deployed successfully with the centralized Back
+to Top control in the curated Pages artifact. Direct inspection of the
+deployed `app.js` confirmed the button markup, the 480-pixel visibility
+threshold, smooth scrolling, and the `prefers-reduced-motion` fallback.
+
+Two requests to the deployed root document returned HTTP 200 with
+`Content-Type: text/html; charset=utf-8`, `Content-Length: 1243`,
+`Last-Modified: Tue, 15 Sep 2026 05:58:31 GMT`, stable ETag
+`"6aa8de87-4db"`, and `Cache-Control: max-age=600`. The CDN changed from
+`X-Cache: MISS`, `X-Cache-Hits: 0`, `Age: 0` to `X-Cache: HIT`,
+`X-Cache-Hits: 1`, `Age: 2`.
+
+Two requests to the deployed `app.js` returned HTTP 200 with
+`Content-Type: application/javascript; charset=utf-8`,
+`Content-Length: 96103`, `Last-Modified: Tue, 15 Sep 2026 05:58:31 GMT`,
+stable ETag `"6aa8de87-17767"`, and `Cache-Control: max-age=600`. The CDN
+again changed from `MISS`, `X-Cache-Hits: 0`, `Age: 0` to `HIT`,
+`X-Cache-Hits: 1`, `Age: 2`.
+
+Four deployed-route screenshots were captured after scrolling to 1,200
+pixels:
+
+- `.tmp-static-review/2026-09-15-back-to-top-live/about-desktop.png`
+- `.tmp-static-review/2026-09-15-back-to-top-live/about-mobile.png`
+- `.tmp-static-review/2026-09-15-back-to-top-live/legal-library-desktop.png`
+- `.tmp-static-review/2026-09-15-back-to-top-live/legal-library-mobile.png`
+
+The desktop captures used a `1440 x 1000` viewport and showed a `48 x 48`
+pixel control at approximately `x=1360`, `y=920`. The mobile captures used a
+`390 x 844` viewport and showed a `44 x 44` pixel control at approximately
+`x=331.6`, `y=785.6`. The button remained fixed at the lower-right edge
+without materially obstructing the About or Legal Library content. The
+captures are temporary internal verification evidence and remain excluded
+from source control.
+
+This checkpoint preserves the earlier cleanup and deployment history. Pages,
+CDN, browser, and screenshot evidence confirms implementation and propagation
+only; it does not provide legal, credential, translation, or publication
+approval.
