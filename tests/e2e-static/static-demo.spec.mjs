@@ -38,6 +38,20 @@ test("static About route preserves locale, resolved Bar status, and noindex", as
   }
 });
 
+test("static routes provide an accessible back-to-top control for long pages", async ({ page }) => {
+  await page.goto("/#/about");
+  const button = page.locator("#back-to-top");
+  await expect(button).toBeHidden();
+  await page.evaluate(() => window.scrollTo(0, 900));
+  await expect(button).toBeVisible();
+  await expect(button).toHaveAttribute("aria-label", "Back to top");
+  await button.focus();
+  await expect(button).toBeFocused();
+  await button.click();
+  await page.waitForTimeout(350);
+  expect(await page.evaluate(() => window.scrollY)).toBeLessThan(40);
+});
+
 test("static public routes support filtering, detail navigation, and guidance intake", async ({ page }) => {
   await page.goto("/#/services");
   await expect(page.locator("#service-filters")).toBeVisible();
