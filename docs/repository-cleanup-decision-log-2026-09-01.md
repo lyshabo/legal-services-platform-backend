@@ -357,3 +357,88 @@ This checkpoint preserves the earlier cleanup and deployment history. Pages,
 CDN, browser, and screenshot evidence confirms implementation and propagation
 only; it does not provide legal, credential, translation, or publication
 approval.
+
+## Checkpoint 10: Localized Back to Top Publication and Visual Evidence
+
+**Verification date:** September 15, 2026
+
+**Main implementation commit:** `0637de623df919d6ba690d6a1cfe601033002218`
+
+**Static-demo source commit:** `d7f38dec6e912c38182e32d5b0b6d486617df1ed`
+
+**Pages workflow:** `Deploy static demo to GitHub Pages`
+
+**Pages workflow run:** `34936127472`
+
+**Deploy job:** `104274302290`
+
+**Workflow and deploy-job conclusion:** `success` / `success`
+
+**Artifact:** `github-pages` (ID `10382499302`, 397,830 bytes)
+
+**Artifact digest:** `sha256:91b2499b2da740df87744feb143b47e7201adb705cc8db771216decb47f2c89f`
+
+**Artifact created:** September 15, 2026 at 06:15:33 UTC
+
+**Artifact expiry:** September 16, 2026 at 06:15:32 UTC
+
+**Deployment URL:** `https://legal-services-platform.github.io/legal-services-platform-static-demo-20260828/`
+
+GitHub reported the Pages site as `built`, with HTTPS enforced and
+`build_type: workflow`. The run and artifact both identify the exact static-demo
+source SHA above. The deployed localization asset contains the approved
+implementation labels `Retour en haut`, `返回顶部`, and `返回頂部`.
+
+Two requests to the deployed root document returned HTTP 200 with
+`Content-Type: text/html; charset=utf-8`, `Content-Length: 1243`,
+`Last-Modified: Tue, 15 Sep 2026 06:15:34 GMT`, stable ETag
+`"6aa8e286-4db"`, and `Cache-Control: max-age=600`. The CDN changed from
+`X-Cache: MISS`, `X-Cache-Hits: 0`, `Age: 0` to `X-Cache: HIT`,
+`X-Cache-Hits: 1`, `Age: 22`.
+
+Two requests to the deployed `app.js` returned HTTP 200 with
+`Content-Type: application/javascript; charset=utf-8`,
+`Content-Length: 96241`, the same `Last-Modified` timestamp, stable ETag
+`"6aa8e286-177f1"`, and `Cache-Control: max-age=600`. The CDN changed from
+`MISS`, `X-Cache-Hits: 0`, `Age: 0` to `HIT`, `X-Cache-Hits: 1`,
+`Age: 19`.
+
+Two requests to the deployed `i18n.js` returned HTTP 200 with
+`Content-Type: application/javascript; charset=utf-8`,
+`Content-Length: 126498`, the same `Last-Modified` timestamp, stable ETag
+`"6aa8e286-1ee22"`, and `Cache-Control: max-age=600`. The CDN changed from
+`MISS`, `X-Cache-Hits: 0`, `Age: 0` to `HIT`, `X-Cache-Hits: 1`,
+`Age: 21`.
+
+The deployed About route was captured at `scrollY: 1200` in French,
+Simplified Chinese, and Traditional Chinese at desktop and mobile sizes:
+
+- `.tmp-static-review/2026-09-15-back-to-top-localized-d7f38de/about-fr-desktop.png`
+- `.tmp-static-review/2026-09-15-back-to-top-localized-d7f38de/about-fr-mobile.png`
+- `.tmp-static-review/2026-09-15-back-to-top-localized-d7f38de/about-zh-desktop.png`
+- `.tmp-static-review/2026-09-15-back-to-top-localized-d7f38de/about-zh-mobile.png`
+- `.tmp-static-review/2026-09-15-back-to-top-localized-d7f38de/about-zh-Hant-desktop.png`
+- `.tmp-static-review/2026-09-15-back-to-top-localized-d7f38de/about-zh-Hant-mobile.png`
+
+The desktop captures used a `1440 x 1000` viewport and showed a `48 x 48`
+pixel control at `x=1360`, `y=920`. The mobile captures used a `390 x 844`
+viewport and showed a `44 x 44` pixel control at approximately `x=331.6`,
+`y=785.6`. Automated capture evidence confirmed:
+
+- French: `<html lang="fr">`, accessible label and tooltip
+  `Retour en haut`
+- Simplified Chinese: `<html lang="zh-Hans">`, accessible label and tooltip
+  `返回顶部`
+- Traditional Chinese: `<html lang="zh-Hant">`, accessible label and tooltip
+  `返回頂部`
+- no horizontal overflow in any of the six captures
+
+Visual inspection confirmed that the focused lower-right control remained
+clear, consistently positioned, and did not materially obstruct the localized
+About content at either viewport. The screenshots and capture metadata are
+temporary verification evidence and remain excluded from source control.
+
+This checkpoint is append-only and does not replace Checkpoint 9. Deployment,
+CDN, automated-browser, and visual evidence verifies the localized
+implementation only. It does not constitute qualified translation, legal,
+credential, jurisdiction, or publication approval.
