@@ -20,6 +20,32 @@ const backToTopLabels = {
   zh: "返回顶部",
   "zh-Hant": "返回頂部"
 };
+const contactCopy = {
+  en: {
+    title: "Contact",
+    name: "Name",
+    email: "Email",
+    message: "Message"
+  },
+  fr: {
+    title: "Contact",
+    name: "Nom",
+    email: "E-mail",
+    message: "Message"
+  },
+  zh: {
+    title: "联系",
+    name: "姓名",
+    email: "电子邮件",
+    message: "留言"
+  },
+  "zh-Hant": {
+    title: "聯絡",
+    name: "姓名",
+    email: "電子郵件",
+    message: "留言"
+  }
+};
 const publicRoutes = [
   "home",
   "services",
@@ -63,6 +89,18 @@ test("back-to-top label and tooltip are localized in all four locales", async ({
     const button = page.locator("#back-to-top");
     await expect(button).toHaveAttribute("aria-label", backToTopLabels[locale]);
     await expect(button).toHaveAttribute("title", backToTopLabels[locale]);
+  }
+});
+
+test("static Contact route uses locale-specific form copy", async ({ page }) => {
+  await page.goto("/#/contact");
+  for (const locale of locales) {
+    await page.selectOption("#locale-select", locale);
+    const expected = contactCopy[locale];
+    await expect(page.locator("h1")).toHaveText(expected.title);
+    await expect(page.locator('label:has(input[name="name"]) span')).toContainText(expected.name);
+    await expect(page.locator('label:has(input[name="email"]) span')).toContainText(expected.email);
+    await expect(page.locator('label:has(textarea[name="message"]) span')).toContainText(expected.message);
   }
 });
 
