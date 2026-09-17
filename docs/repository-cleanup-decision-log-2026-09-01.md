@@ -442,3 +442,74 @@ This checkpoint is append-only and does not replace Checkpoint 9. Deployment,
 CDN, automated-browser, and visual evidence verifies the localized
 implementation only. It does not constitute qualified translation, legal,
 credential, jurisdiction, or publication approval.
+
+## Checkpoint 11: Traditional Chinese Contact Localization Deployment
+
+**Verification date:** September 17, 2026
+
+**Main implementation and regression commit:** `efa2809`
+
+**Static-demo source commit:** `3f4ee3b3592951a2ec728aa5c5dc348771a32450`
+
+**Pages workflow:** `Deploy static demo to GitHub Pages`
+
+**Pages workflow run:** `35186910257`
+
+**Deploy job:** `105090829599`
+
+**Workflow and deploy-job conclusion:** `success` / `success`
+
+**Artifact:** `github-pages` (ID `10482093098`, 400,550 bytes)
+
+**Artifact digest:** `sha256:b96e209abdf69f03f17caff85867107bcefd7ea847d9f863d58521552ba15d26`
+
+**Deployment URL:** `https://legal-services-platform.github.io/legal-services-platform-static-demo-20260828/`
+
+The focused static-demo commit changed only `i18n.js`. The remote `main`
+branch resolved to the exact source commit above. GitHub Pages reported the
+site as `built`, with `build_type: workflow` and HTTPS enforced.
+
+The curated artifact manifest recorded the deployed locale asset as:
+
+`9f0e1ffb00d9c73805a71044fc8d914a8db9bb4ac453b2771c8085e7cf3714e7  i18n.js`
+
+The public `i18n.js` response matched the committed Git blob exactly:
+`7a75f956a1baa24f7d41d348c4b92b7029c4fa04`. It returned HTTP 200 with
+`Last-Modified: Thu, 17 Sep 2026 05:44:26 GMT`, ETag
+`W/"6aab7e3a-1efdb"`, and `Cache-Control: max-age=600`. Repeated requests
+reported `X-Cache: HIT`, with observed `Age` values of 0 and 3 seconds.
+
+Public browser verification at desktop (`1440 x 1000`) and mobile
+(`390 x 844`) confirmed:
+
+- `<html lang="zh-Hant">`
+- Contact heading `聯絡`
+- email label `電子郵件 必填`
+- safeguard notice `提交此表單不會建立專業關係，不保證保密或受理，也不會保障任何期限。`
+- `noindex, nofollow, noarchive`
+- no horizontal overflow
+- no browser page errors
+
+The deployed screenshots and machine-readable evidence are retained as
+temporary internal verification evidence:
+
+- `.tmp-static-review/deployed-3f4ee3b-contact/desktop-zh-Hant-contact.png`
+- `.tmp-static-review/deployed-3f4ee3b-contact/mobile-zh-Hant-contact.png`
+- `.tmp-static-review/deployed-3f4ee3b-contact/evidence.json`
+
+Post-correction regression results were:
+
+- unit tests: 18 passed, 1 skipped, 0 failed
+- main Playwright: 24 passed, 1 skipped, 0 failed
+- static-demo Playwright: 13 passed, 0 skipped, 0 failed
+- combined: 55 passed, 2 skipped, 0 failed, from 57 discovered tests
+
+The unit skip remained the live Prisma repository contract, which requires
+`PERSISTENCE_ADAPTER=prisma` and a reachable `DATABASE_URL`. The main
+Playwright skip remained the historical About test that expects obsolete
+CV-related wording. Neither skip is treated as a pass.
+
+This checkpoint is append-only. GitHub Pages, artifact, CDN, browser, and
+screenshot evidence confirms implementation and public propagation only. It
+does not constitute qualified translation, legal, credential, jurisdiction,
+or publication approval.
