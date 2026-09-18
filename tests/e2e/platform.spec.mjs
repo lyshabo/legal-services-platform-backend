@@ -273,6 +273,33 @@ test("every service detail has differentiated evidence metadata in all four loca
   }
 });
 
+test("service-detail anchors and evidence disclosure preserve gates", async ({ page }) => {
+  await page.setViewportSize({ width: 390, height: 844 });
+  await page.emulateMedia({ reducedMotion: "reduce" });
+  for (const locale of ["en", "fr", "zh", "zh-Hant"]) {
+    await page.goto("/#/service/service-legal-consultancy");
+    await page.selectOption("#locale-select", locale);
+    await expect(page.locator(".service-section-nav")).toBeVisible();
+    await expect(page.locator(".service-section-nav [data-service-anchor]")).toHaveCount(5);
+    for (const targetId of ["service-overview", "service-scope", "service-evidence", "service-drc-relevance", "service-limitations"]) {
+      const control = page.locator(`.service-section-nav [data-service-anchor="${targetId}"]`);
+      await control.scrollIntoViewIfNeeded();
+      await control.click();
+      await expect(page.locator(`#${targetId}`)).toBeFocused();
+    }
+    await expect(page.locator(".service-evidence")).toHaveAttribute("data-evidence-status", "pending");
+    await expect(page.locator("[data-evidence-gate=pending]")).toBeVisible();
+    await expect(page.locator(".evidence-disclosure")).not.toHaveAttribute("open", "");
+    await page.locator(".evidence-disclosure summary").scrollIntoViewIfNeeded();
+    await page.locator(".evidence-disclosure summary").click();
+    await expect(page.locator(".evidence-disclosure")).toHaveAttribute("open", "");
+    await expect(page.locator(".service-evidence .reference-list li").first()).toBeVisible();
+    await expect(page.locator("button[data-booking]")).toBeDisabled();
+    await expect(page.locator(".gate-explanation")).toBeVisible();
+    expect(await page.evaluate(() => document.documentElement.scrollWidth <= document.documentElement.clientWidth)).toBeTruthy();
+  }
+});
+
 test("legal compendium catalog remains gated with publication metadata and disabled purchase", async ({ page }) => {
   await page.goto("/#/home");
   await expect(page.getByRole("heading", { name: "Legal Compendiums" }).first()).toBeVisible();
