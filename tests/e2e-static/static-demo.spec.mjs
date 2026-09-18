@@ -57,6 +57,12 @@ const publicRoutes = [
   "about",
   "contact"
 ];
+const serviceDetailNavigationLabels = {
+  en: "Service detail sections",
+  fr: "Sections du detail du service",
+  zh: "\u670d\u52a1\u8be6\u60c5\u90e8\u5206",
+  "zh-Hant": "\u670d\u52d9\u8a73\u60c5\u90e8\u5206"
+};
 
 for (const viewport of [
   { name: "mobile portrait", width: 390, height: 844 },
@@ -219,6 +225,39 @@ test("static service details preserve evidence references and four-locale scope"
         await expect(page.locator("button[data-booking]")).toBeDisabled();
       }
     }
+  }
+});
+
+test("mobile service-detail navigation and evidence disclosure preserve gates in all locales", async ({ page }) => {
+  await page.setViewportSize({ width: 390, height: 844 });
+  await page.emulateMedia({ reducedMotion: "reduce" });
+  for (const locale of locales) {
+    await page.goto("/#/service/service-legal-consultancy");
+    await page.selectOption("#locale-select", locale);
+    const sectionNav = page.locator(".service-section-nav");
+    await expect(sectionNav).toHaveAttribute("aria-label", serviceDetailNavigationLabels[locale]);
+    await expect(sectionNav.locator("[data-service-anchor]")).toHaveCount(5);
+    for (const targetId of ["service-overview", "service-scope", "service-evidence", "service-drc-relevance", "service-limitations"]) {
+      await expect(page.locator(`#${targetId}`)).toHaveCount(1);
+      const control = sectionNav.locator(`[data-service-anchor="${targetId}"]`);
+      const box = await control.boundingBox();
+      expect(box).not.toBeNull();
+      expect(box.height).toBeGreaterThanOrEqual(44);
+      await control.scrollIntoViewIfNeeded();
+      await control.click();
+      await expect(page.locator(`#${targetId}`)).toBeFocused();
+      await expect(page).toHaveURL(/#\/service\/service-legal-consultancy$/);
+    }
+    const disclosure = page.locator(".evidence-disclosure");
+    await expect(disclosure).not.toHaveAttribute("open", "");
+    await expect(page.locator("[data-evidence-gate=pending]")).toBeVisible();
+    await disclosure.locator("summary").scrollIntoViewIfNeeded();
+    await disclosure.locator("summary").click();
+    await expect(disclosure).toHaveAttribute("open", "");
+    expect(await disclosure.locator(".reference-list li").count()).toBeGreaterThan(0);
+    await expect(page.locator(".gate-explanation")).toBeVisible();
+    await expect(page.locator("button[data-booking]")).toBeDisabled();
+    expect(await page.evaluate(() => document.documentElement.scrollWidth <= document.documentElement.clientWidth)).toBeTruthy();
   }
 });
 
