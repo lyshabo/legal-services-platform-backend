@@ -58,6 +58,26 @@ const publicRoutes = [
   "contact"
 ];
 
+for (const viewport of [
+  { name: "mobile portrait", width: 390, height: 844 },
+  { name: "mobile landscape", width: 844, height: 390 },
+  { name: "tablet", width: 768, height: 1024 }
+]) {
+  test(`header controls preserve usable touch targets on ${viewport.name}`, async ({ page }) => {
+    await page.setViewportSize({ width: viewport.width, height: viewport.height });
+    await page.goto("/#/home");
+
+    const menuBox = await page.locator(".mobile-menu").boundingBox();
+    const localeBox = await page.locator("#locale-select").boundingBox();
+
+    expect(menuBox).not.toBeNull();
+    expect(localeBox).not.toBeNull();
+    expect(menuBox.width).toBeGreaterThanOrEqual(44);
+    expect(menuBox.height).toBeGreaterThanOrEqual(44);
+    expect(localeBox.height).toBeGreaterThanOrEqual(44);
+  });
+}
+
 test("static About route preserves locale, resolved Bar status, and noindex", async ({ page }) => {
   for (const locale of locales) {
     await page.goto("/#/about");
