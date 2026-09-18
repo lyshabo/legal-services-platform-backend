@@ -153,3 +153,91 @@ UI change:
 These are usability recommendations, not verified defects. Any implementation
 should be followed by the same four-locale route matrix and mobile
 overflow/touch-target regression checks.
+
+## Verified Mobile Service-Detail Deployment Evidence
+
+- **Verification date:** September 18, 2026
+- **Main commit:** `b7452be6c7428936e930770b320fa6681a6d2f2f`
+- **Static-demo commit:** `dd58f6e0a045d30e70c3250c342fdbb3c572b3b7`
+- **Static-demo remote branch:** `origin/main`
+- **Workflow:** Deploy static demo to GitHub Pages
+- **Run:** `35392997085` (`success`)
+- **Deploy job:** `105755387686` (`success`)
+- **Artifact:** `github-pages`, ID `10567265298`, 401,908 bytes
+- **Artifact digest:** `sha256:e2f05b543ddfcdb0574c619197f776b3582da8f9b4cbfab9f18b5e2d96f19ca4`
+- **Artifact expiry:** September 19, 2026 at 20:43:35 UTC
+- **Deployment URL:** https://legal-services-platform.github.io/legal-services-platform-static-demo-20260828/
+- **Pages status:** `built`; workflow deployment path; public; HTTPS enforced.
+
+The verified public assets contain the mobile service-detail navigation,
+accessible evidence disclosure, stable section targets, and gate explanation
+from the exact static-demo commit. The deployed JavaScript contains
+`data-service-anchor`, `evidence-disclosure`, and `gate-explanation`; the
+deployed stylesheet contains `.service-section-nav` and
+`.evidence-disclosure`.
+
+### CDN Evidence
+
+The first public requests returned HTTP 200 with the following validators and
+cache behavior:
+
+| Asset | Content length | Last-Modified | ETag | Cache-Control | Age | Cache result |
+| --- | ---: | --- | --- | --- | ---: | --- |
+| Shell | 1,243 bytes | `Fri, 18 Sep 2026 20:43:37 GMT` | `"6aada279-4db"` | `max-age=600` | 0 | `X-Cache: MISS`; 0 hits |
+| `app.js` | 100,862 bytes | `Fri, 18 Sep 2026 20:43:37 GMT` | `"6aada279-189fe"` | `max-age=600` | 0 | `X-Cache: MISS`; 0 hits |
+| `styles.css` | 45,500 bytes | `Fri, 18 Sep 2026 20:43:37 GMT` | `"6aada279-b1bc"` | `max-age=600` | 0 | `X-Cache: MISS`; 0 hits |
+
+A follow-up `styles.css` request retained the same `Last-Modified` and `ETag`
+and returned `Age: 20`, `X-Cache: HIT`, and `X-Cache-Hits: 1`. This confirms
+post-deployment cache propagation without treating CDN evidence as content or
+governance approval.
+
+### Representative Four-Locale Screenshot Review
+
+The evidence set in
+`.tmp-static-review/mobile-service-detail-2026-09-18/` contains 16 screenshots
+and `results.json`:
+
+- Routes: Legal Consultancy and Service Orientation.
+- Locales: English, French, Simplified Chinese, and Traditional Chinese.
+- Viewports: desktop `1440 x 1000` and mobile `390 x 844`.
+
+Every captured route/locale/viewport result confirmed:
+
+- the localized service-detail heading and navigation accessible name;
+- five stable section targets: overview, scope, evidence, DRC relevance, and
+  limitations;
+- evidence disclosure closed by default with the pending evidence notice still
+  visible;
+- references retained after expansion;
+- disabled booking state and visible gate explanation;
+- correct `<html lang>` value; and
+- no document-level horizontal overflow.
+
+Desktop captures preserve the two-column service-detail layout and visible
+action panel. Mobile captures stack the content cleanly, keep the compact
+section-navigation row scrollable within its own region, and wrap the longer
+French and Chinese content without page-level overflow. No screenshot-based
+defect was identified that hides evidence metadata, enables a gated action, or
+weakens a publication control.
+
+### Regression Evidence
+
+- Syntax checks: `app.js` and `static-demo/app.js` passed.
+- Unit suite: **18 passed, 1 skipped, 0 failed**. The live Prisma contract
+  remains skipped because the required live database configuration is absent.
+- Main Playwright suite: **25 passed, 1 skipped, 0 failed**. The historical
+  CV-sourcing test remains skipped.
+- Static-demo Playwright suite: **17 passed, 0 skipped, 0 failed**.
+- Focused main service-detail anchor test: **1 passed**.
+- Focused static-demo mobile service-detail test: **1 passed**.
+
+The first focused browser attempt exposed a smooth-scroll timing problem in the
+test harness. The test was corrected to emulate reduced motion and scroll each
+control into view before activation; the rerun passed. No product defect was
+identified from that initial timeout.
+
+This section records technical deployment and responsive-browser evidence
+only. Legal claims, identity, jurisdiction, source currentness, republication
+permission, accessibility approval, qualified translation, and final
+production publication remain separate approval tracks.
