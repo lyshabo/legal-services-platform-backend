@@ -241,3 +241,127 @@ This section records technical deployment and responsive-browser evidence
 only. Legal claims, identity, jurisdiction, source currentness, republication
 permission, accessibility approval, qualified translation, and final
 production publication remain separate approval tracks.
+
+## Complete 14-Service Four-Locale Route Matrix
+
+**Verification date:** September 18, 2026
+
+**Generated at:** `2026-09-18T21:04:38.275Z`
+
+**Public URL:** https://legal-services-platform.github.io/legal-services-platform-static-demo-20260828/
+
+**Matrix:** 14 service-detail routes x 4 locales x 2 viewports = **112 checks**
+
+**Result:** **112 passed, 0 failed**
+
+The deployed route matrix covered English (`en`), French (`fr`), Simplified
+Chinese (`zh`), and Traditional Chinese (`zh-Hant`) at desktop `1440 x 1000`
+and mobile `390 x 844`. Each check used a unique document request before the
+hash route so that the HTTP response and rendered route were independently
+recorded.
+
+### Complete Check Results
+
+| Check category | Failures |
+| --- | ---: |
+| HTTP status | 0 |
+| Localized heading | 0 |
+| Selected locale and `<html lang>` | 0 |
+| `noindex, nofollow, noarchive` | 0 |
+| Five-section navigation and target focus | 0 |
+| Mobile touch-target height | 0 |
+| Evidence disclosure, pending notice, and references | 0 |
+| Booking-control gate state | 0 |
+| Duplicate IDs | 0 |
+| Broken images | 0 |
+| Document-level horizontal overflow | 0 |
+| Unsafe external-link attributes | 0 |
+| Page errors | 0 |
+| Console errors | 0 |
+
+Every route retained the five stable targets for overview, scope, evidence,
+DRC relevance, and limitations. The evidence disclosure was closed by default,
+the pending evidence notice remained visible, and the cited references were
+present after expansion. The orientation route retained its intentionally
+enabled booking action; the other 13 routes retained disabled booking controls
+and visible gate explanations.
+
+### Page-Height Profile
+
+Page height is recorded as a density indicator, not as a pass/fail threshold.
+
+| Locale and viewport | Minimum | Maximum | Average |
+| --- | ---: | ---: | ---: |
+| English desktop | 1,791 px | 1,965 px | 1,862 px |
+| English mobile | 8,792 px | 11,631 px | 9,902 px |
+| French desktop | 1,818 px | 2,086 px | 1,909 px |
+| French mobile | 10,097 px | 12,804 px | 11,322 px |
+| Simplified Chinese desktop | 1,676 px | 1,823 px | 1,730 px |
+| Simplified Chinese mobile | 7,860 px | 10,329 px | 8,690 px |
+| Traditional Chinese desktop | 1,676 px | 1,823 px | 1,730 px |
+| Traditional Chinese mobile | 7,880 px | 10,402 px | 8,720 px |
+
+French pages are taller because of translation expansion, but the complete
+matrix found no horizontal overflow, clipped control, hidden evidence notice,
+or unreachable section. Legal Representation is the longest mobile route in
+all four locales; the French mobile rendering is the matrix maximum at 12,804
+pixels. The tallest desktop rendering is French ESG Advisory at 2,086 pixels.
+
+### Service-by-Service Visual Findings
+
+| Service route | English heading | English mobile height | References | Visual finding |
+| --- | --- | ---: | ---: | --- |
+| `service-orientation` | `[Placeholder] Initial legal orientation` | 8,792 px | 2 | Shortest route. The five-section index is easy to scan, the placeholder posture is visible, and booking remains intentionally enabled. |
+| `service-document-review` | `[Placeholder] Document review service` | 8,803 px | 3 | Compact despite three references. Evidence metadata and the disabled-action explanation remain separated and readable. |
+| `service-international-arbitration` | `International Arbitration` | 9,451 px | 2 | Moderate density. Scope, DRC relevance, limitations, and evidence retain clear visual boundaries. |
+| `service-investment-law` | `International Investment Law` | 9,188 px | 2 | The title and section controls wrap without clipping. No page-level overflow or evidence loss was found. |
+| `service-cross-border-business` | `Africa-Focused Cross-Border Business` | 9,384 px | 2 | The long heading wraps cleanly on mobile. The service index remains locally scrollable without widening the document. |
+| `service-extractive-industries` | `Extractive Industries & Natural Resources` | 9,979 px | 3 | Higher evidence density is orderly. All three references remain available within the accessible disclosure. |
+| `service-business-human-rights` | `Business & Human Rights` | 10,349 px | 2 | A longer mobile route, but the evidence notice, DRC relevance, limitations, and disabled control remain distinct. |
+| `service-afcfta-trade` | `AfCFTA & African Trade Law` | 9,821 px | 1 | The single-reference evidence block is concise, and the section-navigation behavior is stable across viewports. |
+| `service-international-research` | `Legal Research & International Law Consultancy` | 9,674 px | 3 | The long title wraps correctly. Three references are retained without crowding the visible pending-status notice. |
+| `service-expert-witness` | `Expert Witness Services` | 10,296 px | 2 | The longer scope and limitation content remains readable; the evidence disclosure and booking gate are visible with no overlap. |
+| `service-legal-representation` | `Legal Representation` | 11,631 px | 3 | Longest English mobile route and longest route in every locale. It is visually orderly and overflow-free, but remains the primary content-density outlier. |
+| `service-legal-consultancy` | `Legal Consultancy` | 10,179 px | 3 | The four-locale representative review confirmed clean stacking, stable navigation, visible evidence status, and preserved gate text. |
+| `service-environmental-law` | `Environmental Law` | 10,311 px | 2 | The extended mobile content keeps a consistent rhythm; evidence, DRC relevance, and limitations remain discoverable and unclipped. |
+| `service-esg-advisory` | `Environmental, Social and Governance (ESG) Advisory` | 10,767 px | 3 | The longest English heading wraps cleanly. French desktop is the tallest desktop route but remains balanced and overflow-free. |
+
+The desktop captures preserve the two-column reading structure and action
+panel. Mobile captures use a single-column flow, accessible native evidence
+disclosures, and locally scrollable section navigation. The review found no
+visual condition that hides evidence metadata, enables a gated transaction, or
+weakens a publication warning. The remaining observation is density on the
+longest mobile pages, particularly Legal Representation, rather than a
+responsive defect.
+
+### Audit-Harness Corrections
+
+The initial audit attempt produced false failures because hash-only navigation
+does not create a new document response and because the pending notice was
+queried with the obsolete selector `.evidence-status-note`. The final run:
+
+- forced a new document response with a unique query parameter before each
+  hash route; and
+- used the rendered selector `.evidence-status-notice`.
+
+After those harness corrections, the same deployed product completed all 112
+checks with zero failures. The initial harness output is not classified as a
+site regression.
+
+### Evidence Package
+
+- Structured report:
+  `.tmp-static-review/all-service-details-public-2026-09-18/report.json`
+- Screenshot directory:
+  `.tmp-static-review/all-service-details-public-2026-09-18/`
+- Screenshot count: 112 PNG files
+- Evidence archive:
+  `.tmp-static-review/all-service-details-public-2026-09-18.zip`
+- Archive contents: 112 screenshots plus `report.json`
+- Archive SHA-256:
+  `A90DCE3EEE2C31B5F919923962B369D8BC23862297D7F249DBE9B40DC49A88A6`
+
+This matrix is technical browser and visual evidence only. It does not approve
+legal claims, identity, jurisdiction, source currentness, republication
+permission, accessibility, qualified translation, or production publication.
+Those review and sign-off gates remain separate and unchanged.
