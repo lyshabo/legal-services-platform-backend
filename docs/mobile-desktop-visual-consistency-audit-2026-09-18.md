@@ -630,3 +630,31 @@ horizontal overflow, retained the visible pending-evidence state, and used
 static desktop or sticky mobile section navigation as expected. Representative
 English/French/Simplified Chinese/Traditional Chinese desktop and mobile
 images were opened to confirm nonblank, complete rendering.
+
+### Sixteen-screenshot visual findings
+
+The full set of 16 deployed screenshots was opened and reviewed individually.
+The review covered both dense services, all four locales, and desktop and
+mobile viewports.
+
+| Service | Locale | Desktop finding | Mobile finding |
+| --- | --- | --- | --- |
+| Legal Representation | English | The two-column reading structure and right-side action panel remain balanced. Section navigation, evidence disclosure, DRC relevance, limitations, and the disabled action state are visually distinct, with no clipping or overlap. | The page resolves to a consistent single-column flow. The header, content, evidence sections, and action panel share the available width; sticky navigation remains usable without covering headings. The full-page height is 2,611 px. |
+| Legal Representation | French | Translation expansion makes the page moderately taller than English, but heading wraps, metadata spacing, and the action panel remain coherent. The full-page height is 2,038 px. | This is the longest Legal Representation capture at 2,772 px. The additional text remains readable, with no truncation, overlapping controls, or hidden evidence content. |
+| Legal Representation | Simplified Chinese | The page is compact and balanced at 1,838 px. The `zh-Hans` language value and Simplified Chinese text render correctly in the browser, and the desktop panel relationship remains intact. | The single-column layout is compact at 2,130 px. Evidence metadata, pending status, limitations, and the disabled action remain visible without horizontal overflow. |
+| Legal Representation | Traditional Chinese | The page matches the established desktop hierarchy at 1,838 px while preserving Traditional Chinese text and the `zh-Hant` language value. No malformed browser text, clipping, or control collision was observed. | The page remains compact at 2,150 px. Sticky navigation, evidence disclosure, and the full-width action panel remain aligned, with no missing content or document-level overflow. |
+| ESG Advisory | English | The two-column hierarchy is preserved at 2,042 px. The long ESG heading wraps cleanly without colliding with the section controls or action panel, and all evidence and gate elements remain visible. | The layout follows the desktop hierarchy in a full-width single column. The title and evidence sections wrap predictably, sticky navigation remains unobstructed, and the full-page height is 2,637 px. |
+| ESG Advisory | French | This is the tallest desktop capture at 2,163 px. The expanded title and body copy retain clear spacing, and the action panel remains aligned and visually separate from the reading column. | This is the tallest capture in the set at 2,823 px. Despite the additional text, no overlap, truncation, hidden evidence, or blocked control was found. |
+| ESG Advisory | Simplified Chinese | The page is compact and balanced at 1,900 px. The right-side panel, evidence disclosure, pending notice, and limitations remain clearly separated from the main content. | At 2,143 px, the page retains an efficient vertical rhythm. Sticky navigation, disclosures, and disabled actions remain visible and usable without overflow. |
+| ESG Advisory | Traditional Chinese | The desktop page remains balanced at 1,900 px, with correct Traditional Chinese rendering and consistent hierarchy, spacing, and panel alignment. | At 2,163 px, the action panel and reading column align correctly in the single-column flow. No horizontal overflow, missing evidence content, or control collision was observed. |
+
+Across the 16 screenshots, French is consistently the longest locale because
+of translation expansion, while Simplified and Traditional Chinese are the
+most compact. The responsive implementation preserves the desktop information
+hierarchy on mobile without retaining an unusable narrow two-column grid.
+Desktop navigation is static in all eight desktop captures; mobile navigation
+is sticky in all eight mobile captures. No blocking visual defect was found.
+
+These findings are technical visual evidence only. They do not resolve legal,
+identity, jurisdiction, source-currentness, republication-permission,
+accessibility, qualified-translation, or final production-publication gates.
