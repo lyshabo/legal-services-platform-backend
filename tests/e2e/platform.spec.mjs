@@ -300,6 +300,40 @@ test("service-detail anchors and evidence disclosure preserve gates", async ({ p
   }
 });
 
+test("dense service details improve mobile scanning without weakening gates", async ({ page }) => {
+  const labels = {
+    en: { onThisPage: "On this page", references: "3 references", back: "Back to service sections" },
+    fr: { onThisPage: "Sur cette page", references: "3 references", back: "Revenir aux sections du service" },
+    zh: { onThisPage: "\u672c\u9875\u5185\u5bb9", references: "3 \u9879\u53c2\u8003\u8d44\u6599", back: "\u8fd4\u56de\u670d\u52a1\u90e8\u5206" },
+    "zh-Hant": { onThisPage: "\u672c\u9801\u5167\u5bb9", references: "3 \u9805\u53c3\u8003\u8cc7\u6599", back: "\u8fd4\u56de\u670d\u52d9\u90e8\u5206" }
+  };
+  await page.setViewportSize({ width: 390, height: 844 });
+  await page.emulateMedia({ reducedMotion: "reduce" });
+  for (const serviceId of ["service-legal-representation", "service-esg-advisory"]) {
+    for (const locale of ["en", "fr", "zh", "zh-Hant"]) {
+      await page.goto(`/#/service/${serviceId}`);
+      await page.selectOption("#locale-select", locale);
+      const shell = page.locator("#service-section-navigation");
+      await expect(shell).toHaveClass(/service-detail-density/);
+      await expect(shell.locator(".service-section-nav-label")).toHaveText(labels[locale].onThisPage);
+      await expect(shell.locator("[data-service-anchor]")).toHaveCount(5);
+      expect(await shell.evaluate((element) => getComputedStyle(element).position)).toBe("sticky");
+      expect(await shell.evaluate((element) => getComputedStyle(element).top)).toBe("76px");
+      await expect(page.locator(".evidence-disclosure summary")).toContainText(labels[locale].references);
+      await expect(page.locator("[data-service-section-return]")).toHaveCount(2);
+      await expect(page.locator("[data-service-section-return]").first()).toHaveText(labels[locale].back);
+      await page.locator("[data-service-section-return]").first().scrollIntoViewIfNeeded();
+      await page.locator("[data-service-section-return]").first().click();
+      await expect(shell).toBeFocused();
+      await expect(page.locator("[data-evidence-gate=pending]")).toBeVisible();
+      await expect(page.locator("#service-drc-relevance")).toBeVisible();
+      await expect(page.locator(".gate-explanation")).toBeVisible();
+      await expect(page.locator("button[data-booking]")).toBeDisabled();
+      expect(await page.evaluate(() => document.documentElement.scrollWidth <= document.documentElement.clientWidth)).toBeTruthy();
+    }
+  }
+});
+
 test("legal compendium catalog remains gated with publication metadata and disabled purchase", async ({ page }) => {
   await page.goto("/#/home");
   await expect(page.getByRole("heading", { name: "Legal Compendiums" }).first()).toBeVisible();
