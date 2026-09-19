@@ -365,3 +365,89 @@ This matrix is technical browser and visual evidence only. It does not approve
 legal claims, identity, jurisdiction, source currentness, republication
 permission, accessibility, qualified translation, or production publication.
 Those review and sign-off gates remain separate and unchanged.
+
+## Legal Representation and ESG Advisory Density Refinement
+
+**Implementation and review date:** September 19, 2026
+**Scope:** `service-legal-representation` and `service-esg-advisory`
+**Locales:** English (`en`), French (`fr`), Simplified Chinese (`zh`), and
+Traditional Chinese (`zh-Hant`)
+**Viewports:** desktop `1440 x 1000` and mobile `390 x 844`
+
+This refinement is structural and density-focused. It does not rewrite service
+claims, remove scope limitations, alter citations, change evidence status, or
+open any booking or publication gate. The same implementation is present in
+the main repository and the browser-only `static-demo` mirror.
+
+### Implemented refinements
+
+- Added a localized “On this page” label above the five existing section
+  controls for the two dense routes.
+- Made the section-navigation shell sticky on mobile at `top: 76px`, below
+  the mobile header, while leaving desktop navigation in normal flow.
+- Tightened mobile scope-block spacing and added separators between the
+  audience, included, and excluded blocks.
+- Added a localized reference count to the existing evidence disclosure
+  summary (`3 references` in each reviewed route).
+- Added accessible “back to service sections” controls after evidence and in
+  the action panel. These controls return focus to the navigation shell and
+  preserve reduced-motion behavior.
+- Kept the pending evidence notice outside the disclosure, retained DRC
+  relevance and limitations text, and kept the booking control disabled with
+  its gate explanation visible.
+
+### Four-locale screenshot findings
+
+The refreshed evidence set is stored in
+`.tmp-static-review/density-refinements-2026-09-19/` and contains 16 PNG
+captures plus `results.json`.
+
+| Route | Locale | Desktop height | Mobile height | Overflow | Mobile nav | References | Gates |
+| --- | --- | ---: | ---: | --- | --- | ---: | --- |
+| Legal Representation | English | 1,917 px | 11,708 px | none | sticky | 3 | pending / disabled |
+| Legal Representation | French | 2,038 px | 12,933 px | none | sticky | 3 | pending / disabled |
+| Legal Representation | Simplified Chinese | 1,838 px | 10,486 px | none | sticky | 3 | pending / disabled |
+| Legal Representation | Traditional Chinese | 1,838 px | 10,558 px | none | sticky | 3 | pending / disabled |
+| ESG Advisory | English | 2,042 px | 10,844 px | none | sticky | 3 | pending / disabled |
+| ESG Advisory | French | 2,163 px | 12,481 px | none | sticky | 3 | pending / disabled |
+| ESG Advisory | Simplified Chinese | 1,900 px | 9,415 px | none | sticky | 3 | pending / disabled |
+| ESG Advisory | Traditional Chinese | 1,900 px | 9,408 px | none | sticky | 3 | pending / disabled |
+
+The desktop captures retain the two-column reading structure and action panel
+without introducing a new visual hierarchy or clipping. On mobile, the
+sticky navigation gives both long pages a persistent orientation aid; the
+scope separators make the three scope blocks easier to scan; and the return
+controls provide a keyboard- and touch-accessible way back to the section
+index. French remains the densest locale because of translation expansion,
+while the Chinese captures are more compact. Legal Representation remains
+longer than ESG Advisory in every mobile locale, but neither route shows
+page-level overflow, obscured headings, or overlapping controls.
+
+### Preservation checks
+
+All 16 results confirmed:
+
+- `evidenceStatus: "pending"` remains rendered and visible;
+- all three evidence references remain represented in the disclosure;
+- DRC relevance and limitations remain visible;
+- disabled booking controls and gate explanations remain unchanged;
+- no evidence metadata, source title, citation, permission field, or
+  publication warning was removed or rewritten; and
+- no document-level horizontal overflow was introduced.
+
+### Verification totals
+
+- Focused main density test: **1 passed, 0 failed**.
+- Focused static-demo density test: **1 passed, 0 failed**.
+- Unit suite: **18 passed, 1 skipped, 0 failed**. The live Prisma contract
+  remains skipped because live database configuration is absent.
+- Main Playwright suite: **26 passed, 1 skipped, 0 failed**. The historical
+  CV-sourcing assertion remains skipped.
+- Static-demo Playwright suite: **18 passed, 0 skipped, 0 failed**.
+- Syntax and patch checks: passed for both repositories.
+
+This section records responsive and browser evidence only. Legal claims,
+identity, jurisdiction, source currentness, republication permission,
+accessibility approval, qualified translation, and final production
+publication remain separate approval tracks and are not changed by this
+refinement.
