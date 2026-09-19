@@ -703,3 +703,91 @@ matches the deployed LF artifact exactly.
 This recheck is deployment and CDN evidence only. It does not resolve legal,
 identity, jurisdiction, source-currentness, republication-permission,
 accessibility, qualified-translation, or final production-publication gates.
+
+## Main-Repository Pages Deployment: Commit e552593
+
+**Verification date:** September 19, 2026
+**Exact main commit:** `e55259326ea87e09e2c76376318431c1fb4a8062`
+**Remote branch:** `origin/master` (exact match)
+**Workflow:** `pages-build-deployment`
+**Workflow run:** `35421575269`
+**Workflow conclusion:** `success`
+**Build job:** `105840149296` (`success`)
+**Status-report job:** `105840201190` (`success`)
+**Deploy job:** `105840201211` (`success`)
+**Deployment record:** `6537118015` (`success`)
+**Artifact:** `github-pages`, ID `10577912165`, 681,775 bytes
+**Formal artifact digest:** `sha256:d3f5c7f7adafb9aed5ac12941744cd5dabfc11460e96bcdb9448d824f80b4f3e`
+**Deployment URL:** https://lyshabo.github.io/legal-services-platform-backend/
+**Pages status:** `built`; legacy branch deployment from `master:/`; HTTPS
+enforced
+
+The public URL returned HTTP `200`. Two sequential cache-busted requests
+returned the same validator and modification time:
+
+| Request | ETag | Last-Modified | Cache-Control | Age | X-Cache | X-Cache-Hits |
+| --- | --- | --- | --- | ---: | --- | ---: |
+| 1 | `"6aae108d-46c"` | `Sat, 19 Sep 2026 04:33:17 GMT` | `max-age=600` | 0 | `MISS` | 0 |
+| 2 | `"6aae108d-46c"` | `Sat, 19 Sep 2026 04:33:17 GMT` | `max-age=600` | 2 | `HIT` | 1 |
+
+This proves that the main-repository Pages pipeline built and deployed exact
+commit `e55259326ea87e09e2c76376318431c1fb4a8062`. It is separate from the
+curated static-demo workflow and its artifact evidence.
+
+### Node.js 20 warning and safe remediation
+
+The successful build emitted this non-blocking warning:
+
+> Node.js 20 is deprecated. `actions/upload-artifact@v4` was forced to run on
+> Node.js 24.
+
+The warning originates in GitHub's generated legacy Pages/Jekyll workflow.
+The repository does not contain that generated `pages-build-deployment`
+workflow; the only checked-in workflow is the separately guarded preview
+verification workflow. Editing `preview-verification.yml` or changing its
+application Node.js version would therefore not remove this Pages warning.
+
+The safe remediation is a controlled migration from the legacy `master:/`
+Pages source to a checked-in GitHub Actions Pages workflow:
+
+1. Create a curated publish directory containing only the browser assets
+   required by the public site, including `index.html`, `app.js`, `data.js`,
+   `i18n.js`, `service-evidence.js`, `styles.css`, and the approved portrait.
+   Do not upload the repository root, server code, Prisma files, reports,
+   prompts, environment examples, test results, or temporary evidence.
+2. Add an explicit Pages workflow with `contents: read`, `pages: write`, and
+   `id-token: write`; a `github-pages` deployment environment; concurrency
+   protection; and separate build and deploy jobs.
+3. Pin the current Node.js 24-compatible official actions to immutable commits:
+   `actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1`
+   (`v7.0.1`),
+   `actions/configure-pages@45bfe0192ca1faeb007ade9deae92b16b8254a0d`
+   (`v6.0.0`),
+   `actions/upload-pages-artifact@fc324d3547104276b827a68afc52ff2a11cc49c9`
+   (`v5.0.0`), and
+   `actions/deploy-pages@368f82528645a54fb793d4d04e342629a3f51346`
+   (`v5.0.1`). The current upload-pages action internally pins
+   `actions/upload-artifact` v7, replacing the warned v4 runtime.
+4. Before changing the repository's Pages source, validate the curated
+   directory locally, run the complete browser regression suite, record the
+   file manifest and SHA-256 hashes, and inspect the uploaded artifact for
+   unexpected files.
+5. Switch Pages from legacy branch publishing to GitHub Actions only after
+   the workflow artifact is verified. Then confirm the exact workflow SHA,
+   deploy job, artifact digest, public URL, asset hashes, route behavior, and
+   CDN MISS-to-HIT propagation.
+6. Roll back to the previous source setting if the public URL, base path,
+   assets, locale routes, `noindex`, evidence metadata, disabled controls, or
+   publication gates differ from the verified legacy deployment.
+
+The separate `ubuntu-latest` notice should be addressed by testing the
+curated workflow on the announced successor image before GitHub changes the
+label. Pinning an operating-system image can reduce surprise temporarily, but
+it does not replace dependency and browser regression testing.
+
+No workflow configuration was changed during this review. The warning is a
+maintenance risk, not evidence that run `35421575269` failed.
+
+This main-repository deployment evidence does not resolve legal, identity,
+jurisdiction, source-currentness, republication-permission, accessibility,
+qualified-translation, or final production-publication gates.
