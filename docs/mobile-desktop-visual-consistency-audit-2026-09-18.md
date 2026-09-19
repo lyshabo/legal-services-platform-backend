@@ -791,3 +791,43 @@ maintenance risk, not evidence that run `35421575269` failed.
 This main-repository deployment evidence does not resolve legal, identity,
 jurisdiction, source-currentness, republication-permission, accessibility,
 qualified-translation, or final production-publication gates.
+
+## Curated Pages Validation: Legacy Source Preserved
+
+**Verification date:** September 19, 2026
+**Validation commit:** `f65e9b7ca6664f60ecd1d83906fa0295321c6357`
+**Workflow:** `Validate curated GitHub Pages artifact`
+**Workflow run:** `35422474597`
+**Workflow conclusion:** `success`
+**Build job:** `105842555338` (`success`)
+**Deploy job:** `105842578559` (`skipped`)
+**Artifact:** `github-pages`, ID `10578485017`, 408,692 bytes
+**Formal artifact digest:** `sha256:f8cfe4a360a01d77b239d6f4392eed11d897c99c8dc471763065baad5467e2ee`
+
+The validation job passed browser JavaScript syntax checks, created the
+curated allowlist, rejected symlinks, generated and verified `SHA256SUMS`, and
+uploaded the artifact. The artifact contained only the approved browser
+assets, `.nojekyll`, and the checksum manifest. No repository-root server,
+Prisma, prompt, report, environment, test-result, or temporary-evidence files
+were included.
+
+Deployment was intentionally not attempted: the manual `deploy` input was
+`false`, and the repository variable
+`ENABLE_CURATED_PAGES_DEPLOYMENT` is not configured. The active public Pages
+source therefore remains unchanged:
+
+| Pages field | Current value |
+| --- | --- |
+| Source | Legacy branch publishing |
+| Branch/path | `master:/` |
+| Pages status | `built` |
+| Public URL | https://lyshabo.github.io/legal-services-platform-backend/ |
+| HTTPS | enforced |
+
+This is artifact-validation evidence only. It does not prove a curated
+deployment, and it does not change legal, identity, jurisdiction,
+source-currentness, republication-permission, accessibility,
+qualified-translation, or final production-publication gates.
+
+See `docs/guarded-pages-source-switch-checklist-2026-09-19.md` for the
+cutover and rollback controls.
