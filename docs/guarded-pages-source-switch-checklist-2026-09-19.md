@@ -11,6 +11,25 @@ verified GitHub Actions workflow. It is fail-closed: a skipped or incomplete
 item blocks source change. The current legacy source must remain active until
 all pre-cutover checks are signed off.
 
+## Authenticated approval register
+
+No authenticated approval records were supplied in the workspace or in the
+current request. The following six role rows are therefore explicit unsigned
+records, not approvals. Replace only with authenticated details supplied by the
+authorized reviewer:
+
+| Role | Reviewer name | Authority basis | Evidence location | Review date | Decision | Sign-off date |
+| --- | --- | --- | --- | --- | --- | --- |
+| Repository owner | `Name not supplied` | `Not supplied` | `Not supplied` | `Not supplied` | `Not signed` | `Not supplied` |
+| Security reviewer | `Name not supplied` | `Not supplied` | `Not supplied` | `Not supplied` | `Not signed` | `Not supplied` |
+| CI owner | `Name not supplied` | `Not supplied` | `Not supplied` | `Not supplied` | `Not signed` | `Not supplied` |
+| Content/localization reviewer | `Name not supplied` | `Not supplied` | `Not supplied` | `Not supplied` | `Not signed` | `Not supplied` |
+| QA owner | `Name not supplied` | `Not supplied` | `Not supplied` | `Not supplied` | `Not signed` | `Not supplied` |
+| Release owner | `Name not supplied` | `Not supplied` | `Not supplied` | `Not supplied` | `Not signed` | `Not supplied` |
+
+Technical test results below do not substitute for these role-based
+approvals.
+
 ## A. Ownership and approval
 
 | ID | Check | Owner | Evidence location | Status |
@@ -38,15 +57,15 @@ all pre-cutover checks are signed off.
 | PGS-11 | Artifact digest and ID are recorded | CI owner | Digest `sha256:f8cfe4a360a01d77b239d6f4392eed11d897c99c8dc471763065baad5467e2ee`; artifact `10578485017` | `PASS` |
 | PGS-12 | Downloaded artifact contains only the approved allowlist plus `SHA256SUMS` | Security reviewer | Artifact archive and manifest | `PASS` |
 | PGS-13 | All manifest hashes recompute successfully | CI owner | Artifact `SHA256SUMS` verification | `PASS` |
-| PGS-14 | Local and artifact files preserve UTF-8, locale content, `noindex`, evidence metadata, disabled controls, and publication gates | Content and localization reviewers | Browser regression results; artifact inspection | `PENDING` |
+| PGS-14 | Local and artifact files preserve UTF-8, locale content, `noindex`, evidence metadata, disabled controls, and publication gates | Content and localization reviewers | Browser regression results; artifact inspection | `PENDING - named reviewer and sign-off absent` |
 
 ## D. Browser and public-site parity
 
 | ID | Check | Owner | Evidence location | Status |
 | --- | --- | --- | --- | --- |
-| PGS-15 | Run syntax, unit, main Playwright, and static-demo Playwright suites against the candidate commit | QA owner | CI run and test reports | `PENDING` |
-| PGS-16 | Run the full four-locale desktop/mobile route matrix | QA owner | Responsive audit; screenshot manifests | `PENDING` |
-| PGS-17 | Confirm all public links, assets, locale attributes, `noindex`, evidence disclosures, and disabled actions | QA and content reviewers | Public-browser report | `PENDING` |
+| PGS-15 | Run syntax, unit, main Playwright, and static-demo Playwright suites against the candidate commit | QA owner | Candidate commit `c8eb262`; syntax checks passed; unit `18 passed, 1 skipped, 0 failed`; main Playwright `26 passed, 1 skipped, 0 failed`; static-demo Playwright `18 passed, 0 skipped, 0 failed` | `PASS - technical evidence; QA sign-off absent` |
+| PGS-16 | Run the full four-locale desktop/mobile route matrix | QA owner | Public dense-service matrix: 16 checks, 16 passed, 0 failed, 0 timeouts; prior complete 14-service matrix: 112 passed, 0 failed | `PASS - technical evidence; QA sign-off absent` |
+| PGS-17 | Confirm all public links, assets, locale attributes, `noindex`, evidence disclosures, and disabled actions | QA and content reviewers | Main and static-demo Playwright results; public route matrix; artifact manifest and checksum verification | `PASS - technical evidence; content/QA sign-off absent` |
 | PGS-18 | Capture baseline public asset hashes, ETags, Last-Modified, Cache-Control, Age, and cache status from the legacy URL | Release owner | CDN evidence section of responsive audit | `PASS - baseline recorded` |
 
 ## E. Controlled cutover
