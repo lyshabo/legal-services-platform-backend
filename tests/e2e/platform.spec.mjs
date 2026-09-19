@@ -73,15 +73,38 @@ test("guidance presents an AI draft with explicit attorney-review boundaries", a
 });
 
 test("investment risk route preserves founder note, evidence controls, and fail-closed availability", async ({ page }) => {
-  await page.goto("/#/risk");
-  await expect(page.getByRole("heading", { name: /DRC Investment Risk & Due-Diligence/i })).toBeVisible();
+  const locales = {
+    en: { lang: "en", title: "DRC Investment Risk & Due-Diligence" },
+    fr: { lang: "fr", title: "Risque d’investissement et diligence raisonnable en RDC" },
+    zh: { lang: "zh-Hans", title: "刚果民主共和国投资风险与尽职调查" },
+    "zh-Hant": { lang: "zh-Hant", title: "剛果民主共和國投資風險與盡職調查" }
+  };
+  for (const viewport of [
+    { width: 1440, height: 1000 },
+    { width: 390, height: 844 }
+  ]) {
+    await page.setViewportSize(viewport);
+    for (const [locale, expected] of Object.entries(locales)) {
+      await page.goto("/#/home");
+      await page.selectOption("#locale-select", locale);
+      await expect(page.locator("html")).toHaveAttribute("lang", expected.lang);
+      await expect(page.locator(".founder-note")).toBeVisible();
+      await expect(page.locator('.founder-note a[href="#/risk"]')).toBeVisible();
+
+      await page.goto("/#/risk");
+      await expect(page.locator("h1")).toHaveText(expected.title);
+      await expect(page.locator(".risk-phase-list li")).toHaveCount(6);
+      await expect(page.locator(".risk-architecture button[disabled]")).toHaveCount(1);
+      expect(
+        await page.evaluate(
+          () => document.documentElement.scrollWidth <= document.documentElement.clientWidth
+        )
+      ).toBeTruthy();
+    }
+  }
+  await page.selectOption("#locale-select", "en");
   await expect(page.locator(".risk-architecture")).toContainText(/Claim.*Evidence.*Source.*Analysis.*Uncertainty/i);
   await expect(page.locator(".risk-architecture")).toContainText(/not yet available|not available/i);
-  await expect(page.locator(".risk-architecture button[disabled]")).toHaveCount(1);
-
-  await page.goto("/#/home");
-  await expect(page.locator(".founder-note")).toContainText(/fragmented legal information/i);
-  await expect(page.locator('.founder-note a[href="#/risk"]')).toBeVisible();
 });
 
 test("preliminary legal assessment exposes missing, unsupported, and attorney-approved states", async ({ page }) => {

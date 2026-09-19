@@ -82,12 +82,31 @@ export function buildAuthConfig({ adapter, env = process.env } = {}) {
 
 export const rolePermissions = Object.freeze({
   PUBLIC_USER: ["catalog.read", "guidance.start"],
-  CUSTOMER: ["catalog.read", "guidance.start", "booking.create", "order.read"],
+  CUSTOMER: [
+    "catalog.read",
+    "guidance.start",
+    "booking.create",
+    "order.read",
+    "investment.create",
+    "investment.read",
+    "investment.evidence.write"
+  ],
   SUPPORT: ["catalog.read", "booking.read", "order.read"],
   CONTENT_EDITOR: ["catalog.read", "service.write"],
   TRANSLATOR: ["catalog.read", "translation.write"],
-  LEGAL_REVIEWER: ["catalog.read", "service.approve", "knowledge.approve"],
-  AI_REVIEWER: ["ai.evaluate", "ai.issue.review"],
+  LEGAL_REVIEWER: [
+    "catalog.read",
+    "service.approve",
+    "knowledge.approve",
+    "investment.review",
+    "investment.finding.write"
+  ],
+  AI_REVIEWER: [
+    "ai.evaluate",
+    "ai.issue.review",
+    "investment.review",
+    "investment.finding.write"
+  ],
   OPERATIONS_ADMIN: ["booking.manage", "order.manage"],
   PRIVACY_ADMIN: ["privacy.manage", "audit.read"],
   PLATFORM_ADMIN: ["*"]

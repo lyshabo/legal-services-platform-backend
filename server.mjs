@@ -2,7 +2,13 @@ import { createReadStream, existsSync, statSync } from "node:fs";
 import { createServer } from "node:http";
 import { extname, join, normalize } from "node:path";
 import { fileURLToPath } from "node:url";
-import { createServiceVersion, listAuditEvents, listServiceVersions, listServices } from "./server-repository.mjs";
+import {
+  appendAudit,
+  createServiceVersion,
+  listAuditEvents,
+  listServiceVersions,
+  listServices
+} from "./server-repository.mjs";
 import {
   clearSessionCookies,
   createDevSession,
@@ -11,6 +17,7 @@ import {
   getSession,
   isValidDevKey,
   recordLogin,
+  requirePermission,
   requireRole,
   sessionCookie,
   assertAuthenticationConfiguration,
@@ -33,6 +40,17 @@ import {
   updateBookingStatus
 } from "./booking-repository.mjs";
 import { createAssessment, listAssessments, reviewAssessment } from "./assessment-repository.mjs";
+import {
+  addAssessmentEvidence,
+  addRiskFinding,
+  createInvestmentAssessment,
+  getInvestmentAssessment,
+  listInvestmentAssessments,
+  listProfessionalReviews,
+  queueProfessionalReview,
+  reviewProfessionalAssessment
+} from "./investment-assessment-repository.mjs";
+import { analyzeInvestmentAssessment } from "./claude-adapter.mjs";
 
 const root = fileURLToPath(new URL(".", import.meta.url));
 const port = Number(process.env.PORT || 4173);
@@ -122,6 +140,169 @@ async function handleApi(request, response) {
     const body = await readJson(request);
     const assessment = await createAssessment(body);
     json(response, 201, assessment);
+    return true;
+  }
+  if (request.method === "POST" && path === "/api/investment-assessments") {
+    const user = await requirePermission(request, "investment.create");
+    if (!user) {
+      json(response, 403, { error: "Customer investment-assessment permission required" });
+      return true;
+    }
+    const body = await readJson(request);
+    const assessment = await createInvestmentAssessment(body, user.id || null);
+    await appendAudit({
+      action: "investment.assessment.create",
+      actorId: user.id,
+      actorRole: user.role,
+      targetType: "InvestmentAssessment",
+      targetId: assessment.id,
+      at: new Date().toISOString()
+    });
+    json(response, 201, assessment);
+    return true;
+  }
+  const investmentMatch = path.match(/^\/api\/investment-assessments\/([^/]+)$/);
+  if (investmentMatch && request.method === "GET") {
+    const user = await getSession(request);
+    if (!user) {
+      json(response, 401, { error: "Authentication required" });
+      return true;
+    }
+    const assessment = await getInvestmentAssessment(investmentMatch[1]);
+    if (!assessment) {
+      json(response, 404, { error: "Investment assessment not found" });
+      return true;
+    }
+    const role = String(user.user?.role || user.role || "").toUpperCase();
+    const userId = user.user?.id || user.id;
+    const privileged = ["PLATFORM_ADMIN", "AI_REVIEWER", "LEGAL_REVIEWER"].includes(role);
+    if (!privileged && assessment.userId !== userId) {
+      json(response, 403, { error: "Assessment access denied" });
+      return true;
+    }
+    json(response, 200, assessment);
+    return true;
+  }
+  const investmentEvidenceMatch = path.match(/^\/api\/investment-assessments\/([^/]+)\/evidence$/);
+  if (investmentEvidenceMatch && request.method === "POST") {
+    const user = await requirePermission(request, "investment.evidence.write");
+    if (!user) {
+      json(response, 403, { error: "Assessment evidence permission required" });
+      return true;
+    }
+    const assessment = await getInvestmentAssessment(investmentEvidenceMatch[1]);
+    const role = String(user.role || "").toUpperCase();
+    if (!assessment || (assessment.userId !== user.id && role !== "PLATFORM_ADMIN")) {
+      json(response, 403, { error: "Assessment access denied" });
+      return true;
+    }
+    const evidence = await addAssessmentEvidence(investmentEvidenceMatch[1], await readJson(request));
+    await appendAudit({
+      action: "investment.evidence.create",
+      actorId: user.id,
+      actorRole: user.role,
+      targetType: "InvestmentAssessment",
+      targetId: investmentEvidenceMatch[1],
+      metadata: { evidenceId: evidence.id },
+      at: new Date().toISOString()
+    });
+    json(response, 201, evidence);
+    return true;
+  }
+  const investmentFindingMatch = path.match(/^\/api\/investment-assessments\/([^/]+)\/findings$/);
+  if (investmentFindingMatch && request.method === "POST") {
+    const reviewer = await requirePermission(request, "investment.finding.write");
+    if (!reviewer) {
+      json(response, 403, { error: "AI review permission required" });
+      return true;
+    }
+    const finding = await addRiskFinding(investmentFindingMatch[1], await readJson(request));
+    await appendAudit({
+      action: "investment.finding.create",
+      actorId: reviewer.id,
+      actorRole: reviewer.role,
+      targetType: "InvestmentAssessment",
+      targetId: investmentFindingMatch[1],
+      metadata: { findingId: finding.id },
+      at: new Date().toISOString()
+    });
+    json(response, 201, finding);
+    return true;
+  }
+  const investmentAnalyzeMatch = path.match(/^\/api\/investment-assessments\/([^/]+)\/analyze$/);
+  if (investmentAnalyzeMatch && request.method === "POST") {
+    const reviewer = await requirePermission(request, "investment.review");
+    if (!reviewer) {
+      json(response, 403, { error: "AI review permission required" });
+      return true;
+    }
+    const assessment = await getInvestmentAssessment(investmentAnalyzeMatch[1]);
+    if (!assessment) {
+      json(response, 404, { error: "Investment assessment not found" });
+      return true;
+    }
+    const result = await analyzeInvestmentAssessment(assessment);
+    const review = await queueProfessionalReview(investmentAnalyzeMatch[1], "AI_OUTPUT_REVIEW");
+    await appendAudit({
+      action: "investment.analysis.request",
+      actorId: reviewer.id,
+      actorRole: reviewer.role,
+      targetType: "InvestmentAssessment",
+      targetId: investmentAnalyzeMatch[1],
+      metadata: { resultStatus: result.status, reviewId: review?.id || null },
+      at: new Date().toISOString()
+    });
+    json(response, 200, { result, review });
+    return true;
+  }
+  if (request.method === "GET" && path === "/api/admin/investment-reviews") {
+    const reviewer = await requirePermission(request, "investment.review");
+    if (!reviewer) {
+      json(response, 403, { error: "Professional-review permission required" });
+      return true;
+    }
+    json(response, 200, { reviews: await listProfessionalReviews({ status: url.searchParams.get("status") || undefined }) });
+    return true;
+  }
+  const investmentReviewMatch = path.match(/^\/api\/admin\/investment-reviews\/([^/]+)$/);
+  if (investmentReviewMatch && request.method === "PATCH") {
+    const reviewer = await requirePermission(request, "investment.review");
+    if (!reviewer) {
+      json(response, 403, { error: "Professional-review permission required" });
+      return true;
+    }
+    const body = await readJson(request);
+    const review = await reviewProfessionalAssessment(
+      investmentReviewMatch[1],
+      reviewer.user?.id || reviewer.id,
+      body.status,
+      body.reviewNote || ""
+    );
+    if (!review) {
+      json(response, 404, { error: "Review not found or invalid status" });
+      return true;
+    }
+    await appendAudit({
+      action: "investment.review.update",
+      actorId: reviewer.id,
+      actorRole: reviewer.role,
+      targetType: "ProfessionalReview",
+      targetId: investmentReviewMatch[1],
+      metadata: { status: review.status, assessmentId: review.assessmentId },
+      at: new Date().toISOString()
+    });
+    json(response, 200, review);
+    return true;
+  }
+  if (request.method === "GET" && path === "/api/admin/investment-assessments") {
+    const reviewer = await requirePermission(request, "investment.review");
+    if (!reviewer) {
+      json(response, 403, { error: "Professional-review permission required" });
+      return true;
+    }
+    json(response, 200, {
+      assessments: await listInvestmentAssessments({ status: url.searchParams.get("status") || undefined })
+    });
     return true;
   }
   if (request.method === "GET" && path === "/api/admin/assessments") {

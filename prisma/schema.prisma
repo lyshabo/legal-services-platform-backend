@@ -59,6 +59,31 @@ enum AssessmentStatus {
   REJECTED
 }
 
+enum InvestmentAssessmentStatus {
+  DRAFT
+  SUBMITTED
+  IN_REVIEW
+  ANALYSIS_BLOCKED
+  APPROVED
+  REJECTED
+}
+
+enum EvidenceVerificationStatus {
+  CONFIRMED
+  DOCUMENTED
+  REPORTED
+  ALLEGED
+  DISPUTED
+  NOT_INDEPENDENTLY_VERIFIED
+}
+
+enum ProfessionalReviewStatus {
+  PENDING
+  IN_PROGRESS
+  APPROVED
+  REJECTED
+}
+
 model User {
   id             String       @id @default(cuid())
   email          String       @unique
@@ -75,6 +100,8 @@ model User {
   bookings       Booking[]
   submissions    QuestionnaireSubmission[]
   reviewedAssessments PreliminaryAssessment[] @relation("AssessmentReviewer")
+  investmentAssessments InvestmentAssessment[] @relation("InvestmentAssessmentOwner")
+  professionalReviews ProfessionalReview[] @relation("ProfessionalReviewReviewer")
 }
 
 model Session {
@@ -250,6 +277,98 @@ model PreliminaryAssessment {
 
   @@index([status, submittedAt])
   @@index([reviewedById, reviewedAt])
+}
+
+model InvestmentAssessment {
+  id                     String                    @id @default(cuid())
+  userId                 String?
+  projectName            String
+  company                String?
+  sector                 String?
+  province               String?
+  city                   String?
+  investmentAmount       String?
+  investmentStructure    String?
+  projectStage           String?
+  localPartners          String?
+  governmentCounterparties String?
+  ownershipInformation   String?
+  beneficialOwners       String?
+  expectedInvestmentPeriod String?
+  financingStructure     String?
+  contracts              String?
+  licences               String?
+  permits                String?
+  concessions            String?
+  diligenceScope         Json?
+  status                 InvestmentAssessmentStatus @default(DRAFT)
+  createdAt              DateTime                  @default(now())
+  updatedAt              DateTime                  @updatedAt
+  evidence               AssessmentEvidence[]
+  findings               RiskFinding[]
+  reviews                ProfessionalReview[]
+  user                   User?                     @relation("InvestmentAssessmentOwner", fields: [userId], references: [id], onDelete: SetNull)
+
+  @@index([userId, status])
+  @@index([status, updatedAt])
+}
+
+model AssessmentEvidence {
+  id                 String                    @id @default(cuid())
+  assessmentId       String
+  claim              String
+  source              String
+  url                String?
+  sourceType         String?
+  publicationDate    String?
+  eventDate          String?
+  jurisdiction       String?
+  excerpt            String?
+  reliabilityLimits String?
+  riskCategory       String?
+  verificationStatus EvidenceVerificationStatus @default(NOT_INDEPENDENTLY_VERIFIED)
+  createdAt          DateTime                  @default(now())
+  assessment         InvestmentAssessment      @relation(fields: [assessmentId], references: [id], onDelete: Cascade)
+  findings           RiskFinding[]
+
+  @@index([assessmentId, verificationStatus])
+}
+
+model RiskFinding {
+  id                   String               @id @default(cuid())
+  assessmentId         String
+  evidenceId           String?
+  category             String
+  description          String
+  likelihood           String?
+  potentialImpact      String?
+  existingControls     String?
+  controlEffectiveness String?
+  mitigation           String?
+  residualRisk         String?
+  monitoringIndicators String?
+  reviewDate           DateTime?
+  createdAt            DateTime             @default(now())
+  assessment           InvestmentAssessment @relation(fields: [assessmentId], references: [id], onDelete: Cascade)
+  evidence             AssessmentEvidence?  @relation(fields: [evidenceId], references: [id], onDelete: SetNull)
+
+  @@index([assessmentId, category])
+}
+
+model ProfessionalReview {
+  id           String               @id @default(cuid())
+  assessmentId String
+  reviewType   String
+  status       ProfessionalReviewStatus @default(PENDING)
+  reviewerId   String?
+  reviewNote   String?
+  createdAt    DateTime             @default(now())
+  reviewedAt   DateTime?
+  assessment   InvestmentAssessment @relation(fields: [assessmentId], references: [id], onDelete: Cascade)
+  reviewer     User?                @relation("ProfessionalReviewReviewer", fields: [reviewerId], references: [id], onDelete: SetNull)
+
+  @@index([status, createdAt])
+  @@index([assessmentId, reviewType])
 }
 
 model AvailabilityRule {

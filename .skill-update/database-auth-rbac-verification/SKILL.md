@@ -1405,3 +1405,44 @@ content/localization, QA, or release approvals:
    the authority basis matches the decision, the sign-off date is actual, and
    the approved commit/version matches the candidate. Preserve superseded
    records and append changes rather than rewriting history.
+
+### DOCX founder-note and DRC investment-risk integration
+
+When a founder note and a DRC investment risk / due-diligence implementation
+prompt are supplied together:
+
+1. Extract both DOCX files locally and separate founder positioning from
+   implementation requirements. Do not treat a prompt as evidence of a
+   credential, client relationship, legal authorization, provider approval,
+   or completed technical capability.
+2. Place founder positioning in the most relevant public narrative section,
+   normally Home or About, and synchronize English, French, Simplified
+   Chinese, and Traditional Chinese. Keep identity, evidence metadata,
+   noindex, disabled controls, and publication gates unchanged.
+3. Add a dedicated risk-management route only when its state is explicit:
+   investment profile, evidence register, risk categories, mitigation,
+   monitoring, report, and professional-review escalation. A browser route is
+   not a completed AI or diligence engine.
+4. Keep Claude credentials server-side. Implement a narrow adapter boundary
+   that refuses analysis unless an approved endpoint, model, API key,
+   retention policy, source policy, and professional-review gate are present.
+   Never fabricate provider output, citations, sanctions results, monitoring
+   alerts, company records, or government data.
+5. Persist investment assessments, evidence, findings, and professional-review
+   queue items through Prisma models and migrations. Include ownership checks,
+   reviewer RBAC, status transitions, auditability, and a memory fallback only
+   for explicitly gated development mode.
+6. Expose only authenticated APIs: owners may create/read their assessments;
+   AI or legal reviewers may add findings and queue analysis; approved
+   reviewers may process the professional-review queue. Cross-user access,
+   unauthenticated writes, and publication of analysis remain denied.
+7. Mirror only browser-safe route, copy, and test changes into the independent
+   static-demo repository. Never copy server, Prisma, credential, upload,
+   authentication, or confidential-submission capabilities into the mirror.
+8. Add tests for Prisma schema/migration shape, ownership and RBAC denial,
+   fail-closed Claude configuration, assessment/evidence/finding persistence,
+   professional-review status transitions, four-locale risk-route rendering,
+   and static-demo parity.
+9. Run syntax, unit, main Playwright, static-demo Playwright, and any live
+   Prisma contract suite independently. Report skipped or blocked provider
+   checks separately from passing browser evidence.
