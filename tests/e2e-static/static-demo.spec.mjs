@@ -54,6 +54,7 @@ const publicRoutes = [
   "library",
   "product/resource-drc-constitution",
   "guidance",
+  "risk",
   "about",
   "contact"
 ];
@@ -331,6 +332,28 @@ test("Home demo scope is localized and retains browser-only boundaries", async (
   }
 });
 
+test("founder note and DRC investment-risk architecture stay localized and fail closed", async ({ page }) => {
+  const titles = {
+    en: "DRC Investment Risk & Due-Diligence",
+    fr: "Risque d’investissement et diligence raisonnable en RDC",
+    zh: "刚果民主共和国投资风险与尽职调查",
+    "zh-Hant": "剛果民主共和國投資風險與盡職調查"
+  };
+  for (const locale of locales) {
+    await page.goto("/#/home");
+    await page.selectOption("#locale-select", locale);
+    await expect(page.locator(".founder-note")).toBeVisible();
+    await expect(page.locator('.founder-note a[href="#/risk"]')).toBeVisible();
+
+    await page.goto("/#/risk");
+    await expect(page.locator("h1")).toHaveText(titles[locale]);
+    await expect(page.locator(".risk-phase-list li")).toHaveCount(6);
+    await expect(page.locator(".risk-architecture button[disabled]")).toHaveCount(1);
+    await expect(page.locator(".risk-architecture")).toContainText(/Claude/);
+    await expect(page.locator(".risk-architecture .status-red")).toBeVisible();
+  }
+});
+
 for (const viewport of [
   { name: "desktop", width: 1440, height: 1000 },
   { name: "mobile", width: 390, height: 844 }
@@ -373,7 +396,7 @@ for (const viewport of [
   test(`public routes remain accessible and overflow-free on ${viewport.name}`, async ({ page }) => {
     await page.setViewportSize({ width: viewport.width, height: viewport.height });
 
-    for (const route of ["home", "services", "library", "guidance", "about"]) {
+    for (const route of ["home", "services", "library", "guidance", "risk", "about"]) {
       await page.goto(`/#/${route}`);
       await expect(page.locator("main")).toBeVisible();
       await expect(page.locator("h1")).toHaveCount(1);

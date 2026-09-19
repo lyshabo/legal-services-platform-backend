@@ -72,6 +72,18 @@ test("guidance presents an AI draft with explicit attorney-review boundaries", a
   await expect(page.getByText(/AI-generated draft for attorney verification/i)).toBeVisible();
 });
 
+test("investment risk route preserves founder note, evidence controls, and fail-closed availability", async ({ page }) => {
+  await page.goto("/#/risk");
+  await expect(page.getByRole("heading", { name: /DRC Investment Risk & Due-Diligence/i })).toBeVisible();
+  await expect(page.locator(".risk-architecture")).toContainText(/Claim.*Evidence.*Source.*Analysis.*Uncertainty/i);
+  await expect(page.locator(".risk-architecture")).toContainText(/not yet available|not available/i);
+  await expect(page.locator(".risk-architecture button[disabled]")).toHaveCount(1);
+
+  await page.goto("/#/home");
+  await expect(page.locator(".founder-note")).toContainText(/fragmented legal information/i);
+  await expect(page.locator('.founder-note a[href="#/risk"]')).toBeVisible();
+});
+
 test("preliminary legal assessment exposes missing, unsupported, and attorney-approved states", async ({ page }) => {
   await page.goto("/#/assessment");
   await page.locator("#assessment-form button[type=submit]").click();

@@ -109,6 +109,120 @@ const denseServiceDetailIds = new Set([
   "service-legal-representation",
   "service-esg-advisory"
 ]);
+const riskPlatformCopy = {
+  en: {
+    nav: "Investment risk",
+    founderTitle: "A clearer legal information layer for DRC investment decisions",
+    founderText: "The platform was created in response to the fragmented legal information investors often face when preparing financial projections and compliance decisions in the Democratic Republic of the Congo. It is intended to make relevant laws, regulations, and by-laws easier to find, compare, and discuss in the languages investors understand, while supporting more informed conversations among investors, public authorities, and local communities.",
+    founderCta: "Explore the risk-management architecture",
+    title: "DRC Investment Risk & Due-Diligence",
+    intro: "A structured, evidence-led workflow for investors evaluating actual or proposed investments in the Democratic Republic of the Congo.",
+    status: "Development architecture — not yet available for live investment assessments",
+    disclaimer: "This route describes a controlled product architecture. It does not provide investment advice, legal advice, risk scores, monitoring alerts, or a professional conclusion. No Claude analysis or external-data result is generated here.",
+    phasesTitle: "Assessment workflow",
+    phases: [
+      "Investment profile: project, sector, location, amount, structure, stage, counterparties, ownership, contracts, licences, permits, concessions, and supporting documents.",
+      "Evidence and research: every material finding follows Claim → Evidence → Source → Analysis → Uncertainty.",
+      "Claude analysis boundary: server-side model access may summarize supplied evidence only after source, scope, retention, and professional-review controls are approved.",
+      "Risk assessment: political and sovereign; legal and regulatory; tax and customs; integrity and AML/CFT; counterparty; security; financial and currency; infrastructure; environmental and social; human rights; reputational; and sector-specific risk.",
+      "Mitigation and monitoring: distinguish elimination, reduction, transfer, and acceptance, then define indicators for legislation, sanctions, litigation, ownership, security, permits, environmental incidents, communities, and infrastructure.",
+      "Report and escalation: produce an auditable source register, evidence gaps, residual-risk narrative, monitoring framework, and issues requiring review by appropriately qualified professionals."
+    ],
+    evidenceTitle: "Evidence controls",
+    evidence: [
+      "Sources must identify a URL or controlled document, source type, publication or event date, jurisdiction, excerpt or summary, reliability limits, affected category, and finding.",
+      "Unsupported allegations remain classified as reported, alleged, disputed, or not independently verified; they are not presented as facts.",
+      "Live feeds, sanctions screening, company records, government information, and Claude output require their own approved providers, credentials, retention rules, and audit trail."
+    ],
+    reviewTitle: "Professional review and availability",
+    reviewText: "The architecture supports escalation to DRC-qualified counsel, international counsel, tax advisers, sanctions and compliance specialists, financial advisers, security professionals, environmental specialists, technical experts, and independent investigators. The full assessment workflow remains disabled until those dependencies, authentication, authorization, database persistence, and publication gates are approved.",
+    cta: "Return to controlled guidance"
+  },
+  fr: {
+    nav: "Risque d’investissement",
+    founderTitle: "Une couche d’information juridique plus claire pour les décisions d’investissement en RDC",
+    founderText: "La plateforme est née de l’observation selon laquelle les investisseurs disposent souvent d’informations juridiques fragmentées pour leurs projections financières et leurs décisions de conformité en République démocratique du Congo. Elle vise à faciliter la recherche, la comparaison et la discussion des lois, règlements et textes d’application, dans les langues comprises par les investisseurs, tout en favorisant un dialogue plus éclairé avec les autorités publiques et les communautés locales.",
+    founderCta: "Découvrir l’architecture de gestion des risques",
+    title: "Risque d’investissement et diligence raisonnable en RDC",
+    intro: "Un parcours structuré et fondé sur les preuves pour les investisseurs qui évaluent un investissement réel ou envisagé en République démocratique du Congo.",
+    status: "Architecture de développement — évaluations d’investissement en direct non disponibles",
+    disclaimer: "Cette page décrit une architecture contrôlée. Elle ne fournit ni conseil en investissement, ni conseil juridique, ni score de risque, ni alerte de suivi, ni conclusion professionnelle. Aucun résultat Claude ou résultat de source externe n’est généré ici.",
+    phasesTitle: "Parcours d’évaluation",
+    phases: [
+      "Profil de l’investissement : projet, secteur, lieu, montant, structure, stade, contreparties, propriété, contrats, licences, permis, concessions et pièces justificatives.",
+      "Preuves et recherche : chaque constat important suit la séquence Affirmation → Preuve → Source → Analyse → Incertitude.",
+      "Limite de l’analyse Claude : un accès serveur au modèle pourra résumer les éléments fournis uniquement après approbation des contrôles de source, de périmètre, de conservation et de revue professionnelle.",
+      "Évaluation des risques : risques politiques et souverains, juridiques et réglementaires, fiscaux et douaniers, d’intégrité et de LBC/FT, de contrepartie, de sécurité, financiers et monétaires, d’infrastructure, environnementaux et sociaux, de droits humains, de réputation et sectoriels.",
+      "Atténuation et suivi : distinguer élimination, réduction, transfert et acceptation, puis définir les indicateurs relatifs aux lois, sanctions, contentieux, propriété, sécurité, permis, incidents environnementaux, communautés et infrastructures.",
+      "Rapport et escalade : produire un registre des sources, les lacunes probatoires, le risque résiduel, le cadre de suivi et les questions à soumettre à des professionnels qualifiés."
+    ],
+    evidenceTitle: "Contrôles des preuves",
+    evidence: [
+      "Les sources doivent indiquer une URL ou un document contrôlé, le type de source, la date de publication ou d’événement, la juridiction, un extrait ou résumé, les limites de fiabilité, la catégorie concernée et le constat.",
+      "Les allégations non étayées restent classées comme rapportées, alléguées, contestées ou non vérifiées indépendamment ; elles ne sont pas présentées comme des faits.",
+      "Les flux en direct, contrôles de sanctions, données d’entreprises, informations publiques et résultats Claude exigent chacun des fournisseurs, identifiants, règles de conservation et pistes d’audit approuvés."
+    ],
+    reviewTitle: "Revue professionnelle et disponibilité",
+    reviewText: "L’architecture prévoit une escalade vers des avocats qualifiés en RDC ou à l’international, des conseillers fiscaux, des spécialistes des sanctions et de la conformité, des conseillers financiers, des professionnels de la sécurité, de l’environnement et de la technique, ainsi que des enquêteurs indépendants. Le parcours complet reste désactivé jusqu’à l’approbation des dépendances, de l’authentification, de l’autorisation, de la persistance et des gates de publication.",
+    cta: "Retour à l’orientation contrôlée"
+  },
+  zh: {
+    nav: "投资风险",
+    founderTitle: "为刚果民主共和国投资决策提供更清晰的法律信息层",
+    founderText: "本平台源于一个观察：投资者在刚果民主共和国准备财务预测和合规决策时，常常面对分散且零碎的法律信息。平台旨在让相关法律、法规和附属规则更易于查找、比较和讨论，并以投资者理解的语言促进投资者、公共机构和当地社区之间更充分的沟通。",
+    founderCta: "查看风险管理架构",
+    title: "刚果民主共和国投资风险与尽职调查",
+    intro: "为评估在刚果民主共和国实际或拟议投资的投资者提供结构化、以证据为基础的工作流程。",
+    status: "开发架构——暂不提供实时投资评估",
+    disclaimer: "本页面说明受控的产品架构，不提供投资建议、法律建议、风险评分、监测警报或专业结论。本页面不会生成 Claude 分析或外部数据结果。",
+    phasesTitle: "评估流程",
+    phases: [
+      "投资概况：项目、行业、地点、金额、结构、阶段、交易对手、所有权、合同、许可证、许可、特许权及支持文件。",
+      "证据与研究：每项重要发现均按“主张 → 证据 → 来源 → 分析 → 不确定性”组织。",
+      "Claude 分析边界：只有在来源、范围、保留和专业审查控制获批后，服务器端模型才可对所提供证据进行摘要。",
+      "风险评估：政治与主权、法律与监管、税务与海关、诚信与反洗钱/反恐融资、交易对手、安全、金融与货币、基础设施、环境与社会、人权、声誉及行业风险。",
+      "缓释与监测：区分消除、降低、转移和接受，并为立法、制裁、诉讼、所有权、安全、许可、环境事件、社区事项和基础设施定义指标。",
+      "报告与升级：生成可审计的来源登记、证据缺口、剩余风险说明、监测框架及需要合格专业人士审查的问题。"
+    ],
+    evidenceTitle: "证据控制",
+    evidence: [
+      "来源必须标明 URL 或受控文件、来源类型、发布日期或事件日期、司法管辖区、摘录或摘要、可靠性限制、影响的风险类别及相关发现。",
+      "未经支持的指控应继续标记为“据报告”“被指称”“有争议”或“未独立核实”，不得作为事实呈现。",
+      "实时数据、制裁筛查、企业记录、政府信息和 Claude 输出均须分别配置获批提供方、凭据、保留规则和审计轨迹。"
+    ],
+    reviewTitle: "专业审查与可用性",
+    reviewText: "该架构支持升级至刚果民主共和国或国际律师、税务顾问、制裁与合规专家、金融顾问、安全专家、环境专家、技术专家及独立调查人员。完整评估流程在依赖项、身份验证、授权、数据库持久化和发布门槛获批前保持禁用。",
+    cta: "返回受控初步信息"
+  },
+  "zh-Hant": {
+    nav: "投資風險",
+    founderTitle: "為剛果民主共和國投資決策提供更清晰的法律資訊層",
+    founderText: "本平台源於一項觀察：投資者在剛果民主共和國準備財務預測及合規決策時，往往面對分散而零碎的法律資訊。平台旨在讓相關法律、法規及附屬規則更易於查找、比較及討論，並以投資者理解的語言促進投資者、公共機構及地方社群之間更充分的溝通。",
+    founderCta: "查看風險管理架構",
+    title: "剛果民主共和國投資風險與盡職調查",
+    intro: "為評估在剛果民主共和國實際或擬議投資的投資者提供結構化、以證據為基礎的工作流程。",
+    status: "開發架構——暫不提供即時投資評估",
+    disclaimer: "本頁面說明受控的產品架構，不提供投資建議、法律建議、風險評分、監測警報或專業結論。本頁面不會產生 Claude 分析或外部資料結果。",
+    phasesTitle: "評估流程",
+    phases: [
+      "投資概況：項目、行業、地點、金額、結構、階段、交易對手、所有權、合約、牌照、許可、特許權及支援文件。",
+      "證據與研究：每項重要發現均按「主張 → 證據 → 來源 → 分析 → 不確定性」組織。",
+      "Claude 分析界線：只有在來源、範圍、保留及專業審查控制獲批後，伺服器端模型才可對所提供證據進行摘要。",
+      "風險評估：政治與主權、法律與監管、稅務與海關、誠信與反洗錢／反恐融資、交易對手、安全、金融與貨幣、基礎設施、環境與社會、人權、聲譽及行業風險。",
+      "緩解與監測：區分消除、降低、轉移及接受，並為立法、制裁、訴訟、所有權、安全、許可、環境事件、社群事項及基礎設施定義指標。",
+      "報告與升級：生成可審計的來源登記、證據缺口、剩餘風險說明、監測框架及需要合資格專業人士審查的問題。"
+    ],
+    evidenceTitle: "證據控制",
+    evidence: [
+      "來源必須標明 URL 或受控文件、來源類型、發布日期或事件日期、司法管轄區、摘錄或摘要、可靠性限制、受影響風險類別及相關發現。",
+      "未經支持的指控應繼續標記為「據報告」「被指稱」「有爭議」或「未獨立核實」，不得作為事實呈現。",
+      "即時資料、制裁篩查、企業記錄、政府資訊及 Claude 輸出均須分別配置獲批提供方、憑據、保留規則及審計軌跡。"
+    ],
+    reviewTitle: "專業審查與可用性",
+    reviewText: "該架構支援升級至剛果民主共和國或國際律師、稅務顧問、制裁與合規專家、金融顧問、安全專家、環境專家、技術專家及獨立調查人員。完整評估流程在依賴項、身份驗證、授權、資料庫持久化及發布門檻獲批前保持停用。",
+    cta: "返回受控初步資訊"
+  }
+};
 
 const app = document.querySelector("#app");
 const staticDemo = document.documentElement.dataset.staticDemo === "true";
@@ -286,6 +400,7 @@ function layout(content) {
           ${navLink("services", c.nav.services)}
           ${navLink("library", c.nav.library)}
           ${navLink("guidance", c.nav.guidance)}
+          ${navLink("risk", riskPlatformCopy[state.locale].nav)}
           ${navLink("about", c.nav.about)}
           ${navLink("contact", c.nav.contact)}
           ${navLink("admin", c.nav.admin)}
@@ -329,6 +444,7 @@ function routeTitle() {
     library: c.nav.library,
     product: c.nav.library,
     guidance: c.nav.guidance,
+    risk: riskPlatformCopy[state.locale].nav,
     about: c.nav.about,
     contact: c.nav.contact,
     admin: c.nav.admin
@@ -430,7 +546,50 @@ function homeView() {
         ${c.home.process.map((item, index) => `<li><span>${String(index + 1).padStart(2, "0")}</span><p>${escapeHtml(item)}</p></li>`).join("")}
       </ol>
     </section>
+    <section class="section founder-note">
+      <div class="section-heading">
+        <p class="eyebrow">${escapeHtml(riskPlatformCopy[state.locale].founderTitle)}</p>
+        <h2>${escapeHtml(riskPlatformCopy[state.locale].founderTitle)}</h2>
+      </div>
+      <p class="profile-copy">${escapeHtml(riskPlatformCopy[state.locale].founderText)}</p>
+      <a class="text-link" href="#/risk">${escapeHtml(riskPlatformCopy[state.locale].founderCta)}${icon("arrow")}</a>
+    </section>
   `;
+}
+
+function riskView() {
+  const c = riskPlatformCopy[state.locale];
+  return pageIntro(
+    c.title,
+    c.intro,
+    `
+      <section class="section compact-top risk-architecture">
+        <div class="readiness-strip" aria-label="${escapeHtml(c.status)}">
+          <strong class="status-red">${escapeHtml(c.status)}</strong>
+          <span>${escapeHtml(c.disclaimer)}</span>
+        </div>
+        <div class="section-heading">
+          <p class="eyebrow">${escapeHtml(c.phasesTitle)}</p>
+          <h2>${escapeHtml(c.phasesTitle)}</h2>
+        </div>
+        <ol class="process-list risk-phase-list">
+          ${c.phases.map((item, index) => `<li><span>${String(index + 1).padStart(2, "0")}</span><p>${escapeHtml(item)}</p></li>`).join("")}
+        </ol>
+        <div class="detail-layout risk-detail-grid">
+          <article class="detail-content">
+            <h2>${escapeHtml(c.evidenceTitle)}</h2>
+            <ul class="guidance-structure">${c.evidence.map((item) => `<li>${escapeHtml(item)}</li>`).join("")}</ul>
+          </article>
+          <aside class="action-panel">
+            <h2>${escapeHtml(c.reviewTitle)}</h2>
+            <p>${escapeHtml(c.reviewText)}</p>
+            <button class="button button-primary" type="button" disabled>${icon("lock")}${escapeHtml(c.status)}</button>
+          </aside>
+        </div>
+        <a class="text-link" href="#/guidance">${escapeHtml(c.cta)}${icon("arrow")}</a>
+      </section>
+    `
+  );
 }
 
 function pathCard(iconName, title, text, route) {
@@ -1403,6 +1562,7 @@ function render() {
     library: libraryView,
     product: () => productDetailView(state.route.id),
     guidance: guidanceView,
+    risk: riskView,
     assessment: assessmentView,
     about: aboutView,
     contact: contactView,
@@ -1950,5 +2110,5 @@ if (!window.location.hash) window.location.hash = "#/home";
 render();
 refreshServerState().then(() => {
   // Avoid replacing an active intake form while a user is entering guidance.
-  if (!document.querySelector("#guidance-form")) render();
+  if (!document.querySelector("#guidance-form") && !document.querySelector("#assessment-form")) render();
 });
