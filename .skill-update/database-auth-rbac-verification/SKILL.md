@@ -1446,3 +1446,51 @@ prompt are supplied together:
 9. Run syntax, unit, main Playwright, static-demo Playwright, and any live
    Prisma contract suite independently. Report skipped or blocked provider
    checks separately from passing browser evidence.
+
+### Claude server-side configuration and deployment requirement
+
+When the Claude adapter is refusing execution or a server-side configuration
+DOCX is supplied:
+
+1. Read the adapter implementation first. Use its actual environment-variable
+   contract; do not invent aliases or silently rename existing variables.
+   Record the enablement flag, API-key name, model, token limit, timeout,
+   endpoint/base URL, environment mode, risk-engine flag, and approval
+   conditions.
+2. Preserve the trust boundary:
+   `browser -> existing backend -> Claude adapter -> Anthropic API`.
+   The Anthropic credential must remain server-side and must never appear in
+   browser JavaScript, HTML, public configuration, client bundles, source
+   control, screenshots, or test output.
+3. Keep the adapter disabled unless every required secret, model, endpoint,
+   environment, authorization, retention, source-policy, and professional-
+   review condition is valid. Return a clear structured configuration error
+   such as `Claude analysis unavailable - server-side configuration is
+   incomplete`; never simulate output, fabricate sources, or mark an
+   assessment AI-reviewed.
+4. Expose only a non-secret diagnostic status through an authenticated
+   administrative health check. It may report enabled/disabled, credential
+   present, model present, adapter initialized, connectivity state, last
+   successful request timestamp, and sanitized configuration errors. It must
+   never return a key, token, request body, confidential document, or raw
+   provider response.
+5. Enforce production controls at the backend boundary: authentication,
+   reviewer authorization, request-schema validation, maximum request/document
+   size, maximum output tokens, request timeout, bounded retries, rate limits,
+   user/project usage limits, structured redacted logging, and usage/cost
+   monitoring. Do not log full investment documents unless explicitly needed.
+6. Separate provider evidence into three states:
+   `NOT_CONFIGURED`, `CONFIGURED_CONNECTIVITY_FAILED`, and
+   `CLAUDE_EXECUTED`. A configured key without a successful authenticated
+   request is not operational evidence and cannot close an AI or publication
+   gate.
+7. Prefer an approved server or serverless runtime with secret injection
+   (for example Cloud Run or another approved target). Do not describe a
+   provider's free infrastructure allowance as free Anthropic inference.
+   Record deployment target, secret scope, authorization owner, and rollback
+   evidence separately from browser and database evidence.
+8. Run the end-to-end path only with approved secrets:
+   investment assessment -> backend -> adapter -> provider -> structured
+   analysis -> evidence/findings -> review queue -> saved assessment.
+   Mark the live track `BLOCKED` when any required secret, provider approval,
+   network path, database, reviewer gate, or cost control is absent.
