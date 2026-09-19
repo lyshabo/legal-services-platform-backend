@@ -531,3 +531,69 @@ This checkpoint is deployment, browser, and CDN evidence only. It does not
 approve legal claims, identity, jurisdiction, source currentness,
 republication permission, accessibility, qualified translation, or final
 production publication.
+
+## Responsive Mobile Parity Follow-up: Pages Run 35419958986
+
+**Verification date:** September 19, 2026
+**Exact static-demo commit:** `e59879286113b20c61cd8e3c98d51667e197af3b`
+**Remote branch:** `origin/main`
+**Workflow:** Deploy static demo to GitHub Pages
+**Workflow conclusion:** `success`
+**Deploy job:** `105835628738` (`success`)
+**Artifact:** `github-pages`, ID `10576812052`, 402,578 bytes
+**Formal artifact digest:** `sha256:1f5e2875595d6c8d1305af8bf11446b47cd5c2aca66c596a7d94f4ad02c99a97`
+**Deployment URL:** https://legal-services-platform.github.io/legal-services-platform-static-demo-20260828/
+**Pages status:** `built`; workflow deployment path; HTTPS enforced
+
+### Deployed CSS parity
+
+The deployed `styles.css` was fetched from the public URL and compared with
+the exact `static-demo` commit. Both files produced:
+
+`sha256:848b5d665f18a0744ed4d0332f882d1695a80a5da9b62cc26fa57dd1b7f1c576`
+
+The deployed stylesheet contains the effective mobile override
+`grid-template-columns: 1fr`, confirming that the later desktop grid rule no
+longer overrides the mobile cascade.
+
+### CDN headers
+
+Two sequential requests to the deployed stylesheet returned HTTP `200` and
+the same validator:
+
+| Request | ETag | Last-Modified | Cache-Control | Age | X-Cache | X-Cache-Hits |
+| --- | --- | --- | --- | ---: | --- | ---: |
+| 1 | `"6aae0806-badf"` | `Sat, 19 Sep 2026 03:56:54 GMT` | `max-age=600` | 17 | `HIT` | 1 |
+| 2 | `"6aae0806-badf"` | `Sat, 19 Sep 2026 03:56:54 GMT` | `max-age=600` | 20 | `HIT` | 1 |
+
+Both responses also reported `x-proxy-cache: MISS`; the edge cache
+classification was `X-Cache: HIT` with stable ETag and modification time.
+
+### Fresh public-browser dense-service matrix
+
+The public deployment was rechecked after the responsive commit using
+cache-busting query parameters and the standards-correct locale mapping
+(`zh` renders as `zh-Hans`). The matrix covered:
+
+- `service-legal-representation`
+- `service-esg-advisory`
+- English, French, Simplified Chinese, and Traditional Chinese
+- desktop `1440 x 1000` and mobile `390 x 844`
+
+| Scope | Checks | Passed | Failed | Timeouts |
+| --- | ---: | ---: | ---: | ---: |
+| Legal Representation | 8 | 8 | 0 | 0 |
+| ESG Advisory | 8 | 8 | 0 | 0 |
+| **Total** | **16** | **16** | **0** | **0** |
+
+Every check returned HTTP `200`, the expected localized heading and
+`<html lang>` value, five section anchors, three evidence references, visible
+pending and gate notices, a disabled booking control, and no horizontal
+overflow. Desktop navigation remained static. Mobile navigation remained
+sticky; the resolved mobile grid had one column and the detail, header, and
+action-panel widths matched within one pixel.
+
+This follow-up records implementation, deployment, browser, and CDN evidence
+only. It does not change legal, identity, jurisdiction, source-currentness,
+republication-permission, accessibility, qualified-translation, or final
+production-publication gates.
