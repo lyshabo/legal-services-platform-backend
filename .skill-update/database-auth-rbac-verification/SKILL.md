@@ -1369,3 +1369,39 @@ directory, add a validation-first workflow before changing the active source:
 9. Preserve the historical legacy deployment evidence and append each
    validation or cutover checkpoint to the audit; never overwrite earlier
    evidence with later state.
+
+### Authenticated approval register and QA gate closure
+
+When a Pages source-switch checklist requests owner, security, CI,
+content/localization, QA, or release approvals:
+
+1. Require one authenticated record per role with reviewer name, authority or
+   qualification basis, evidence location, review date, decision, and actual
+   sign-off date. A role label, proposed owner, user assertion, or automated
+   test result is not an authenticated approval.
+2. Keep missing records explicit as `Name not supplied`, `Not supplied`, and
+   `Not signed`. Do not replace them with inferred identities, repository
+   permissions, commit authors, or the person running the workflow.
+3. Map the records to the checklist IDs. Repository-owner records are required
+   for public URL, allowlist, source-change, change-window, and rollback
+   decisions; security records for artifact boundaries and permissions; CI
+   records for action pins and runner policy; content/localization records for
+   UTF-8, locale, evidence, `noindex`, disabled-control, and gate parity; QA
+   records for automated and browser matrices; and release records for CDN
+   baselines, deployment execution, and rollback authority.
+4. Record technical QA separately from human approval. Capture syntax, unit,
+   main Playwright, static-demo Playwright, route-matrix, artifact, and CDN
+   totals with exact commit and environment. A passing result may satisfy the
+   evidence column but cannot populate reviewer, authority, decision, or
+   sign-off fields.
+5. Mark PGS-14 pending until named content/localization reviewers approve
+   locale content, evidence metadata, `noindex`, disabled controls, and
+   publication gates. Mark PGS-15 through PGS-17 as technical pass only until
+   the named QA/content reviewers sign.
+6. Do not enable the deployment variable, dispatch with `deploy=true`, change
+   the Pages source, or remove the legacy path while any PGS-01 through PGS-18
+   record is unsigned or any technical result is unexplained.
+7. When records are supplied, verify the evidence location is reproducible,
+   the authority basis matches the decision, the sign-off date is actual, and
+   the approved commit/version matches the candidate. Preserve superseded
+   records and append changes rather than rewriting history.

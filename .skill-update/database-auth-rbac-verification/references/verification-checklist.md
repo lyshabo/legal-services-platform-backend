@@ -362,3 +362,35 @@
       cache failure, and duplicate legacy/Actions deployment paths.
 - [ ] Historical legacy evidence is preserved; each validation and cutover
       checkpoint is appended rather than rewritten.
+
+## Authenticated approval register and QA gate closure
+
+- [ ] One authenticated record exists for repository owner, security reviewer,
+      CI owner, content/localization reviewer, QA owner, and release owner.
+- [ ] Each record contains reviewer name, authority or qualification basis,
+      evidence location, review date, decision, and actual sign-off date.
+- [ ] Missing records remain `Name not supplied`, `Not supplied`, and
+      `Not signed`; commit authors, role labels, and automated results are not
+      treated as approvals.
+- [ ] Repository-owner records cover public URL, allowlist, source change,
+      change window, operator, reviewer, and rollback authority.
+- [ ] Security records cover artifact boundary, permissions, immutable pins,
+      and exclusion of server, Prisma, secret, prompt, report, test, and
+      temporary files.
+- [ ] CI records cover runner, Node.js/action runtime, concurrency, artifact
+      creation, and checksum evidence.
+- [ ] Content/localization records cover UTF-8, all four locales, evidence
+      metadata, `noindex`, disabled controls, disclaimers, and publication
+      gates.
+- [ ] QA records cover syntax, unit, main Playwright, static-demo Playwright,
+      and the full four-locale desktop/mobile route matrix with exact totals.
+- [ ] Release records cover CDN baseline, deployment execution, public URL,
+      rollback authority, and post-deploy verification.
+- [ ] PGS-14 remains pending without named content/localization sign-off.
+- [ ] PGS-15 through PGS-17 may record technical passes but remain unsigned
+      until the named QA/content reviewers sign.
+- [ ] No deployment variable, `deploy=true` dispatch, Pages source change, or
+      legacy-path removal occurs while PGS-01 through PGS-18 is unsigned or
+      technically unexplained.
+- [ ] Supplied records are checked for reproducible evidence, matching
+      authority, actual dates, and approved commit/version before status changes.
