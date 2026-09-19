@@ -302,3 +302,63 @@
 - [ ] Evidence review artifact is registered separately from code commits.
 - [ ] Legal, jurisdiction, source, and qualified-translation approvals remain
       independent of automated test results.
+
+## Dense mobile service-detail parity
+
+- [ ] Affected route IDs and before/after screenshots are recorded in English,
+      French, Simplified Chinese, and Traditional Chinese at desktop/mobile
+      sizes, with page heights and overflow state.
+- [ ] Dense-route navigation is localized, sticky below the mobile header,
+      keyboard focusable, reduced-motion aware, and static on desktop.
+- [ ] The full CSS cascade has been inspected at the target viewport:
+      later desktop rules do not override mobile grid/flex/width/position
+      declarations; effective computed styles are asserted in the browser.
+- [ ] Scope spacing and dividers improve scanning without reducing reading
+      size or concealing translation expansion.
+- [ ] Evidence summaries include the correct reference count; native
+      disclosure preserves citations and complete evidence metadata.
+- [ ] Pending evidence, DRC relevance, limitations, disabled actions, gate
+      explanations, `noindex`, and publication controls remain visible or
+      otherwise unchanged as appropriate.
+- [ ] Main and mirror route tests assert all four locales, five targets,
+      reference count, return focus, sticky offset, and zero overflow.
+- [ ] Syntax, unit, main browser, and static-demo browser totals are recorded
+      separately; live database skips are not misreported as passes.
+- [ ] Main implementation/tests, static-demo implementation, and append-only
+      responsive audit have separate exact-path staged lists and commits.
+- [ ] Playwright asserts mobile/desktop parity for the rendered heading
+      hierarchy, detail layout width, action-panel width, computed mobile
+      column count, and horizontal-overflow state in all four locales.
+- [ ] When published, remote SHAs, exact-commit Pages run, deploy job,
+      artifact ID/formal digest, public asset parity, and repeat CDN headers
+      are recorded separately from legal and production approvals.
+
+## Curated Pages and legacy-source preservation
+
+- [ ] The curated publish directory is built from an explicit browser-asset
+      allowlist and excludes server, Prisma, secret, prompt, report, test,
+      temporary, and unrelated files.
+- [ ] Symlinks and unexpected files are rejected; a generated `SHA256SUMS`
+      manifest is included and recomputed successfully.
+- [ ] Official Pages actions are pinned to immutable commit SHAs with release
+      annotations; the selected actions use the supported Node.js runtime.
+- [ ] Build permissions are limited to `contents: read`; deploy permissions are
+      isolated to the deploy job with `pages: write` and `id-token: write`.
+- [ ] Deployment requires an explicit manual input plus a separately approved
+      repository or environment variable.
+- [ ] A deployment-disabled run records workflow conclusion, build conclusion,
+      skipped deploy conclusion, artifact ID, byte size, and formal digest.
+- [ ] GitHub Pages still reports the legacy branch/path and unchanged public URL
+      after validation; an uploaded artifact is not called deployed.
+- [ ] Owner approvals exist for public URL, allowlist, security permissions,
+      source change, change window, operator, reviewer, and rollback authority.
+- [ ] Browser, locale, `noindex`, evidence, disabled-control, publication-gate,
+      and CDN baseline checks pass before source cutover.
+- [ ] Cutover evidence records exact workflow/deploy conclusions, deployment
+      record, artifact digest, public asset hashes, route matrix, and two
+      sequential CDN requests with validators and cache status.
+- [ ] Rollback triggers cover artifact drift, route or locale regression,
+      missing evidence metadata, enabled gated actions, URL/validator mismatch,
+      cache failure, and duplicate legacy/Actions deployment paths.
+- [ ] Historical legacy evidence is preserved; each validation and cutover
+      checkpoint is appended rather than rewritten.

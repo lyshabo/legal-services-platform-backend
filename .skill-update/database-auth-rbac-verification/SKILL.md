@@ -5,6 +5,45 @@ description: Repeatable full-stack verification workflow for environment-variabl
 
 # Database Auth Rbac Verification
 
+## Public-site comparison, responsive evidence, and approval gating
+
+Apply this read-only workflow when comparing a deployed browser-only site with
+local main and static-demo files before publication:
+
+1. Record the public URL, local commits, configured remotes, and repository
+   boundaries. Do not push, deploy, dispatch Pages, or modify unrelated files.
+2. Compare deployed assets with static-demo `HEAD` blobs using normalized
+   UTF-8/line-ending content and Git object hashes. Separate intentional
+   main-versus-mirror differences from unpublished static-demo changes; do not
+   classify CRLF/LF normalization as an application difference.
+3. Run every public route in every supported locale at representative desktop
+   and mobile viewports. Record shell status, `h1`, `<html lang>`, selected
+   locale, `noindex`, overflow, broken images, page/console errors, disabled
+   transactional controls, and browser-only boundaries.
+4. Enumerate rendered HTTP(S) links and assets. Check status, final URL,
+   content type, and redirects. Capture Pages `ETag`, `Last-Modified`,
+   `Cache-Control`, `Age`, cache status, and hit counts.
+5. When an evidence URL returns `404`, DNS failure, automated `403`, or cannot
+   be independently validated, remove its rendered hyperlink rather than
+   substituting an unverified URL. Preserve the citation, source title,
+   identity-match status, and publication-permission gate as pending.
+6. Prepare a publication checklist in the requested language. Assign
+   role-based action owners when authenticated names are unavailable and give
+   a reproducible evidence location, action, decision, review date, sign-off
+   date, and blocking effect for every approval row.
+7. Keep publication fail closed until legal claims, identity, jurisdiction,
+   qualified translation, privacy, security, AI, commerce, provider,
+   image-rights, accessibility, source-currentness, and publication approvals
+   are signed. A passing browser audit or CDN response is technical evidence,
+   not human approval.
+8. Re-run the local corrected mirror and the unchanged public deployment
+   separately. State explicitly that local fixes are unpublished until an
+   approved push, Pages run, exact artifact, and public content check prove
+   deployment.
+9. Produce a focused synchronization plan for Home, Legal Library, Guidance,
+   Booking, and multilingual About differences. Identify the source of truth,
+   owner, evidence, locale review, tests, and stop condition for each section.
+
 ## Latest Auth.js and secret-channel controls
 
 Apply these additional checks whenever the repository implements Auth.js,
@@ -1239,3 +1278,94 @@ experience, founding, or investor-advisory claims:
     static-demo Playwright suite. Report live database skips separately from
     ordinary failures and stop publication if identity parity, locale parity,
     noindex, evidence controls, or browser assertions fail.
+
+### Dense mobile service details and mirrored responsive evidence
+
+When long legal-service pages need mobile density refinements:
+
+1. Identify the affected service IDs and capture a baseline in `en`, `fr`,
+   `zh`, and `zh-Hant` at desktop and mobile sizes. Record route, heading,
+   page height, clipping, scroll behavior, evidence count, and gate state.
+2. Scope layout changes to the affected routes. Provide a localized section
+   index, sticky below the actual mobile header, compact scope spacing and
+   separators, an accessible return control, and a reference count in the
+   existing native evidence disclosure. Do not shrink reading text to absorb
+   translation expansion.
+   Before changing selectors, inspect the complete CSS cascade at the target
+   viewport. Check later desktop rules, media-query order, grid/flex
+   declarations, min/max widths, box sizing, and inherited positioning so a
+   desktop declaration cannot silently override the mobile override. Add a
+   browser assertion for the effective computed layout (for example, one
+   mobile grid column and equal content/action widths) rather than relying on
+   source-order inspection alone.
+3. Preserve all service copy, source metadata, citations, DRC relevance,
+   limitations, pending evidence notices outside the disclosure, disabled
+   transactions, gate explanations, `noindex`, and publication controls.
+   Test keyboard focus and reduced-motion behavior for return controls.
+4. Mirror only the browser-side changes into the independent static-demo
+   repository. Assert the affected routes in each locale for localized
+   labels, five section targets, sticky mobile offset, reference counts,
+   focus return, visible gate text, disabled actions, and zero horizontal
+   overflow. Keep desktop navigation in normal flow. Assert mobile/desktop
+   parity for the rendered heading hierarchy, detail-column widths, action
+   panel width, and viewport overflow after all CSS rules have resolved.
+5. Capture a named 2-route x 4-locale x 2-viewport screenshot matrix and
+   inspect desktop and mobile separately. Append dated findings, page-height
+   measurements, screenshot paths, test totals, and outstanding refinements
+   to the responsive audit without overwriting historical evidence.
+6. Run syntax, unit, main Playwright, and static-demo Playwright suites. Stage
+   exact implementation and test paths in a main commit; stage browser-only
+   mirror paths in a separate static-demo commit; stage the responsive audit
+   alone in a focused documentation commit. Verify cached file lists and
+   leave unrelated modifications and generated images out of commits. Treat a
+   failed computed-style parity assertion as a layout defect even when the
+   page is technically usable; fix the cascade and rerun the focused test
+   before the complete suites.
+7. If publication is approved, push each branch and check exact remote SHAs.
+   Tie Pages workflow conclusion, deploy job, artifact ID and formal digest,
+   deployment URL, deployed asset hashes, and repeat CDN headers to the
+   exact static-demo commit. Public deployment evidence does not resolve
+   legal, jurisdictional, rights, accessibility, qualified-translation, or
+   production-publication approvals.
+
+### Curated Pages validation and guarded source switching
+
+When a repository still publishes GitHub Pages from a legacy branch or
+directory, add a validation-first workflow before changing the active source:
+
+1. Create a curated publish directory from an explicit browser-asset allowlist.
+   Exclude server code, Prisma files, secrets, prompts, reports, test output,
+   temporary evidence, and unrelated repository files. Include a generated
+   checksum manifest and reject symlinks or unexpected files.
+2. Pin `actions/checkout`, `actions/configure-pages`,
+   `actions/upload-pages-artifact`, and `actions/deploy-pages` to immutable
+   commit SHAs. Prefer current official actions whose runtime is compatible
+   with the supported Node.js version; record the release tag beside each SHA.
+3. Give the build job only `contents: read`. Scope `pages: write` and
+   `id-token: write` to the deployment job and protect the job with both an
+   explicit manual deploy input and a separately configured repository or
+   environment approval variable.
+4. Run the build with deployment disabled first. Verify JavaScript syntax,
+   artifact file boundaries, SHA-256 manifest recomputation, browser suites,
+   locale behavior, `noindex`, evidence metadata, disabled controls, and
+   publication gates. Record the workflow run, build job, skipped deploy job,
+   artifact ID, byte size, and API-provided `sha256:` digest.
+5. Confirm GitHub Pages still reports the legacy source and public URL after
+   validation. Do not describe an uploaded artifact as deployed. Keep the
+   legacy source unchanged until an authenticated owner approves the switch.
+6. Before cutover, obtain explicit approval for repository/public URL,
+   allowlist, security permissions, source change, change window, operator,
+   reviewer, and rollback authority. Keep legal, identity, source-currentness,
+   republication-permission, accessibility, qualified-translation, and
+   production-publication decisions separate.
+7. At cutover, enable the deployment gate, dispatch with deploy enabled, and
+   change Pages to GitHub Actions only after the artifact is approved. Verify
+   the exact workflow and deploy conclusions, deployment record, public URL,
+   artifact digest, asset hashes, route matrix, and two-request CDN behavior.
+8. Roll back immediately if the artifact, route, locale, `noindex`, evidence
+   disclosure, disabled action, publication warning, URL, validator, or cache
+   behavior differs from the approved legacy baseline, or if both legacy and
+   Actions paths remain active.
+9. Preserve the historical legacy deployment evidence and append each
+   validation or cutover checkpoint to the audit; never overwrite earlier
+   evidence with later state.
