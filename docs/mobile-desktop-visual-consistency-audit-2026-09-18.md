@@ -597,3 +597,36 @@ This follow-up records implementation, deployment, browser, and CDN evidence
 only. It does not change legal, identity, jurisdiction, source-currentness,
 republication-permission, accessibility, qualified-translation, or final
 production-publication gates.
+
+### Fresh public screenshot paths
+
+Sixteen full-page screenshots were captured from the deployed static-demo
+commit `e59879286113b20c61cd8e3c98d51667e197af3b` on September 19, 2026.
+The capture manifest is:
+
+`.tmp-static-review/public-dense-screenshots-2026-09-19/manifest.json`
+
+| Service | Locale | Viewport | Screenshot |
+| --- | --- | --- | --- |
+| Legal Representation | English | desktop | `.tmp-static-review/public-dense-screenshots-2026-09-19/service-legal-representation--en--desktop.png` |
+| Legal Representation | English | mobile | `.tmp-static-review/public-dense-screenshots-2026-09-19/service-legal-representation--en--mobile.png` |
+| Legal Representation | French | desktop | `.tmp-static-review/public-dense-screenshots-2026-09-19/service-legal-representation--fr--desktop.png` |
+| Legal Representation | French | mobile | `.tmp-static-review/public-dense-screenshots-2026-09-19/service-legal-representation--fr--mobile.png` |
+| Legal Representation | Simplified Chinese | desktop | `.tmp-static-review/public-dense-screenshots-2026-09-19/service-legal-representation--zh--desktop.png` |
+| Legal Representation | Simplified Chinese | mobile | `.tmp-static-review/public-dense-screenshots-2026-09-19/service-legal-representation--zh--mobile.png` |
+| Legal Representation | Traditional Chinese | desktop | `.tmp-static-review/public-dense-screenshots-2026-09-19/service-legal-representation--zh-Hant--desktop.png` |
+| Legal Representation | Traditional Chinese | mobile | `.tmp-static-review/public-dense-screenshots-2026-09-19/service-legal-representation--zh-Hant--mobile.png` |
+| ESG Advisory | English | desktop | `.tmp-static-review/public-dense-screenshots-2026-09-19/service-esg-advisory--en--desktop.png` |
+| ESG Advisory | English | mobile | `.tmp-static-review/public-dense-screenshots-2026-09-19/service-esg-advisory--en--mobile.png` |
+| ESG Advisory | French | desktop | `.tmp-static-review/public-dense-screenshots-2026-09-19/service-esg-advisory--fr--desktop.png` |
+| ESG Advisory | French | mobile | `.tmp-static-review/public-dense-screenshots-2026-09-19/service-esg-advisory--fr--mobile.png` |
+| ESG Advisory | Simplified Chinese | desktop | `.tmp-static-review/public-dense-screenshots-2026-09-19/service-esg-advisory--zh--desktop.png` |
+| ESG Advisory | Simplified Chinese | mobile | `.tmp-static-review/public-dense-screenshots-2026-09-19/service-esg-advisory--zh--mobile.png` |
+| ESG Advisory | Traditional Chinese | desktop | `.tmp-static-review/public-dense-screenshots-2026-09-19/service-esg-advisory--zh-Hant--desktop.png` |
+| ESG Advisory | Traditional Chinese | mobile | `.tmp-static-review/public-dense-screenshots-2026-09-19/service-esg-advisory--zh-Hant--mobile.png` |
+
+All 16 captures returned HTTP `200`, rendered without document-level
+horizontal overflow, retained the visible pending-evidence state, and used
+static desktop or sticky mobile section navigation as expected. Representative
+English/French/Simplified Chinese/Traditional Chinese desktop and mobile
+images were opened to confirm nonblank, complete rendering.
