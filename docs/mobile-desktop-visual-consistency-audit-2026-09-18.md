@@ -451,3 +451,83 @@ identity, jurisdiction, source currentness, republication permission,
 accessibility approval, qualified translation, and final production
 publication remain separate approval tracks and are not changed by this
 refinement.
+
+## Public Dense-Service Verification: Pages Run 35416079826
+
+**Verification date:** September 19, 2026
+**Exact static-demo commit:** `0988835c93d6c73be47eef22dfe7db12bee31abc`
+**Remote branch:** `origin/main`
+**Workflow:** Deploy static demo to GitHub Pages
+**Workflow conclusion:** `success`
+**Deploy job:** `105824914774` (`success`)
+**Deployment record:** `6536222797` (`success`)
+**Artifact:** `github-pages`, ID `10576595101`, 402,502 bytes
+**Formal artifact digest:** `sha256:c39466d74f988aed271bae956e1b88bfaff926540398f42880e3138cc31b398e`
+**Deployment URL:** https://legal-services-platform.github.io/legal-services-platform-static-demo-20260828/
+**Pages status:** `built`; workflow deployment path; HTTPS enforced
+
+### Public asset parity
+
+The deployed shell and required assets were fetched from the deployment URL
+and compared with normalized UTF-8 copies from the exact static-demo commit:
+
+| Asset | HTTP | Content type | Bytes | Public SHA-256 | Local parity |
+| --- | ---: | --- | ---: | --- | --- |
+| `index.html` | 200 | `text/html; charset=utf-8` | 1,243 | `8b11840fb51a01f3ebc89a23e4c546cee6550ebe3d51ea549e88af7ad0c19bee` | yes |
+| `app.js` | 200 | `application/javascript; charset=utf-8` | 102,956 | `ed1c3d839daa0b8b7e8aaf55185ffef4a94e389b3d7a5e1ed4615d870dd74779` | yes |
+| `styles.css` | 200 | `text/css; charset=utf-8` | 47,307 | `10e575548d19cc99abc8f9d2ce2c5035f827eb9d0aaafd551183afb8c00b0f91` | yes |
+
+### CDN headers
+
+Two sequential requests were made for each required public asset. The first
+request was a cache miss; the second returned the same validator and a cache
+hit:
+
+| Asset | ETag | Last-Modified | Cache-Control | Request 1 | Request 2 |
+| --- | --- | --- | --- | --- | --- |
+| `index.html` | `"6aadf4de-4db"` | `Sat, 19 Sep 2026 02:35:10 GMT` | `max-age=600` | `Age: 0`, `X-Cache: MISS`, hits `0` | `Age: 4`, `X-Cache: HIT`, hits `1` |
+| `app.js` | `"6aadf4de-1922c"` | `Sat, 19 Sep 2026 02:35:10 GMT` | `max-age=600` | `Age: 0`, `X-Cache: MISS`, hits `0` | `Age: 3`, `X-Cache: HIT`, hits `1` |
+| `styles.css` | `"6aadf4de-b8cb"` | `Sat, 19 Sep 2026 02:35:10 GMT` | `max-age=600` | `Age: 0`, `X-Cache: MISS`, hits `0` | `Age: 3`, `X-Cache: HIT`, hits `1` |
+
+### Live public route matrix
+
+The corrected public-browser matrix covered both dense routes, all four
+locales, and desktop/mobile viewports:
+
+| Route | Locales | Viewports | Checks | Passed | Failed | Timeouts |
+| --- | --- | --- | ---: | ---: | ---: | ---: |
+| Legal Representation | `en`, `fr`, `zh`, `zh-Hant` | 1440 x 1000; 390 x 844 | 8 | 8 | 0 | 0 |
+| ESG Advisory | `en`, `fr`, `zh`, `zh-Hant` | 1440 x 1000; 390 x 844 | 8 | 8 | 0 | 0 |
+| **Total** | 4 locales | 2 viewports | **16** | **16** | **0** | **0** |
+
+Every check returned HTTP 200, the expected localized heading and language
+value (`zh-Hans` for Simplified Chinese and `zh-Hant` for Traditional
+Chinese), five section targets, three evidence references, a visible pending
+notice, a visible gate explanation, a disabled booking control, and no
+document-level horizontal overflow. Desktop navigation remained in normal
+flow; mobile navigation remained sticky.
+
+The first public-matrix attempt reported four false failures because it
+expected `zh` instead of the served standards value `zh-Hans`. A second
+run with the locale mapping corrected completed **16/16**, with **0
+timeouts**. This is recorded as a test-harness correction, not a product
+regression.
+
+### Supplied Chrome screenshot review
+
+The three supplied captures
+`Screenshot_20260918_223747_Chrome.jpg`,
+`Screenshot_20260918_223803_Chrome.jpg`, and
+`Screenshot_20260918_223826_Chrome.jpg` are each 1080 x 2340 mobile Chrome
+screenshots. They show the expected long-form mobile reading pattern: stacked
+service content, continued vertical flow below the first viewport, and the
+need for persistent section orientation on dense routes. The visible
+layout does not justify reducing body text or removing evidence content.
+The implemented sticky section index, tighter scope rhythm, and return-to-
+sections controls address the actionable density concern while preserving
+the evidence disclosure, disabled action state, and publication gate.
+
+This checkpoint is deployment, browser, and CDN evidence only. It does not
+approve legal claims, identity, jurisdiction, source currentness,
+republication permission, accessibility, qualified translation, or final
+production publication.
