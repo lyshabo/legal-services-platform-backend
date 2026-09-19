@@ -325,6 +325,20 @@ test("dense service details improve mobile scanning without weakening gates", as
       await page.locator("[data-service-section-return]").first().scrollIntoViewIfNeeded();
       await page.locator("[data-service-section-return]").first().click();
       await expect(shell).toBeFocused();
+      const mobileLayout = await page.evaluate(() => {
+        const detail = document.querySelector(".detail-layout");
+        const header = document.querySelector(".detail-header");
+        const action = document.querySelector(".action-panel");
+        return {
+          detailWidth: detail?.getBoundingClientRect().width ?? 0,
+          actionWidth: action?.getBoundingClientRect().width ?? 0,
+          headerWidth: header?.getBoundingClientRect().width ?? 0,
+          headingSize: Number.parseFloat(getComputedStyle(header?.querySelector("h1")).fontSize)
+        };
+      });
+      expect(Math.abs(mobileLayout.detailWidth - mobileLayout.actionWidth)).toBeLessThanOrEqual(1);
+      expect(Math.abs(mobileLayout.detailWidth - mobileLayout.headerWidth)).toBeLessThanOrEqual(1);
+      expect(mobileLayout.headingSize).toBeGreaterThanOrEqual(32);
       await expect(page.locator("[data-evidence-gate=pending]")).toBeVisible();
       await expect(page.locator("#service-drc-relevance")).toBeVisible();
       await expect(page.locator(".gate-explanation")).toBeVisible();
