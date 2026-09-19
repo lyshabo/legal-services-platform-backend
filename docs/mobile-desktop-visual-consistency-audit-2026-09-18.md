@@ -658,3 +658,48 @@ is sticky in all eight mobile captures. No blocking visual defect was found.
 These findings are technical visual evidence only. They do not resolve legal,
 identity, jurisdiction, source-currentness, republication-permission,
 accessibility, qualified-translation, or final production-publication gates.
+
+## Exact-Commit Pages and CDN Recheck: September 19, 2026
+
+The deployed static demo was rechecked by exact commit after the
+sixteen-screenshot findings were recorded.
+
+| Evidence field | Verified value |
+| --- | --- |
+| Static-demo commit | `e59879286113b20c61cd8e3c98d51667e197af3b` |
+| Local `static-demo` HEAD | exact match |
+| Remote `origin/main` | exact match |
+| Workflow | Deploy static demo to GitHub Pages |
+| Workflow run | `35419958986` |
+| Workflow conclusion | `success` |
+| Deploy job | `105835628738` (`success`) |
+| Deployment record | `6536840394` (`success`) |
+| Artifact | `github-pages`, ID `10576812052`, 402,578 bytes |
+| Formal artifact digest | `sha256:1f5e2875595d6c8d1305af8bf11446b47cd5c2aca66c596a7d94f4ad02c99a97` |
+| Pages status | `built` |
+| Deployment path | GitHub Actions workflow |
+| HTTPS | enforced |
+| Deployment URL | https://legal-services-platform.github.io/legal-services-platform-static-demo-20260828/ |
+
+### Fresh public asset and CDN evidence
+
+Two cache-busted requests were made for each required public asset. All six
+responses returned HTTP `200`, `Cache-Control: max-age=600`, and
+`Last-Modified: Sat, 19 Sep 2026 03:56:54 GMT`.
+
+| Asset | Bytes | Public SHA-256 | ETag | Request 1 | Request 2 | Exact-commit parity |
+| --- | ---: | --- | --- | --- | --- | --- |
+| `index.html` | 1,243 | `8b11840fb51a01f3ebc89a23e4c546cee6550ebe3d51ea549e88af7ad0c19bee` | `"6aae0806-4db"` | `Age: 19`, `X-Cache: HIT`, hits `1` | `Age: 21`, `X-Cache: HIT`, hits `2` | yes |
+| `app.js` | 102,956 | `ed1c3d839daa0b8b7e8aaf55185ffef4a94e389b3d7a5e1ed4615d870dd74779` | `"6aae0806-1922c"` | `Age: 0`, `X-Cache: MISS`, hits `0` | `Age: 2`, `X-Cache: HIT`, hits `1` | yes, after CRLF-to-LF normalization |
+| `styles.css` | 47,839 | `848b5d665f18a0744ed4d0332f882d1695a80a5da9b62cc26fa57dd1b7f1c576` | `"6aae0806-badf"` | `Age: 0`, `X-Cache: MISS`, hits `0` | `Age: 2`, `X-Cache: HIT`, hits `1` | yes |
+
+The unchanged ETags and content hashes confirm that the public deployment
+still serves the artifact produced from exact static-demo commit
+`e59879286113b20c61cd8e3c98d51667e197af3b`. The MISS-to-HIT transitions for
+`app.js` and `styles.css` confirm normal edge-cache population. The Windows
+working copy of `app.js` uses CRLF line endings; its normalized UTF-8 content
+matches the deployed LF artifact exactly.
+
+This recheck is deployment and CDN evidence only. It does not resolve legal,
+identity, jurisdiction, source-currentness, republication-permission,
+accessibility, qualified-translation, or final production-publication gates.
